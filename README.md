@@ -1,6 +1,6 @@
 # Dun-dun
 
-2D bullet-hell style shooter.
+2D bullet-hell style game.
 
 Currently only a single boss with three different variants is available to play. Gameplay consists in dodging the bosses' attacks and collecting crystals to damage it. The more you wait before you collect a crystal, the more damage it will do, but if you wait too much it'll break and disappear.
 
