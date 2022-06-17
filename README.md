@@ -12,10 +12,10 @@ If you are interested, you can watch development of the game [live on Twitch](ht
 
 ## Controls
 
-| Keyboard | Controller | Action |
+| Action | Keyboard | Controller |
 | -------- | ---------- | ------ |
-| W, A, S, D | Joystick | Movement |
-| Shift | A | Walking |
+| Movement | W, A, S, D | Left joystick |
+| Walking | Shift | A (Xbox) / X (Playstation) |
 
 (Keyboard controls can be rebinded. Controller rebinding is currently not supported)
 
