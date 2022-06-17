@@ -2,7 +2,7 @@
 
 2D bullet-hell style shooter.
 
-Currently only a single boss with three different variants is avaliable to play. Gameplay consists in dodging the bosses' attacks and collecting crystals to damage it. The more you wait before you collect a crystal, the more damage it will do, but if you wait too much it'll break and disappear.
+Currently only a single boss with three different variants is available to play. Gameplay consists in dodging the bosses' attacks and collecting crystals to damage it. The more you wait before you collect a crystal, the more damage it will do, but if you wait too much it'll break and disappear.
 
 Music done by [Blackphilip](https://www.instagram.com/mr.satvrn/)
 
@@ -14,8 +14,8 @@ If you are interested, you can watch development of the game [live on Twitch](ht
 
 | Action | Keyboard | Controller |
 | -------- | ---------- | ------ |
-| Movement | W, A, S, D | Left joystick |
-| Walking | Shift | A (Xbox) / X (Playstation) |
+| **Movement** | W, A, S, D | Left joystick |
+| **Walking** | Shift | A (Xbox) / X (Playstation) |
 
 (Keyboard controls can be rebinded. Controller rebinding is currently not supported)
 
