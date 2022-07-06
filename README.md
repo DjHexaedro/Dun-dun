@@ -25,6 +25,6 @@ The game is currently very early in development, and is being worked on as a hob
 
 ## License
 
-Code (and only code) belongs to the public domain.
+Code made by me belongs to the public domain. Code that isn't made by me will be credited within the script it's used in, and will have its own license.
 
 Graphics and music are licensed under [Creative Commons Attribution NonCommercial ShareAlike v4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/)
