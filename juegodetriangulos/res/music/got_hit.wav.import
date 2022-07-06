@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/got_hit.wav-e3090a945bbfd1a15d65c3730e5d19ea.sample"
+
+[deps]
+
+source_file="res://juegodetriangulos/res/music/got_hit.wav"
+dest_files=[ "res://.import/got_hit.wav-e3090a945bbfd1a15d65c3730e5d19ea.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/crystal_despawning.mp3-0cf47279564672c24cb6b24d00190cab.mp3str"
+
+[deps]
+
+source_file="res://juegodetriangulos/res/music/crystal_despawning.mp3"
+dest_files=[ "res://.import/crystal_despawning.mp3-0cf47279564672c24cb6b24d00190cab.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

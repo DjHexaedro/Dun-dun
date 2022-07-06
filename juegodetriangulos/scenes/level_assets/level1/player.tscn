@@ -1,0 +1,108 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/scripts/levels/level1/level1_player.gd" type="Script" id=1]
+[ext_resource path="res://juegodetriangulos/res/sprites/misc/small_player.png" type="Texture" id=2]
+[ext_resource path="res://juegodetriangulos/res/sprites/map/player_top.png" type="Texture" id=3]
+[ext_resource path="res://juegodetriangulos/res/sprites/map/player_bottomleft.png" type="Texture" id=4]
+[ext_resource path="res://juegodetriangulos/res/sprites/map/player_bottomright.png" type="Texture" id=5]
+[ext_resource path="res://juegodetriangulos/res/sprites/ plain_light.png" type="Texture" id=6]
+
+[sub_resource type="ConvexPolygonShape2D" id=1]
+points = PoolVector2Array( 0, -10, 8.66025, 5, -8.66025, 5 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+} ]
+
+[node name="player" type="KinematicBody2D"]
+position = Vector2( 49.9273, 48.5068 )
+scale = Vector2( 1.55445, 1.50734 )
+collision_mask = 0
+script = ExtResource( 1 )
+BULLET_DELAY = 0.15
+BASE_HEALTH = 3
+HIT_DELAY = 1.0
+CAN_MOVE_DELAY = 0.1
+
+[node name="hitbox" type="CollisionShape2D" parent="."]
+position = Vector2( 0.0351562, 2.36362 )
+scale = Vector2( 1.02291, 0.975505 )
+shape = SubResource( 1 )
+
+[node name="animations" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( -0.00738907, -0.122707 )
+scale = Vector2( 0.4, 0.4 )
+frames = SubResource( 2 )
+animation = "Idle"
+
+[node name="can_get_hit_timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.5
+one_shot = true
+
+[node name="can_switch_color_timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="can_shoot_timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.25
+one_shot = true
+
+[node name="can_move" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.25
+one_shot = true
+
+[node name="blink_timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.1
+
+[node name="unblink_timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.1
+
+[node name="update_old_position_timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="graphics" type="Node2D" parent="."]
+
+[node name="section_color0" type="Sprite" parent="graphics"]
+position = Vector2( 0.107361, -0.166046 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 3 )
+
+[node name="section_color1" type="Sprite" parent="graphics"]
+position = Vector2( 1.52588e-05, 0 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 4 )
+
+[node name="section_color2" type="Sprite" parent="graphics"]
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+
+[node name="shooting_position_color0" type="Position2D" parent="graphics"]
+position = Vector2( 0.053669, -7.08445 )
+
+[node name="shooting_position_color1" type="Position2D" parent="graphics"]
+position = Vector2( -8.10416, 7.19516 )
+
+[node name="shooting_position_color2" type="Position2D" parent="graphics"]
+position = Vector2( 8.10415, 7.02911 )
+
+[node name="light" type="Light2D" parent="."]
+texture = ExtResource( 6 )
+texture_scale = 3.0
+[connection signal="timeout" from="can_get_hit_timer" to="." method="_on_can_get_hit_timer_timeout"]
+[connection signal="timeout" from="can_switch_color_timer" to="." method="_on_can_switch_color_timer_timeout"]
+[connection signal="timeout" from="can_shoot_timer" to="." method="_on_can_shoot_timer_timeout"]
+[connection signal="timeout" from="can_move" to="." method="_on_can_move_timeout"]
+[connection signal="timeout" from="blink_timer" to="." method="_on_blink_timer_timeout"]
+[connection signal="timeout" from="unblink_timer" to="." method="_on_unblink_timer_timeout"]
+[connection signal="timeout" from="update_old_position_timer" to="." method="_on_update_old_position_timer_timeout"]

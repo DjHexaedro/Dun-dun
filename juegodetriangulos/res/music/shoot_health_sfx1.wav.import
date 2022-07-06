@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/shoot_health_sfx1.wav-3a6b114b90acedafaffc2a099108b511.sample"
+
+[deps]
+
+source_file="res://juegodetriangulos/res/music/shoot_health_sfx1.wav"
+dest_files=[ "res://.import/shoot_health_sfx1.wav-3a6b114b90acedafaffc2a099108b511.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

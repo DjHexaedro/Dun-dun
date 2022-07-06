@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/game_over.mp3-30fafaa1b7e46e1c6db9f489a4d6751d.mp3str"
+
+[deps]
+
+source_file="res://juegodetriangulos/res/music/game_over.mp3"
+dest_files=[ "res://.import/game_over.mp3-30fafaa1b7e46e1c6db9f489a4d6751d.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

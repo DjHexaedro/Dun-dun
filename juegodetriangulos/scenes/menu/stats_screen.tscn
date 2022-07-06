@@ -1,0 +1,628 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/scripts/menus/stats_screen.gd" type="Script" id=1]
+[ext_resource path="res://juegodetriangulos/res/themes/stats_subcontainer.tres" type="Theme" id=2]
+[ext_resource path="res://juegodetriangulos/res/themes/standard_medium.tres" type="Theme" id=3]
+[ext_resource path="res://juegodetriangulos/res/themes/standard_small.tres" type="Theme" id=4]
+[ext_resource path="res://juegodetriangulos/res/themes/stats_screen.tres" type="Theme" id=5]
+[ext_resource path="res://juegodetriangulos/res/themes/main_menu_button.tres" type="StyleBox" id=6]
+[ext_resource path="res://juegodetriangulos/res/sprites/ui/hud/exit_icon.png" type="Texture" id=7]
+
+[node name="stats_screen" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="tabs_container" type="TabContainer" parent="."]
+margin_top = 10.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+theme = ExtResource( 5 )
+tab_align = 0
+
+[node name="General" type="Control" parent="tabs_container"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 68.0
+margin_right = -5.0
+margin_bottom = -5.0
+theme = ExtResource( 4 )
+
+[node name="deaths_label" type="Label" parent="tabs_container/General"]
+margin_left = 40.0
+margin_top = 30.0
+margin_right = 181.0
+margin_bottom = 76.0
+theme = ExtResource( 3 )
+text = "Deaths:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="deaths" type="Label" parent="tabs_container/General" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 30.0
+margin_right = 559.0
+margin_bottom = 76.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="crystals_collected_label" type="Label" parent="tabs_container/General"]
+margin_left = 40.0
+margin_top = 90.0
+margin_right = 207.0
+margin_bottom = 136.0
+theme = ExtResource( 3 )
+text = "Crystals collected:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="crystals_collected" type="Label" parent="tabs_container/General" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 90.0
+margin_right = 559.0
+margin_bottom = 136.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="perfect_grabs_label" type="Label" parent="tabs_container/General"]
+margin_left = 65.0
+margin_top = 150.0
+margin_right = 352.0
+margin_bottom = 196.0
+theme = ExtResource( 3 )
+text = "Perfect grabs:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="crystals_L" type="Label" parent="tabs_container/General"]
+margin_left = 40.0
+margin_top = 151.0
+margin_right = 61.0
+margin_bottom = 197.0
+rect_scale = Vector2( 0.85, 0.5 )
+theme = ExtResource( 3 )
+text = "L"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="perfect_grabs" type="Label" parent="tabs_container/General" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 150.0
+margin_right = 559.0
+margin_bottom = 196.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="perfect_grabs_combos_label" type="Label" parent="tabs_container/General"]
+margin_left = 89.0
+margin_top = 210.0
+margin_right = 376.0
+margin_bottom = 256.0
+theme = ExtResource( 3 )
+text = "Most in a row:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="perfect_grabs_L" type="Label" parent="tabs_container/General"]
+margin_left = 64.0
+margin_top = 210.0
+margin_right = 85.0
+margin_bottom = 256.0
+rect_scale = Vector2( 0.85, 0.5 )
+theme = ExtResource( 3 )
+text = "L"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="perfect_grabs_combos" type="Label" parent="tabs_container/General" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 210.0
+margin_right = 559.0
+margin_bottom = 256.0
+theme = ExtResource( 3 )
+text = "Coming soon!"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="bad_grabs_label" type="Label" parent="tabs_container/General"]
+margin_left = 65.0
+margin_top = 270.0
+margin_right = 352.0
+margin_bottom = 316.0
+theme = ExtResource( 3 )
+text = "Bad grabs:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="crystals_L2" type="Label" parent="tabs_container/General"]
+margin_left = 40.0
+margin_top = 270.0
+margin_right = 61.0
+margin_bottom = 316.0
+rect_scale = Vector2( 0.85, 0.5 )
+theme = ExtResource( 3 )
+text = "L"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="bad_grabs" type="Label" parent="tabs_container/General" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 270.0
+margin_right = 559.0
+margin_bottom = 316.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="crystals_missed_label" type="Label" parent="tabs_container/General"]
+margin_left = 40.0
+margin_top = 330.0
+margin_right = 355.0
+margin_bottom = 376.0
+theme = ExtResource( 3 )
+text = "Crystals missed:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="crystals_missed" type="Label" parent="tabs_container/General" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 330.0
+margin_right = 559.0
+margin_bottom = 376.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Ongard" type="Control" parent="tabs_container"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 68.0
+margin_right = -5.0
+margin_bottom = -5.0
+
+[node name="difficulties" type="TabContainer" parent="tabs_container/Ongard"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_right = -5.0
+margin_bottom = -12.0
+theme = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Normal" type="Control" parent="tabs_container/Ongard/difficulties"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 58.0
+
+[node name="deaths_label" type="Label" parent="tabs_container/Ongard/difficulties/Normal"]
+visible = false
+margin_left = 40.0
+margin_top = 390.0
+margin_right = 181.0
+margin_bottom = 436.0
+theme = ExtResource( 3 )
+text = "Deaths:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_normal_deaths" type="Label" parent="tabs_container/Ongard/difficulties/Normal" groups=["stats_to_load"]]
+visible = false
+margin_left = 450.0
+margin_top = 390.0
+margin_right = 559.0
+margin_bottom = 436.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="times_reached_second_phase_label" type="Label" parent="tabs_container/Ongard/difficulties/Normal"]
+margin_left = 40.0
+margin_top = 30.0
+margin_right = 426.0
+margin_bottom = 76.0
+theme = ExtResource( 3 )
+text = "Reached 2nd phase:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_normal_times_reached_second_phase" type="Label" parent="tabs_container/Ongard/difficulties/Normal" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 30.0
+margin_right = 559.0
+margin_bottom = 76.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="times_reached_third_phase_label" type="Label" parent="tabs_container/Ongard/difficulties/Normal"]
+margin_left = 40.0
+margin_top = 90.0
+margin_right = 427.0
+margin_bottom = 136.0
+theme = ExtResource( 3 )
+text = "Reached 3rd phase:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_normal_times_reached_third_phase" type="Label" parent="tabs_container/Ongard/difficulties/Normal" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 90.0
+margin_right = 559.0
+margin_bottom = 136.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="times_reached_fourth_phase_label" type="Label" parent="tabs_container/Ongard/difficulties/Normal"]
+margin_left = 40.0
+margin_top = 150.0
+margin_right = 426.0
+margin_bottom = 196.0
+theme = ExtResource( 3 )
+text = "Reached 4th phase:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_normal_times_reached_fourth_phase" type="Label" parent="tabs_container/Ongard/difficulties/Normal" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 150.0
+margin_right = 559.0
+margin_bottom = 196.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="times_reached_fifth_phase_label" type="Label" parent="tabs_container/Ongard/difficulties/Normal"]
+margin_left = 40.0
+margin_top = 210.0
+margin_right = 413.0
+margin_bottom = 256.0
+theme = ExtResource( 3 )
+text = "Reached 5th phase:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_normal_times_reached_fifth_phase" type="Label" parent="tabs_container/Ongard/difficulties/Normal" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 210.0
+margin_right = 559.0
+margin_bottom = 256.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="times_won_label" type="Label" parent="tabs_container/Ongard/difficulties/Normal"]
+margin_left = 40.0
+margin_top = 270.0
+margin_right = 256.0
+margin_bottom = 316.0
+theme = ExtResource( 3 )
+text = "Times won:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_normal_times_won" type="Label" parent="tabs_container/Ongard/difficulties/Normal" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 270.0
+margin_right = 559.0
+margin_bottom = 316.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Hard" type="Control" parent="tabs_container/Ongard/difficulties"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 58.0
+
+[node name="deaths_label" type="Label" parent="tabs_container/Ongard/difficulties/Hard"]
+visible = false
+margin_left = 40.0
+margin_top = 390.0
+margin_right = 181.0
+margin_bottom = 436.0
+theme = ExtResource( 3 )
+text = "Deaths:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_hard_deaths" type="Label" parent="tabs_container/Ongard/difficulties/Hard" groups=["stats_to_load"]]
+visible = false
+margin_left = 450.0
+margin_top = 390.0
+margin_right = 559.0
+margin_bottom = 436.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="times_reached_second_phase_label" type="Label" parent="tabs_container/Ongard/difficulties/Hard"]
+margin_left = 40.0
+margin_top = 30.0
+margin_right = 426.0
+margin_bottom = 76.0
+theme = ExtResource( 3 )
+text = "Reached 2nd phase:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_hard_times_reached_second_phase" type="Label" parent="tabs_container/Ongard/difficulties/Hard" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 30.0
+margin_right = 559.0
+margin_bottom = 76.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="times_reached_third_phase_label" type="Label" parent="tabs_container/Ongard/difficulties/Hard"]
+margin_left = 40.0
+margin_top = 90.0
+margin_right = 427.0
+margin_bottom = 136.0
+theme = ExtResource( 3 )
+text = "Reached 3rd phase:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_hard_times_reached_third_phase" type="Label" parent="tabs_container/Ongard/difficulties/Hard" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 90.0
+margin_right = 559.0
+margin_bottom = 136.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="times_reached_fourth_phase_label" type="Label" parent="tabs_container/Ongard/difficulties/Hard"]
+margin_left = 40.0
+margin_top = 150.0
+margin_right = 426.0
+margin_bottom = 196.0
+theme = ExtResource( 3 )
+text = "Reached 4th phase:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_hard_times_reached_fourth_phase" type="Label" parent="tabs_container/Ongard/difficulties/Hard" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 150.0
+margin_right = 559.0
+margin_bottom = 196.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="times_reached_fifth_phase_label" type="Label" parent="tabs_container/Ongard/difficulties/Hard"]
+margin_left = 40.0
+margin_top = 210.0
+margin_right = 413.0
+margin_bottom = 256.0
+theme = ExtResource( 3 )
+text = "Reached 5th phase:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_hard_times_reached_fifth_phase" type="Label" parent="tabs_container/Ongard/difficulties/Hard" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 210.0
+margin_right = 559.0
+margin_bottom = 256.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="times_won_label" type="Label" parent="tabs_container/Ongard/difficulties/Hard"]
+margin_left = 40.0
+margin_top = 270.0
+margin_right = 256.0
+margin_bottom = 316.0
+theme = ExtResource( 3 )
+text = "Times won:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_hard_times_won" type="Label" parent="tabs_container/Ongard/difficulties/Hard" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 270.0
+margin_right = 559.0
+margin_bottom = 316.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Hardest" type="Control" parent="tabs_container/Ongard/difficulties"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 58.0
+
+[node name="deaths_label" type="Label" parent="tabs_container/Ongard/difficulties/Hardest"]
+visible = false
+margin_left = 40.0
+margin_top = 330.0
+margin_right = 181.0
+margin_bottom = 376.0
+theme = ExtResource( 3 )
+text = "Deaths:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_hardest_deaths" type="Label" parent="tabs_container/Ongard/difficulties/Hardest" groups=["stats_to_load"]]
+visible = false
+margin_left = 450.0
+margin_top = 330.0
+margin_right = 559.0
+margin_bottom = 376.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="times_reached_second_phase_label" type="Label" parent="tabs_container/Ongard/difficulties/Hardest"]
+margin_left = 40.0
+margin_top = 30.0
+margin_right = 426.0
+margin_bottom = 76.0
+theme = ExtResource( 3 )
+text = "Reached 2nd phase:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_hardest_times_reached_second_phase" type="Label" parent="tabs_container/Ongard/difficulties/Hardest" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 30.0
+margin_right = 559.0
+margin_bottom = 76.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="times_reached_third_phase_label" type="Label" parent="tabs_container/Ongard/difficulties/Hardest"]
+margin_left = 40.0
+margin_top = 90.0
+margin_right = 427.0
+margin_bottom = 136.0
+theme = ExtResource( 3 )
+text = "Reached 3rd phase:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_hardest_times_reached_third_phase" type="Label" parent="tabs_container/Ongard/difficulties/Hardest" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 90.0
+margin_right = 559.0
+margin_bottom = 136.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="times_reached_fourth_phase_label" type="Label" parent="tabs_container/Ongard/difficulties/Hardest"]
+margin_left = 40.0
+margin_top = 150.0
+margin_right = 426.0
+margin_bottom = 196.0
+theme = ExtResource( 3 )
+text = "Reached 4th phase:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_hardest_times_reached_fourth_phase" type="Label" parent="tabs_container/Ongard/difficulties/Hardest" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 150.0
+margin_right = 559.0
+margin_bottom = 196.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="times_won_label" type="Label" parent="tabs_container/Ongard/difficulties/Hardest"]
+margin_left = 40.0
+margin_top = 210.0
+margin_right = 256.0
+margin_bottom = 256.0
+theme = ExtResource( 3 )
+text = "Times won:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ongard_hardest_times_won" type="Label" parent="tabs_container/Ongard/difficulties/Hardest" groups=["stats_to_load"]]
+margin_left = 450.0
+margin_top = 210.0
+margin_right = 559.0
+margin_bottom = 256.0
+theme = ExtResource( 3 )
+text = "Value"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="exit_button" type="Button" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1641.84
+margin_top = 799.637
+margin_right = -28.1558
+margin_bottom = -30.3633
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 6 )
+custom_styles/normal = ExtResource( 6 )
+icon = ExtResource( 7 )
+expand_icon = true
+
+[connection signal="pressed" from="exit_button" to="." method="_on_exit_button_pressed"]

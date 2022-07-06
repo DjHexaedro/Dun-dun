@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/level0.mp3-65a6699abf910e70b3f1b5c2c9f749bf.mp3str"
+
+[deps]
+
+source_file="res://juegodetriangulos/res/music/level0.mp3"
+dest_files=[ "res://.import/level0.mp3-65a6699abf910e70b3f1b5c2c9f749bf.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

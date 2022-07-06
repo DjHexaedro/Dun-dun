@@ -1,0 +1,21 @@
+[gd_resource type="Theme" load_steps=4 format=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+content_margin_left = 50.0
+content_margin_right = 50.0
+bg_color = Color( 0, 0, 0, 1 )
+expand_margin_right = 5.0
+
+[sub_resource type="StyleBoxFlat" id=3]
+content_margin_left = 50.0
+content_margin_right = 50.0
+bg_color = Color( 0, 0, 0, 1 )
+
+[resource]
+TabContainer/styles/panel = SubResource( 1 )
+TabContainer/styles/tab_bg = SubResource( 2 )
+TabContainer/styles/tab_disabled = null
+TabContainer/styles/tab_fg = SubResource( 3 )

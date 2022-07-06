@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/get_health_sfx1.wav-1462c99bdea65224a0fbf8579e2d3750.sample"
+
+[deps]
+
+source_file="res://juegodetriangulos/res/music/get_health_sfx1.wav"
+dest_files=[ "res://.import/get_health_sfx1.wav-1462c99bdea65224a0fbf8579e2d3750.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

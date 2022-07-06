@@ -1,0 +1,133 @@
+[gd_resource type="Theme" load_steps=23 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/sprites/ui/menu/checkbox_empty.png" type="Texture" id=1]
+[ext_resource path="res://juegodetriangulos/res/sprites/ui/menu/checkbox_checked.png" type="Texture" id=2]
+[ext_resource path="res://juegodetriangulos/res/fonts/Dun_dunTipografia-Regular.otf" type="DynamicFontData" id=3]
+[ext_resource path="res://juegodetriangulos/res/sprites/ui/menu/grabber_highlight.png" type="Texture" id=4]
+[ext_resource path="res://juegodetriangulos/res/sprites/ui/menu/grabber.png" type="Texture" id=5]
+
+[sub_resource type="StyleBoxFlat" id=18]
+bg_color = Color( 0, 0, 0, 0 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 1, 1, 1, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=21]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=22]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="DynamicFont" id=10]
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=14]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=15]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=12]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 1, 1, 1, 1 )
+corner_detail = 1
+expand_margin_top = 5.0
+
+[sub_resource type="StyleBoxFlat" id=3]
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_color = Color( 1, 1, 1, 1 )
+corner_detail = 1
+expand_margin_left = 5.0
+expand_margin_top = 10.0
+
+[sub_resource type="StyleBoxFlat" id=4]
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_color = Color( 1, 1, 1, 1 )
+corner_detail = 1
+expand_margin_left = 5.0
+expand_margin_top = 10.0
+
+[sub_resource type="DynamicFontData" id=19]
+font_path = "res://juegodetriangulos/res/fonts/Dun_dunTipografia-Regular.otf"
+
+[sub_resource type="DynamicFont" id=20]
+size = 48
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+font_data = SubResource( 19 )
+
+[resource]
+default_font = SubResource( 20 )
+CheckBox/constants/check_vadjust = 0
+CheckBox/icons/checked = ExtResource( 2 )
+CheckBox/icons/unchecked = ExtResource( 1 )
+CheckBox/styles/focus = SubResource( 18 )
+HSlider/icons/grabber = ExtResource( 5 )
+HSlider/icons/grabber_highlight = ExtResource( 4 )
+HSlider/styles/grabber_area = SubResource( 8 )
+HSlider/styles/grabber_area_highlight = SubResource( 9 )
+HSlider/styles/slider = SubResource( 7 )
+LineEdit/styles/focus = SubResource( 21 )
+LineEdit/styles/normal = SubResource( 22 )
+OptionButton/fonts/font = SubResource( 10 )
+OptionButton/styles/disabled = SubResource( 13 )
+OptionButton/styles/focus = SubResource( 14 )
+OptionButton/styles/hover = SubResource( 15 )
+OptionButton/styles/normal = SubResource( 11 )
+OptionButton/styles/pressed = SubResource( 12 )
+TabContainer/constants/side_margin = 5
+TabContainer/styles/panel = SubResource( 2 )
+TabContainer/styles/tab_bg = SubResource( 3 )
+TabContainer/styles/tab_fg = SubResource( 4 )

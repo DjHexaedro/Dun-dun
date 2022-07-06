@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/sprites/ui/hud/lifebar_separator.png" type="Texture" id=1]
+
+[node name="marker" type="Sprite"]
+light_mask = 128
+texture = ExtResource( 1 )

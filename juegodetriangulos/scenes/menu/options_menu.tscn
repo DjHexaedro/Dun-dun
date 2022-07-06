@@ -1,0 +1,625 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/scripts/menus/options_menu.gd" type="Script" id=1]
+[ext_resource path="res://juegodetriangulos/res/scripts/misc/button_remapping_keyboard.gd" type="Script" id=3]
+[ext_resource path="res://juegodetriangulos/res/themes/standard_small.tres" type="Theme" id=4]
+[ext_resource path="res://juegodetriangulos/res/themes/options_menu.tres" type="Theme" id=5]
+[ext_resource path="res://juegodetriangulos/res/themes/main_menu_button.tres" type="StyleBox" id=6]
+[ext_resource path="res://juegodetriangulos/res/sprites/ui/hud/exit_icon.png" type="Texture" id=7]
+[ext_resource path="res://juegodetriangulos/res/scripts/misc/button_remapping_controller.gd" type="Script" id=8]
+
+[node name="options_menu" type="CanvasLayer"]
+offset = Vector2( 1300, 660 )
+transform = Transform2D( 1, 0, 0, 1, 1300, 660 )
+script = ExtResource( 1 )
+
+[node name="tabs_container" type="TabContainer" parent="."]
+visible = false
+light_mask = 128
+margin_right = 600.0
+margin_bottom = 400.0
+theme = ExtResource( 5 )
+tab_align = 0
+
+[node name="General" type="Control" parent="tabs_container"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 37.0
+margin_right = -5.0
+margin_bottom = -5.0
+theme = ExtResource( 4 )
+
+[node name="fullscreen" type="CheckBox" parent="tabs_container/General" groups=["control_to_load", "pressed"]]
+margin_left = 8.0
+margin_top = 3.0
+margin_right = 121.0
+margin_bottom = 42.0
+theme = ExtResource( 5 )
+text = "Fullscreen"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="walk_default" type="CheckBox" parent="tabs_container/General" groups=["control_to_load", "pressed"]]
+margin_left = 8.0
+margin_top = 45.0
+margin_right = 153.0
+margin_bottom = 84.0
+theme = ExtResource( 5 )
+text = "Walk by default"
+
+[node name="always_show_hitbox" type="CheckBox" parent="tabs_container/General" groups=["control_to_load", "pressed"]]
+margin_left = 8.0
+margin_top = 90.0
+margin_right = 153.0
+margin_bottom = 129.0
+theme = ExtResource( 5 )
+text = "Always show hitbox"
+
+[node name="show_fps" type="CheckBox" parent="tabs_container/General" groups=["control_to_load", "pressed"]]
+margin_left = 8.0
+margin_top = 135.0
+margin_right = 180.0
+margin_bottom = 174.0
+theme = ExtResource( 5 )
+text = "Show FPS"
+
+[node name="Audio" type="Control" parent="tabs_container"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 32.0
+margin_right = -5.0
+margin_bottom = -5.0
+
+[node name="master_label" type="Label" parent="tabs_container/Audio"]
+margin_left = 22.0
+margin_top = 16.0
+margin_right = 69.0
+margin_bottom = 33.0
+theme = ExtResource( 4 )
+text = "Master"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="master_volume" type="HSlider" parent="tabs_container/Audio" groups=["control_to_load", "value"]]
+margin_left = 89.0
+margin_top = 18.0
+margin_right = 498.0
+margin_bottom = 35.0
+theme = ExtResource( 5 )
+max_value = 1.0
+step = 0.01
+tick_count = 10
+ticks_on_borders = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="current_value" type="Label" parent="tabs_container/Audio/master_volume"]
+margin_left = 418.0
+margin_top = 1.0
+margin_right = 490.0
+margin_bottom = 15.0
+theme = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="music_label" type="Label" parent="tabs_container/Audio"]
+margin_left = 22.0
+margin_top = 55.0
+margin_right = 69.0
+margin_bottom = 72.0
+theme = ExtResource( 4 )
+text = "Music"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="music_volume" type="HSlider" parent="tabs_container/Audio" groups=["control_to_load", "value"]]
+margin_left = 90.0
+margin_top = 57.0
+margin_right = 499.0
+margin_bottom = 74.0
+max_value = 1.0
+step = 0.01
+tick_count = 10
+ticks_on_borders = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="current_value" type="Label" parent="tabs_container/Audio/music_volume"]
+margin_left = 418.0
+margin_top = 1.0
+margin_right = 490.0
+margin_bottom = 15.0
+theme = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="effects_label" type="Label" parent="tabs_container/Audio"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 22.0
+margin_top = 94.0
+margin_right = -520.0
+margin_bottom = -255.0
+theme = ExtResource( 4 )
+text = "Effects"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="effects_volume" type="HSlider" parent="tabs_container/Audio" groups=["control_to_load", "value"]]
+margin_left = 89.0
+margin_top = 96.0
+margin_right = 498.0
+margin_bottom = 113.0
+max_value = 1.0
+step = 0.01
+tick_count = 10
+ticks_on_borders = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="current_value" type="Label" parent="tabs_container/Audio/effects_volume"]
+margin_left = 418.0
+margin_top = 1.0
+margin_right = 490.0
+margin_bottom = 15.0
+theme = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Input" type="Control" parent="tabs_container"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 32.0
+margin_right = -5.0
+margin_bottom = -5.0
+
+[node name="input_method" type="OptionButton" parent="tabs_container/Input"]
+margin_left = 21.0
+margin_top = 20.0
+margin_right = 171.0
+margin_bottom = 40.0
+theme = ExtResource( 5 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="keyboard_controls" type="Control" parent="tabs_container/Input"]
+visible = false
+anchor_left = -1.11
+anchor_top = -1.487
+anchor_right = -1.11
+anchor_bottom = -1.487
+margin_left = 425.9
+margin_top = 578.781
+margin_right = 426.9
+margin_bottom = 579.781
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_moveup_label" type="Label" parent="tabs_container/Input/keyboard_controls"]
+margin_left = 250.0
+margin_top = 23.0
+margin_right = 305.0
+margin_bottom = 43.0
+theme = ExtResource( 4 )
+text = "Move up"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_moveup" type="Button" parent="tabs_container/Input/keyboard_controls" groups=["control_to_load", "text"]]
+margin_left = 340.0
+margin_top = 23.0
+margin_right = 490.0
+margin_bottom = 46.0
+theme = ExtResource( 4 )
+flat = true
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_movedown_label" type="Label" parent="tabs_container/Input/keyboard_controls"]
+margin_left = 250.0
+margin_top = 47.0
+margin_right = 325.0
+margin_bottom = 67.0
+theme = ExtResource( 4 )
+text = "Move down"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_movedown" type="Button" parent="tabs_container/Input/keyboard_controls" groups=["control_to_load", "text"]]
+margin_left = 341.189
+margin_top = 45.0
+margin_right = 491.189
+margin_bottom = 68.0
+theme = ExtResource( 4 )
+flat = true
+script = ExtResource( 3 )
+
+[node name="player_moveleft_label" type="Label" parent="tabs_container/Input/keyboard_controls"]
+margin_left = 250.0
+margin_top = 71.0
+margin_right = 313.0
+margin_bottom = 91.0
+theme = ExtResource( 4 )
+text = "Move left"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_moveleft" type="Button" parent="tabs_container/Input/keyboard_controls" groups=["control_to_load", "text"]]
+margin_left = 340.0
+margin_top = 69.0
+margin_right = 490.0
+margin_bottom = 92.0
+theme = ExtResource( 4 )
+flat = true
+script = ExtResource( 3 )
+
+[node name="player_moveright_label" type="Label" parent="tabs_container/Input/keyboard_controls"]
+anchor_top = -0.00347722
+anchor_bottom = -0.00347722
+margin_left = 250.0
+margin_top = 94.7412
+margin_right = 323.0
+margin_bottom = 114.741
+theme = ExtResource( 4 )
+text = "Move right"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_moveright" type="Button" parent="tabs_container/Input/keyboard_controls" groups=["control_to_load", "text"]]
+margin_left = 340.189
+margin_top = 95.0
+margin_right = 490.189
+margin_bottom = 118.0
+theme = ExtResource( 4 )
+flat = true
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_walk_label" type="Label" parent="tabs_container/Input/keyboard_controls"]
+anchor_top = -0.00347722
+anchor_bottom = -0.00347722
+margin_left = 250.0
+margin_top = 117.003
+margin_right = 323.0
+margin_bottom = 137.003
+theme = ExtResource( 4 )
+text = "Walk"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_walk" type="Button" parent="tabs_container/Input/keyboard_controls" groups=["control_to_load", "text"]]
+margin_left = 337.811
+margin_top = 117.595
+margin_right = 487.811
+margin_bottom = 140.595
+theme = ExtResource( 4 )
+flat = true
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="controller_controls" type="Control" parent="tabs_container/Input"]
+visible = false
+anchor_left = -1.11
+anchor_top = -1.487
+anchor_right = -1.11
+anchor_bottom = -1.487
+margin_left = 425.9
+margin_top = 578.781
+margin_right = 426.9
+margin_bottom = 579.781
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="controller_controls_explanation" type="Label" parent="tabs_container/Input/controller_controls"]
+anchor_top = -0.00347722
+anchor_bottom = -0.00347722
+margin_left = 240.0
+margin_top = 23.0035
+margin_right = 802.0
+margin_bottom = 160.003
+theme = ExtResource( 4 )
+text = "Controller remapping support coming in the future! You may use a controller with 
+the default bindings:
+
+You can move with either the DPAD or the joystick
+
+You can walk by pressing the A button on an Xbox controller or the X button on a
+ PS controller"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="onscreen_joystick_controls" type="Control" parent="tabs_container/Input"]
+visible = false
+anchor_left = -1.11
+anchor_top = -1.487
+anchor_right = -1.11
+anchor_bottom = -1.487
+margin_left = 425.9
+margin_top = 578.781
+margin_right = 426.9
+margin_bottom = 579.781
+
+[node name="onscreen_joystick_right" type="CheckBox" parent="tabs_container/Input/onscreen_joystick_controls" groups=["control_to_load", "pressed"]]
+margin_left = 249.021
+margin_top = 92.9741
+margin_right = 594.021
+margin_bottom = 131.974
+theme = ExtResource( 5 )
+text = "Move joystick to the right side of the screen"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_deadzone_onscreen_joystick_label" type="Label" parent="tabs_container/Input/onscreen_joystick_controls"]
+anchor_top = -0.00347722
+anchor_bottom = -0.00347722
+margin_left = 250.0
+margin_top = 23.0035
+margin_right = 395.0
+margin_bottom = 43.0035
+theme = ExtResource( 4 )
+text = "Movement deadzone"
+
+[node name="player_deadzone_onscreen_joystick" type="HSlider" parent="tabs_container/Input/onscreen_joystick_controls" groups=["control_to_load", "value"]]
+margin_left = 400.0
+margin_top = 23.0
+margin_right = 700.0
+margin_bottom = 48.0
+theme = ExtResource( 5 )
+min_value = 0.01
+max_value = 0.7
+step = 0.01
+value = 0.1
+tick_count = 8
+ticks_on_borders = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="current_value" type="Label" parent="tabs_container/Input/onscreen_joystick_controls/player_deadzone_onscreen_joystick"]
+margin_left = 318.0
+margin_right = 390.0
+margin_bottom = 48.0
+theme = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_running_deadzone_onscreen_joystick_label" type="Label" parent="tabs_container/Input/onscreen_joystick_controls"]
+anchor_top = -0.00347722
+anchor_bottom = -0.00347722
+margin_left = 250.0
+margin_top = 63.0035
+margin_right = 395.0
+margin_bottom = 83.0035
+theme = ExtResource( 4 )
+text = "Running deadzone"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_running_deadzone_onscreen_joystick" type="HSlider" parent="tabs_container/Input/onscreen_joystick_controls" groups=["control_to_load", "value"]]
+margin_left = 400.0
+margin_top = 63.0
+margin_right = 700.0
+margin_bottom = 88.0
+theme = ExtResource( 5 )
+min_value = 0.01
+max_value = 0.8
+step = 0.01
+value = 0.1
+tick_count = 9
+ticks_on_borders = true
+
+[node name="current_value" type="Label" parent="tabs_container/Input/onscreen_joystick_controls/player_running_deadzone_onscreen_joystick"]
+margin_left = 318.0
+margin_right = 390.0
+margin_bottom = 48.0
+theme = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="controller_controls_with_controls" type="Control" parent="tabs_container/Input"]
+visible = false
+anchor_left = -1.11
+anchor_top = -1.487
+anchor_right = -1.11
+anchor_bottom = -1.487
+margin_left = 425.9
+margin_top = 578.781
+margin_right = 426.9
+margin_bottom = 579.781
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_moveup_controller_label" type="Label" parent="tabs_container/Input/controller_controls_with_controls"]
+margin_left = 250.0
+margin_top = 23.0
+margin_right = 305.0
+margin_bottom = 43.0
+theme = ExtResource( 4 )
+text = "Move up"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_moveup_controller" type="Button" parent="tabs_container/Input/controller_controls_with_controls"]
+margin_left = 340.0
+margin_top = 23.0
+margin_right = 490.0
+margin_bottom = 46.0
+theme = ExtResource( 4 )
+flat = true
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_movedown_controller_label" type="Label" parent="tabs_container/Input/controller_controls_with_controls"]
+margin_left = 250.0
+margin_top = 47.0
+margin_right = 325.0
+margin_bottom = 67.0
+theme = ExtResource( 4 )
+text = "Move down"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_movedown_controller" type="Button" parent="tabs_container/Input/controller_controls_with_controls"]
+margin_left = 341.189
+margin_top = 45.0
+margin_right = 491.189
+margin_bottom = 68.0
+theme = ExtResource( 4 )
+flat = true
+script = ExtResource( 8 )
+
+[node name="player_moveleft_controller_label" type="Label" parent="tabs_container/Input/controller_controls_with_controls"]
+margin_left = 250.0
+margin_top = 71.0
+margin_right = 313.0
+margin_bottom = 91.0
+theme = ExtResource( 4 )
+text = "Move left"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_moveleft_controller" type="Button" parent="tabs_container/Input/controller_controls_with_controls"]
+margin_left = 340.0
+margin_top = 69.0
+margin_right = 490.0
+margin_bottom = 92.0
+theme = ExtResource( 4 )
+flat = true
+script = ExtResource( 8 )
+
+[node name="player_moveright_controller_label" type="Label" parent="tabs_container/Input/controller_controls_with_controls"]
+anchor_top = -0.00347722
+anchor_bottom = -0.00347722
+margin_left = 250.0
+margin_top = 94.7412
+margin_right = 323.0
+margin_bottom = 114.741
+theme = ExtResource( 4 )
+text = "Move right"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_moveright_controller" type="Button" parent="tabs_container/Input/controller_controls_with_controls"]
+margin_left = 340.189
+margin_top = 95.0
+margin_right = 490.189
+margin_bottom = 118.0
+theme = ExtResource( 4 )
+flat = true
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_walk_controller_label" type="Label" parent="tabs_container/Input/controller_controls_with_controls"]
+anchor_top = -0.00347722
+anchor_bottom = -0.00347722
+margin_left = 250.0
+margin_top = 117.003
+margin_right = 323.0
+margin_bottom = 137.003
+theme = ExtResource( 4 )
+text = "Walk"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_walk_controller" type="Button" parent="tabs_container/Input/controller_controls_with_controls"]
+margin_left = 337.811
+margin_top = 117.595
+margin_right = 487.811
+margin_bottom = 140.595
+theme = ExtResource( 4 )
+flat = true
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_deadzone_controller_label" type="Label" parent="tabs_container/Input/controller_controls_with_controls"]
+anchor_top = -0.00347722
+anchor_bottom = -0.00347722
+margin_left = 250.0
+margin_top = 185.003
+margin_right = 395.0
+margin_bottom = 205.003
+theme = ExtResource( 4 )
+text = "Controller deadzone"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="save_button" type="Button" parent="."]
+visible = false
+light_mask = 128
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 499.621
+margin_top = 298.803
+margin_right = -1244.38
+margin_bottom = -605.197
+rect_scale = Vector2( 0.5, 0.5 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 6 )
+custom_styles/normal = ExtResource( 6 )
+icon = ExtResource( 7 )
+
+[connection signal="value_changed" from="tabs_container/Audio/master_volume" to="." method="_on_master_volume_value_changed"]
+[connection signal="value_changed" from="tabs_container/Audio/music_volume" to="." method="_on_music_volume_value_changed"]
+[connection signal="value_changed" from="tabs_container/Audio/effects_volume" to="." method="_on_effects_volume_value_changed"]
+[connection signal="item_selected" from="tabs_container/Input/input_method" to="." method="_on_input_method_item_selected"]
+[connection signal="pressed" from="tabs_container/Input/keyboard_controls/player_moveup" to="tabs_container/Input/keyboard_controls/player_moveup" method="_on_button_pressed"]
+[connection signal="pressed" from="tabs_container/Input/keyboard_controls/player_movedown" to="tabs_container/Input/keyboard_controls/player_movedown" method="_on_button_pressed"]
+[connection signal="pressed" from="tabs_container/Input/keyboard_controls/player_moveleft" to="tabs_container/Input/keyboard_controls/player_moveleft" method="_on_button_pressed"]
+[connection signal="pressed" from="tabs_container/Input/keyboard_controls/player_moveright" to="tabs_container/Input/keyboard_controls/player_moveright" method="_on_button_pressed"]
+[connection signal="pressed" from="tabs_container/Input/keyboard_controls/player_walk" to="tabs_container/Input/keyboard_controls/player_walk" method="_on_button_pressed"]
+[connection signal="value_changed" from="tabs_container/Input/onscreen_joystick_controls/player_deadzone_onscreen_joystick" to="." method="_on_player_deadzone_onscreen_joystick_value_changed"]
+[connection signal="value_changed" from="tabs_container/Input/onscreen_joystick_controls/player_running_deadzone_onscreen_joystick" to="." method="_on_player_running_deadzone_onscreen_joystick_value_changed"]
+[connection signal="pressed" from="tabs_container/Input/controller_controls_with_controls/player_moveup_controller" to="tabs_container/Input/controller_controls_with_controls/player_moveup_controller" method="_on_button_pressed"]
+[connection signal="pressed" from="tabs_container/Input/controller_controls_with_controls/player_movedown_controller" to="tabs_container/Input/controller_controls_with_controls/player_movedown_controller" method="_on_button_pressed"]
+[connection signal="pressed" from="tabs_container/Input/controller_controls_with_controls/player_moveleft_controller" to="tabs_container/Input/controller_controls_with_controls/player_moveleft_controller" method="_on_button_pressed"]
+[connection signal="pressed" from="tabs_container/Input/controller_controls_with_controls/player_moveright_controller" to="tabs_container/Input/controller_controls_with_controls/player_moveright_controller" method="_on_button_pressed"]
+[connection signal="pressed" from="tabs_container/Input/controller_controls_with_controls/player_walk_controller" to="tabs_container/Input/controller_controls_with_controls/player_walk_controller" method="_on_button_pressed"]
+[connection signal="pressed" from="save_button" to="." method="_on_save_button_pressed"]

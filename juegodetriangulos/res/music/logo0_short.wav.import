@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/logo0_short.wav-32c786d5d10a62b8498671a4c820118f.sample"
+
+[deps]
+
+source_file="res://juegodetriangulos/res/music/logo0_short.wav"
+dest_files=[ "res://.import/logo0_short.wav-32c786d5d10a62b8498671a4c820118f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/scripts/misc/score_label.gd" type="Script" id=1]
+[ext_resource path="res://juegodetriangulos/res/themes/standard_medium.tres" type="Theme" id=3]
+
+[node name="control" type="CanvasLayer"]
+layer = 0
+script = ExtResource( 1 )
+
+[node name="score_label" type="Label" parent="."]
+light_mask = 128
+margin_bottom = 46.0
+grow_horizontal = 2
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 3 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="movement_tween" type="Tween" parent="."]
+
+[connection signal="tween_all_completed" from="movement_tween" to="." method="_on_movement_tween_tween_all_completed"]

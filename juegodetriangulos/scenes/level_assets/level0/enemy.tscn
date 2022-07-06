@@ -1,0 +1,144 @@
+[gd_scene load_steps=26 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/music/level0_dragon_roar_shortened.wav" type="AudioStream" id=1]
+[ext_resource path="res://juegodetriangulos/res/scripts/levels/level0/level0_enemy.gd" type="Script" id=2]
+[ext_resource path="res://juegodetriangulos/res/music/level0_dragon_bored_roar.wav" type="AudioStream" id=3]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Ojosizq3.png" type="Texture" id=4]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Frame9ojo.png" type="Texture" id=5]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Frame6ojo.png" type="Texture" id=6]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Frame4ojo.png" type="Texture" id=7]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Frame3ojo.png" type="Texture" id=8]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Frame2ojo.png" type="Texture" id=9]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Frame0ojo.png" type="Texture" id=10]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Frame5ojo.png" type="Texture" id=11]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Frame1ojo.png" type="Texture" id=12]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Frame8ojo.png" type="Texture" id=13]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Frame7ojo.png" type="Texture" id=14]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Ojosizq1.png" type="Texture" id=15]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Ojosizq2.png" type="Texture" id=16]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Ojosder1.png" type="Texture" id=17]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Ojosder2.png" type="Texture" id=18]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Ojosder3.png" type="Texture" id=19]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 12 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 11 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 12 ) ],
+"loop": false,
+"name": "blink",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 18 ) ],
+"loop": false,
+"name": "default",
+"speed": 4.0
+} ]
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ ExtResource( 15 ), ExtResource( 16 ), ExtResource( 4 ), ExtResource( 16 ) ],
+"loop": false,
+"name": "default",
+"speed": 4.0
+} ]
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 12 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 11 ), ExtResource( 6 ), ExtResource( 14 ), ExtResource( 13 ), ExtResource( 5 ), ExtResource( 10 ) ],
+"loop": false,
+"name": "teleport_fade_out",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ), ExtResource( 5 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 6 ), ExtResource( 11 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 12 ) ],
+"loop": false,
+"name": "teleport_fade_in",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 12 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 11 ), ExtResource( 6 ), ExtResource( 14 ), ExtResource( 13 ), ExtResource( 5 ), ExtResource( 10 ) ],
+"loop": false,
+"name": "default",
+"speed": 6.0
+} ]
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 10 ), ExtResource( 5 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 6 ), ExtResource( 11 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 12 ) ],
+"loop": false,
+"name": "default",
+"speed": 2.5
+} ]
+
+[node name="enemy" type="Node2D" groups=["to_be_saved"]]
+z_index = 10
+script = ExtResource( 2 )
+DISPLAY_NAME = "Ongard, dungeon defender"
+N_OF_PHASES = 5
+MAX_DAMAGE_TAKEN_PHASE = 1000
+
+[node name="main_attack_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="secondary_attack_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="blink_idle_animation" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 4
+position = Vector2( 0, -30 )
+scale = Vector2( 0.25, 0.25 )
+frames = SubResource( 2 )
+animation = "blink"
+
+[node name="eyes_right_idle_animation" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 4
+position = Vector2( 0, -30 )
+scale = Vector2( 0.25, 0.25 )
+frames = SubResource( 7 )
+
+[node name="eyes_left_idle_animation" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 4
+position = Vector2( 0, -30 )
+scale = Vector2( 0.25, 0.25 )
+frames = SubResource( 6 )
+
+[node name="teleport_animation" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 4
+position = Vector2( 0, -30 )
+scale = Vector2( 0.25, 0.25 )
+frames = SubResource( 3 )
+animation = "teleport_fade_in"
+
+[node name="despawn_animation" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 4
+position = Vector2( 0, -30 )
+scale = Vector2( 0.25, 0.25 )
+frames = SubResource( 5 )
+
+[node name="spawn_animation" type="AnimatedSprite" parent="."]
+light_mask = 4
+position = Vector2( 0, -30 )
+scale = Vector2( 0.25, 0.25 )
+frames = SubResource( 4 )
+
+[node name="roar" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+bus = "Effects"
+
+[node name="bored_roar" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+bus = "Effects"
+
+[connection signal="animation_finished" from="blink_idle_animation" to="." method="_on_idle_animation_animation_finished"]
+[connection signal="animation_finished" from="eyes_right_idle_animation" to="." method="_on_idle_animation_animation_finished"]
+[connection signal="animation_finished" from="eyes_left_idle_animation" to="." method="_on_idle_animation_animation_finished"]
+[connection signal="animation_finished" from="teleport_animation" to="." method="_on_teleport_animation_animation_finished"]
+[connection signal="animation_finished" from="spawn_animation" to="." method="_on_spawn_animation_animation_finished"]

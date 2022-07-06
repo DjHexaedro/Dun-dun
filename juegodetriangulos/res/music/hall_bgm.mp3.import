@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/hall_bgm.mp3-c47839b835130d9192866f5372d8d4b7.mp3str"
+
+[deps]
+
+source_file="res://juegodetriangulos/res/music/hall_bgm.mp3"
+dest_files=[ "res://.import/hall_bgm.mp3-c47839b835130d9192866f5372d8d4b7.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

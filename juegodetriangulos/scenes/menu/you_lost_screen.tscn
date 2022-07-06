@@ -1,0 +1,111 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/themes/main_menu_button.tres" type="StyleBox" id=1]
+[ext_resource path="res://juegodetriangulos/res/scripts/menus/you_lost_screen.gd" type="Script" id=2]
+[ext_resource path="res://juegodetriangulos/res/music/game_over.mp3" type="AudioStream" id=3]
+[ext_resource path="res://juegodetriangulos/res/themes/standard_medium.tres" type="Theme" id=4]
+[ext_resource path="res://juegodetriangulos/res/themes/standard_extra_large.tres" type="Theme" id=5]
+
+[node name="hud" type="CanvasLayer"]
+pause_mode = 2
+script = ExtResource( 2 )
+
+[node name="bgm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+bus = "BGM"
+
+[node name="background" type="ColorRect" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="you_lost_message" type="Label" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -512.5
+margin_top = -75.0
+margin_right = 512.5
+margin_bottom = 75.0
+theme = ExtResource( 5 )
+text = "YOU LOST"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="you_lost_menu" type="VBoxContainer" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.674
+anchor_right = 0.5
+anchor_bottom = 0.674
+margin_left = -182.0
+margin_top = -77.92
+margin_right = 183.0
+margin_bottom = -4.92004
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="try_again" type="Button" parent="you_lost_menu"]
+margin_right = 365.0
+margin_bottom = 46.0
+theme = ExtResource( 4 )
+custom_styles/hover = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+text = "Try again"
+
+[node name="exit_level" type="Button" parent="you_lost_menu"]
+margin_top = 50.0
+margin_right = 365.0
+margin_bottom = 96.0
+theme = ExtResource( 4 )
+custom_styles/hover = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+text = "Exit level"
+
+[node name="fade_in_tween" type="Tween" parent="."]
+
+[node name="blink_timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="unblink_timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="total_score" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -960.0
+margin_top = -100.0
+margin_right = 960.0
+margin_bottom = -54.0
+theme = ExtResource( 4 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="mouse_entered" from="you_lost_menu/try_again" to="." method="_on_try_again_mouse_entered"]
+[connection signal="pressed" from="you_lost_menu/try_again" to="." method="_on_try_again_pressed"]
+[connection signal="mouse_entered" from="you_lost_menu/exit_level" to="." method="_on_exit_level_mouse_entered"]
+[connection signal="pressed" from="you_lost_menu/exit_level" to="." method="_on_exit_level_pressed"]
+[connection signal="tween_all_completed" from="fade_in_tween" to="." method="_on_fade_in_tween_all_completed"]
+[connection signal="timeout" from="blink_timer" to="." method="_on_blink_timer_timeout"]
+[connection signal="timeout" from="unblink_timer" to="." method="_on_unblink_timer_timeout"]

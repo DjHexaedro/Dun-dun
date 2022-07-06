@@ -1,0 +1,107 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/sprites/ui/hud/heart.png" type="Texture" id=2]
+[ext_resource path="res://juegodetriangulos/res/sprites/ui/hud/boss_lifebar.png" type="Texture" id=3]
+[ext_resource path="res://juegodetriangulos/res/sprites/ui/hud/lifebar_fill.png" type="Texture" id=4]
+[ext_resource path="res://juegodetriangulos/res/themes/standard_medium.tres" type="Theme" id=5]
+[ext_resource path="res://juegodetriangulos/res/sprites/ui/hud/phone_joystick_bg.png" type="Texture" id=6]
+[ext_resource path="res://juegodetriangulos/res/sprites/ui/hud/phone_joystick.png" type="Texture" id=7]
+[ext_resource path="res://juegodetriangulos/res/scripts/misc/on_screen_joystick.gd" type="Script" id=8]
+
+[node name="hud" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( -1752.88, -906.575 )
+
+[node name="current_score" type="Label" parent="."]
+light_mask = 128
+margin_left = 1690.0
+margin_top = 45.0
+margin_right = 2140.0
+margin_bottom = 91.0
+grow_horizontal = 0
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 5 )
+text = "Current score: 0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="current_fps" type="Label" parent="."]
+light_mask = 128
+margin_left = 1690.0
+margin_top = 1035.0
+margin_right = 2140.0
+margin_bottom = 1081.0
+grow_horizontal = 0
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 5 )
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lifebar" type="Sprite" parent="."]
+light_mask = 128
+position = Vector2( 21, 45 )
+scale = Vector2( 20.3, 0.25 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="lifebar_decoration" type="Sprite" parent="."]
+light_mask = 128
+position = Vector2( 15, 38 )
+scale = Vector2( 0.15, 0.1 )
+texture = ExtResource( 3 )
+centered = false
+
+[node name="boss_name" type="Label" parent="lifebar_decoration"]
+light_mask = 128
+margin_top = -275.0
+margin_right = 500.0
+margin_bottom = -229.0
+rect_scale = Vector2( 3, 4.5 )
+theme = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_life_container" type="HBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -253.0
+margin_top = 10.0
+margin_bottom = 42.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="heart1" type="Sprite" parent="player_life_container"]
+light_mask = 128
+position = Vector2( 230, 16 )
+scale = Vector2( 0.18, 0.18 )
+texture = ExtResource( 2 )
+
+[node name="heart2" type="Sprite" parent="player_life_container"]
+light_mask = 128
+position = Vector2( 195, 16 )
+scale = Vector2( 0.18, 0.18 )
+texture = ExtResource( 2 )
+
+[node name="heart3" type="Sprite" parent="player_life_container"]
+light_mask = 128
+position = Vector2( 160, 16 )
+scale = Vector2( 0.18, 0.18 )
+texture = ExtResource( 2 )
+
+[node name="joystick_bg" type="Sprite" parent="."]
+light_mask = 128
+position = Vector2( 240, 840 )
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 6 )
+
+[node name="joystick" type="Sprite" parent="joystick_bg"]
+light_mask = 128
+texture = ExtResource( 7 )
+script = ExtResource( 8 )

@@ -1,0 +1,186 @@
+[gd_scene load_steps=35 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/sprites/misc/lamugregames.png" type="Texture" id=1]
+[ext_resource path="res://juegodetriangulos/res/themes/standard_medium.tres" type="Theme" id=2]
+[ext_resource path="res://juegodetriangulos/res/scripts/misc/lamugregames.gd" type="Script" id=4]
+[ext_resource path="res://juegodetriangulos/res/music/logo0_short.wav" type="AudioStream" id=5]
+[ext_resource path="res://juegodetriangulos/res/music/logo2_short.wav" type="AudioStream" id=6]
+[ext_resource path="res://juegodetriangulos/res/music/logo1_short.wav" type="AudioStream" id=7]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 50, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 100, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 150, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 200, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 1 )
+region = Rect2( 250, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 1 )
+region = Rect2( 300, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 1 )
+region = Rect2( 350, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 1 )
+region = Rect2( 400, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 50, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 1 )
+region = Rect2( 50, 50, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 1 )
+region = Rect2( 100, 50, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 1 )
+region = Rect2( 150, 50, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 1 )
+region = Rect2( 200, 50, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 1 )
+region = Rect2( 250, 50, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 1 )
+region = Rect2( 300, 50, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 1 )
+region = Rect2( 350, 50, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 1 )
+region = Rect2( 400, 50, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 100, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 1 )
+region = Rect2( 50, 100, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 1 )
+region = Rect2( 100, 100, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 1 )
+region = Rect2( 150, 100, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 1 )
+region = Rect2( 200, 100, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 1 )
+region = Rect2( 250, 100, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=25]
+atlas = ExtResource( 1 )
+region = Rect2( 300, 100, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 1 )
+region = Rect2( 350, 100, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=27]
+atlas = ExtResource( 1 )
+region = Rect2( 400, 100, 50, 50 )
+
+[sub_resource type="SpriteFrames" id=28]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ) ],
+"loop": true,
+"name": "default",
+"speed": 15.0
+} ]
+
+[node name="logo_animations" type="AnimatedSprite"]
+light_mask = 128
+frames = SubResource( 28 )
+frame = 8
+playing = true
+script = ExtResource( 4 )
+
+[node name="mugre" type="Label" parent="."]
+visible = false
+light_mask = 128
+margin_left = -150.0
+margin_top = -22.0
+margin_right = -29.0
+margin_bottom = 24.0
+theme = ExtResource( 2 )
+text = "MUGRE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bgm" type="AudioStreamPlayer" parent="mugre"]
+stream = ExtResource( 5 )
+bus = "Effects"
+
+[node name="games" type="Label" parent="."]
+visible = false
+light_mask = 128
+margin_left = 30.0
+margin_top = -22.0
+margin_right = 151.0
+margin_bottom = 24.0
+theme = ExtResource( 2 )
+text = "GAMES"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bgm" type="AudioStreamPlayer" parent="games"]
+stream = ExtResource( 7 )
+bus = "Effects"
+
+[node name="presents" type="Label" parent="."]
+visible = false
+light_mask = 128
+margin_left = -100.0
+margin_top = 20.0
+margin_right = 108.0
+margin_bottom = 66.0
+theme = ExtResource( 2 )
+text = "presents..."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bgm" type="AudioStreamPlayer" parent="presents"]
+stream = ExtResource( 6 )
+bus = "Effects"
+
+[connection signal="finished" from="mugre/bgm" to="." method="_on_mugre_bgm_finished"]
+[connection signal="finished" from="games/bgm" to="." method="_on_games_bgm_finished"]
+[connection signal="finished" from="presents/bgm" to="." method="_on_presents_bgm_finished"]

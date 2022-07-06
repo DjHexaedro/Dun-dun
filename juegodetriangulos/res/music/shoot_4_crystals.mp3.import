@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/shoot_4_crystals.mp3-a298b7940117ee870618624695bdc56b.mp3str"
+
+[deps]
+
+source_file="res://juegodetriangulos/res/music/shoot_4_crystals.mp3"
+dest_files=[ "res://.import/shoot_4_crystals.mp3-a298b7940117ee870618624695bdc56b.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

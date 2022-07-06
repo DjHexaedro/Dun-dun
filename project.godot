@@ -1,0 +1,279 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "BaseBullet",
+"language": "GDScript",
+"path": "res://juegodetriangulos/res/scripts/base/base_bullet.gd"
+}, {
+"base": "Node2D",
+"class": "BaseEnemy",
+"language": "GDScript",
+"path": "res://juegodetriangulos/res/scripts/base/base_enemy.gd"
+}, {
+"base": "Node",
+"class": "BaseLevel",
+"language": "GDScript",
+"path": "res://juegodetriangulos/res/scripts/base/base_level.gd"
+}, {
+"base": "Node2D",
+"class": "BaseMap",
+"language": "GDScript",
+"path": "res://juegodetriangulos/res/scripts/base/base_map.gd"
+}, {
+"base": "Node2D",
+"class": "BaseMinion",
+"language": "GDScript",
+"path": "res://juegodetriangulos/res/scripts/base/base_minion.gd"
+}, {
+"base": "CanvasLayer",
+"class": "BaseOptionsMenu",
+"language": "GDScript",
+"path": "res://juegodetriangulos/res/scripts/base/base_options_menu.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "BasePlayer",
+"language": "GDScript",
+"path": "res://juegodetriangulos/res/scripts/base/base_player.gd"
+}, {
+"base": "Node2D",
+"class": "BasePowerup",
+"language": "GDScript",
+"path": "res://juegodetriangulos/res/scripts/base/base_powerup.gd"
+}, {
+"base": "Area2D",
+"class": "BasePowerupSpawningArea",
+"language": "GDScript",
+"path": "res://juegodetriangulos/res/scripts/base/base_powerup_spawning_area.gd"
+}, {
+"base": "Position2D",
+"class": "BaseSpawnPoint",
+"language": "GDScript",
+"path": "res://juegodetriangulos/res/scripts/base/base_spawn_point.gd"
+}, {
+"base": "BasePlayer",
+"class": "GenericPlayer",
+"language": "GDScript",
+"path": "res://juegodetriangulos/res/scripts/levels/generic/generic_player.gd"
+}, {
+"base": "BasePowerup",
+"class": "GenericPowerup",
+"language": "GDScript",
+"path": "res://juegodetriangulos/res/scripts/levels/generic/generic_powerup.gd"
+} ]
+_global_script_class_icons={
+"BaseBullet": "",
+"BaseEnemy": "",
+"BaseLevel": "",
+"BaseMap": "",
+"BaseMinion": "",
+"BaseOptionsMenu": "",
+"BasePlayer": "",
+"BasePowerup": "",
+"BasePowerupSpawningArea": "",
+"BaseSpawnPoint": "",
+"GenericPlayer": "",
+"GenericPowerup": ""
+}
+
+[application]
+
+config/name="Dun-dun"
+run/main_scene="res://juegodetriangulos/scenes/main.tscn"
+boot_splash/image="res://juegodetriangulos/res/sprites/misc/splash.png"
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
+config/icon="res://juegodetriangulos/game.png"
+
+[autoload]
+
+Settings="*res://juegodetriangulos/res/scripts/misc/settings.gd"
+Utils="*res://juegodetriangulos/res/scripts/misc/utils.gd"
+Globals="*res://juegodetriangulos/res/scripts/misc/globals.gd"
+GameStateManager="*res://juegodetriangulos/res/scripts/managers/game_state_manager.gd"
+PlayerManager="*res://juegodetriangulos/res/scripts/managers/player_manager.gd"
+EnemyManager="*res://juegodetriangulos/res/scripts/managers/enemy_manager.gd"
+ArenaManager="*res://juegodetriangulos/res/scripts/managers/arena_manager.gd"
+PowerupManager="*res://juegodetriangulos/res/scripts/managers/powerup_manager.gd"
+HudManager="*res://juegodetriangulos/res/scripts/managers/hud_manager.gd"
+SimpleBulletManager="*res://juegodetriangulos/res/scripts/managers/simple_bullet_manager.gd"
+SimpleBulletMovementManager="*res://juegodetriangulos/res/scripts/managers/simple_bullet_movement_manager.gd"
+ComplexBulletManager="*res://juegodetriangulos/res/scripts/managers/complex_bullet_manager.gd"
+BulletPatternManager="*res://juegodetriangulos/res/scripts/managers/bullet_pattern_manager.gd"
+CameraManager="*res://juegodetriangulos/res/scripts/managers/camera_manager.gd"
+MinionManager="*res://juegodetriangulos/res/scripts/managers/minion_manager.gd"
+
+[debug]
+
+settings/fps/force_fps=300
+
+[display]
+
+window/size/width=1920
+window/size/height=1080
+window/size/fullscreen=true
+window/vsync/use_vsync=false
+mouse_cursor/custom_image="res://juegodetriangulos/res/sprites/misc/cursor_razonable.png"
+mouse_cursor/custom_image_hotspot=Vector2( 15, 24 )
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
+[importer_defaults]
+
+texture={
+"compress/bptc_ldr": 0,
+"compress/hdr_mode": 0,
+"compress/lossy_quality": 0.7,
+"compress/mode": 0,
+"compress/normal_map": 0,
+"detect_3d": false,
+"flags/anisotropic": false,
+"flags/filter": false,
+"flags/mipmaps": false,
+"flags/repeat": 0,
+"flags/srgb": 2,
+"process/HDR_as_SRGB": false,
+"process/fix_alpha_border": true,
+"process/invert_color": false,
+"process/normal_map_invert_y": false,
+"process/premult_alpha": false,
+"size_limit": 0,
+"stream": false,
+"svg/scale": 1.0
+}
+
+[input]
+
+ui_accept={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777221,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777222,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+mouse_click={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+player_moveup={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+player_movedown={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+player_moveleft={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+player_moveright={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+show_pause_menu={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+player_walk={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+quick_save={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777248,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+quick_load={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777249,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+player_moveup_controller={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":-1.0,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":12,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+player_movedown_controller={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":1.0,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":13,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+player_moveleft_controller={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":-1.0,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":14,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+player_moveright_controller={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":1.0,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":15,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+player_walk_controller={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+show_pause_menu_controller={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":11,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+
+[layer_names]
+
+2d_render/layer_1="player"
+2d_render/layer_2="player_bullets"
+2d_render/layer_3="enemies"
+2d_render/layer_4="enemy_bullets"
+2d_physics/layer_1="player"
+2d_physics/layer_2="player_bullets"
+2d_physics/layer_3="enemy"
+2d_physics/layer_4="enemy_bullets"
+
+[node]
+
+name_casing=2
+
+[rendering]
+
+quality/intended_usage/framebuffer_allocation=1
+quality/intended_usage/framebuffer_allocation.mobile=1
+2d/snapping/use_gpu_pixel_snap=true
+vram_compression/import_etc=true
+misc/lossless_compression/force_png=true
+quality/shadows/filter_mode=0
+quality/reflections/texture_array_reflections=false
+quality/reflections/irradiance_max_size=32
+quality/filters/anisotropic_filter_level=1
+2d/options/ninepatch_mode=0
+gles2/compatibility/disable_half_float=true
+quality/subsurface_scattering/quality=0
+quality/subsurface_scattering/scale=0
+environment/default_clear_color=Color( 0, 0, 0, 1 )
+quality/reflections/atlas_size=0
+quality/reflections/atlas_subdiv=32
+quality/depth/hdr=false
+environment/default_environment="res://default_env.tres"
+quality/intended_usage/framebuffer_mode=500

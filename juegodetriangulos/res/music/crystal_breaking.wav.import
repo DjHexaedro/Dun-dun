@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/crystal_breaking.wav-c02cebdd472a96b560707ebc7eea81e2.sample"
+
+[deps]
+
+source_file="res://juegodetriangulos/res/music/crystal_breaking.wav"
+dest_files=[ "res://.import/crystal_breaking.wav-c02cebdd472a96b560707ebc7eea81e2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

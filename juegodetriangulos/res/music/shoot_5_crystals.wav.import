@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/shoot_5_crystals.wav-8e54e7f0965b7f92424d048c43e8844e.sample"
+
+[deps]
+
+source_file="res://juegodetriangulos/res/music/shoot_5_crystals.wav"
+dest_files=[ "res://.import/shoot_5_crystals.wav-8e54e7f0965b7f92424d048c43e8844e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

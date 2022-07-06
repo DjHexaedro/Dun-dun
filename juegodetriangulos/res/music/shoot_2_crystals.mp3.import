@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/shoot_2_crystals.mp3-58180bf3f106efeeeb93087098c5d2e6.mp3str"
+
+[deps]
+
+source_file="res://juegodetriangulos/res/music/shoot_2_crystals.mp3"
+dest_files=[ "res://.import/shoot_2_crystals.mp3-58180bf3f106efeeeb93087098c5d2e6.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

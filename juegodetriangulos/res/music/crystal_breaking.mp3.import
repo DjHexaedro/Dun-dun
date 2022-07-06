@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/crystal_breaking.mp3-be2c03c047bfdd8ca20c5e42045d3819.mp3str"
+
+[deps]
+
+source_file="res://juegodetriangulos/res/music/crystal_breaking.mp3"
+dest_files=[ "res://.import/crystal_breaking.mp3-be2c03c047bfdd8ca20c5e42045d3819.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

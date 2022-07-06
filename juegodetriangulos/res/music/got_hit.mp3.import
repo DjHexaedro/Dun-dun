@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/got_hit.mp3-bd0089dbee834a788ed3eabcddb6b6f4.mp3str"
+
+[deps]
+
+source_file="res://juegodetriangulos/res/music/got_hit.mp3"
+dest_files=[ "res://.import/got_hit.mp3-bd0089dbee834a788ed3eabcddb6b6f4.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
