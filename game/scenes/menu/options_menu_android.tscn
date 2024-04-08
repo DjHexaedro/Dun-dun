@@ -1,13 +1,13 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://juegodetriangulos/res/scripts/menus/options_menu_android.gd" type="Script" id=1]
+[ext_resource path="res://juegodetriangulos/res/scripts/menus/options_android.gd" type="Script" id=1]
 [ext_resource path="res://juegodetriangulos/res/themes/options_menu_android.tres" type="Theme" id=3]
 [ext_resource path="res://juegodetriangulos/res/themes/standard_small.tres" type="Theme" id=4]
-[ext_resource path="res://juegodetriangulos/res/themes/standard_medium.tres" type="Theme" id=5]
 [ext_resource path="res://juegodetriangulos/res/themes/main_menu_button.tres" type="StyleBox" id=6]
 [ext_resource path="res://juegodetriangulos/res/sprites/ui/hud/exit_icon.png" type="Texture" id=7]
 
 [node name="options_menu_android" type="CanvasLayer"]
+layer = 10
 script = ExtResource( 1 )
 
 [node name="tabs_container" type="TabContainer" parent="."]
@@ -48,91 +48,13 @@ margin_bottom = 148.0
 theme = ExtResource( 3 )
 text = "Always show hitbox"
 
-[node name="player_deadzone_onscreen_joystick_label" type="Label" parent="tabs_container/General"]
-anchor_top = -0.00347722
-anchor_bottom = -0.00347722
-margin_left = 31.0
-margin_top = 178.519
-margin_right = 396.0
-margin_bottom = 224.519
-theme = ExtResource( 5 )
-text = "Joystick deadzone"
-
-[node name="player_deadzone_onscreen_joystick" type="HSlider" parent="tabs_container/General" groups=["control_to_load", "value"]]
-margin_left = 455.0
-margin_top = 175.0
-margin_right = 864.0
-margin_bottom = 200.0
-rect_scale = Vector2( 2, 2 )
-theme = ExtResource( 3 )
-min_value = 0.01
-max_value = 0.7
-step = 0.01
-value = 0.1
-tick_count = 8
-ticks_on_borders = true
-
-[node name="current_value" type="Label" parent="tabs_container/General/player_deadzone_onscreen_joystick"]
-margin_left = 418.0
-margin_top = 1.0
-margin_right = 490.0
-margin_bottom = 15.0
-rect_scale = Vector2( 0.5, 0.5 )
-theme = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="player_running_deadzone_onscreen_joystick_label" type="Label" parent="tabs_container/General"]
-anchor_top = -0.00347722
-anchor_bottom = -0.00347722
-margin_left = 31.0
-margin_top = 253.519
-margin_right = 410.0
-margin_bottom = 301.519
-theme = ExtResource( 3 )
-text = "Running deadzone"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="player_running_deadzone_onscreen_joystick" type="HSlider" parent="tabs_container/General" groups=["control_to_load", "value"]]
-margin_left = 455.0
-margin_top = 250.0
-margin_right = 864.0
-margin_bottom = 275.0
-rect_scale = Vector2( 2, 2 )
-theme = ExtResource( 3 )
-min_value = 0.01
-max_value = 0.8
-step = 0.01
-value = 0.1
-tick_count = 9
-ticks_on_borders = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="current_value" type="Label" parent="tabs_container/General/player_running_deadzone_onscreen_joystick"]
-margin_left = 418.0
-margin_right = 490.0
-margin_bottom = 48.0
-rect_scale = Vector2( 0.5, 0.5 )
-theme = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="onscreen_joystick_right" type="CheckBox" parent="tabs_container/General" groups=["control_to_load", "pressed"]]
+[node name="show_fps" type="CheckBox" parent="tabs_container/General" groups=["control_to_load", "pressed"]]
 margin_left = 40.0
-margin_top = 324.381
+margin_top = 150.0
 margin_right = 981.0
-margin_bottom = 380.381
+margin_bottom = 206.0
 theme = ExtResource( 3 )
-text = "Move joystick to the right side of the screen"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+text = "Show FPS"
 
 [node name="Audio" type="Control" parent="tabs_container"]
 visible = false
@@ -269,12 +191,7 @@ custom_styles/hover = ExtResource( 6 )
 custom_styles/pressed = ExtResource( 6 )
 custom_styles/normal = ExtResource( 6 )
 icon = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[connection signal="value_changed" from="tabs_container/General/player_deadzone_onscreen_joystick" to="." method="_on_player_deadzone_onscreen_joystick_value_changed"]
-[connection signal="value_changed" from="tabs_container/General/player_running_deadzone_onscreen_joystick" to="." method="_on_player_running_deadzone_onscreen_joystick_value_changed"]
 [connection signal="value_changed" from="tabs_container/Audio/master_volume" to="." method="_on_master_volume_value_changed"]
 [connection signal="value_changed" from="tabs_container/Audio/music_volume" to="." method="_on_music_volume_value_changed"]
 [connection signal="value_changed" from="tabs_container/Audio/effects_volume" to="." method="_on_effects_volume_value_changed"]

@@ -87,15 +87,17 @@ func remove_all_active_bullets() -> void:
 
 func remove_active_bullet(bullet_type: String, bullet_id: int) -> void:
 	var bullet = instance_from_id(bullet_id)
-	bullet.set_global_position(Globals.Positions.OUT_OF_BOUNDS)
+	bullet.set_global_position(Globals.OUT_OF_BOUNDS_POSITION)
 	bullet.unload()
-	active_bullets[bullet_type].erase(bullet_id)
-	idle_bullets[bullet_type].append(bullet_id)
+	if bullet_id in active_bullets[bullet_type]:
+		active_bullets[bullet_type].erase(bullet_id)
+	if not bullet_id in idle_bullets[bullet_type]:
+		idle_bullets[bullet_type].append(bullet_id)
 
 func create_bullet(bulletscene: PackedScene) -> AnimatedSprite:
 	var bullet = bulletscene.instance()
 	get_tree().get_root().add_child(bullet)
-	bullet.set_position(Globals.Positions.OUT_OF_BOUNDS)
+	bullet.set_position(Globals.OUT_OF_BOUNDS_POSITION)
 	return bullet
 
 func shoot_bullet(bullet_type: String, params_dict: Dictionary) -> AnimatedSprite:

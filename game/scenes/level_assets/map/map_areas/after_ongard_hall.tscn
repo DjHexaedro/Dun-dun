@@ -1,0 +1,101 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/scripts/base/set_checkpoint.gd" type="Script" id=1]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/arena/arena_open_door_right.png" type="Texture" id=2]
+[ext_resource path="res://juegodetriangulos/res/sprites/misc/bg_color_solid.png" type="Texture" id=3]
+[ext_resource path="res://juegodetriangulos/res/music/hall_bgm.mp3" type="AudioStream" id=4]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/arena/arena_entrance_hall_v2.png" type="Texture" id=5]
+[ext_resource path="res://juegodetriangulos/res/scripts/levels/map/after_ongard_hall.gd" type="Script" id=6]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 95, 10 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 40, 10 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 40, 10 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 100, 300 )
+
+[node name="after_ongard_hall" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="sprite" type="Sprite" parent="."]
+light_mask = 96
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 5 )
+flip_h = true
+
+[node name="area_limit" type="StaticBody2D" parent="sprite"]
+position = Vector2( -65, 20 )
+scale = Vector2( 4, 4 )
+
+[node name="shape" type="CollisionPolygon2D" parent="sprite/area_limit" groups=["to_disable"]]
+position = Vector2( -103.314, 168.829 )
+polygon = PoolVector2Array( -10, -525, -10, -35, 560, -35, 560, 170, -215, 175, -215, -90, -180, -90, -180, 140, 520, 140, 520, 0, -40, 0, -40, -510, -180, -510, -180, -240, -230, -240, -230, -525 )
+disabled = true
+
+[node name="final_hall_top" type="CollisionShape2D" parent="sprite/area_limit" groups=["to_disable"]]
+position = Vector2( -460.851, -39.5437 )
+shape = SubResource( 1 )
+disabled = true
+
+[node name="final_hall_bottom" type="CollisionShape2D" parent="sprite/area_limit" groups=["to_disable"]]
+position = Vector2( -463.333, 52.9181 )
+shape = SubResource( 1 )
+disabled = true
+
+[node name="final_hall_top2" type="CollisionShape2D" parent="sprite/area_limit" groups=["to_disable"]]
+position = Vector2( -341.522, 67.3277 )
+rotation = 0.436332
+shape = SubResource( 2 )
+disabled = true
+
+[node name="final_hall_bottom2" type="CollisionShape2D" parent="sprite/area_limit" groups=["to_disable"]]
+position = Vector2( -344.355, -54.3279 )
+rotation = -0.436332
+shape = SubResource( 3 )
+disabled = true
+
+[node name="entrance_door" type="Sprite" parent="sprite"]
+light_mask = 0
+position = Vector2( -1708.8, 43.2737 )
+scale = Vector2( 4, 4 )
+z_index = 5
+texture = ExtResource( 2 )
+flip_h = true
+
+[node name="darkness" type="Sprite" parent="sprite"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( -1950.93, 48.5817 )
+scale = Vector2( 0.04, 0.2 )
+z_index = 4
+texture = ExtResource( 3 )
+
+[node name="darkness_small" type="Sprite" parent="sprite"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( -1850.02, -244.05 )
+scale = Vector2( 0.04, 0.02 )
+z_index = 4
+texture = ExtResource( 3 )
+
+[node name="checkpoint_position" type="Position2D" parent="."]
+position = Vector2( -222, 7 )
+
+[node name="bgm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+bus = "BGM Base"
+
+[node name="enter_2nd_hall_trigger" type="Area2D" parent="."]
+scale = Vector2( 0.25, 0.25 )
+script = ExtResource( 1 )
+CHECKPOINT_NAME = "after_ongard_hall"
+
+[node name="trigger_hitbox" type="CollisionShape2D" parent="enter_2nd_hall_trigger" groups=["to_disable"]]
+position = Vector2( -1295.89, 36.2202 )
+shape = SubResource( 4 )
+disabled = true
+
+[connection signal="body_entered" from="enter_2nd_hall_trigger" to="enter_2nd_hall_trigger" method="_on_body_entered"]

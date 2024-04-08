@@ -126,7 +126,7 @@ animations = [ {
 [node name="logo_animations" type="AnimatedSprite"]
 light_mask = 128
 frames = SubResource( 28 )
-frame = 8
+frame = 7
 playing = true
 script = ExtResource( 4 )
 

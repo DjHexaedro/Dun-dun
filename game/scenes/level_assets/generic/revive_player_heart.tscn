@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/sprites/ui/hud/heart.png" type="Texture" id=2]
+[ext_resource path="res://juegodetriangulos/res/scripts/base/revive_player_heart.gd" type="Script" id=3]
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="revive_player_heart" type="Node2D"]
+light_mask = 64
+script = ExtResource( 3 )
+
+[node name="cracking" type="AnimatedSprite" parent="."]
+light_mask = 128
+use_parent_material = true
+scale = Vector2( 0.3, 0.3 )
+frames = SubResource( 6 )
+
+[node name="decay_timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="decay_timer" to="." method="_on_decay_timer_timeout"]

@@ -1,0 +1,85 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/themes/score_panel.tres" type="DynamicFont" id=1]
+[ext_resource path="res://juegodetriangulos/res/scripts/base/show_score_screen.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 50, 50 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 1, 1, 1, 1 )
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="DynamicFontData" id=13]
+font_path = "res://juegodetriangulos/res/fonts/Dun_dunTipografia-Regular.otf"
+
+[sub_resource type="DynamicFont" id=11]
+size = 36
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = SubResource( 13 )
+
+[sub_resource type="Theme" id=14]
+default_font = SubResource( 11 )
+Label/colors/font_color = Color( 1, 1, 1, 1 )
+Label/fonts/font = ExtResource( 1 )
+Panel/styles/panel = SubResource( 9 )
+RichTextLabel/fonts/bold_font = SubResource( 11 )
+RichTextLabel/fonts/bold_italics_font = SubResource( 11 )
+RichTextLabel/fonts/italics_font = SubResource( 11 )
+RichTextLabel/fonts/mono_font = SubResource( 11 )
+RichTextLabel/fonts/normal_font = SubResource( 11 )
+
+[sub_resource type="DynamicFontData" id=15]
+font_path = "res://juegodetriangulos/res/fonts/Dun_dunTipografia-Regular.otf"
+
+[sub_resource type="DynamicFont" id=16]
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = SubResource( 15 )
+
+[node name="show_score_trigger" type="Area2D"]
+monitoring = false
+script = ExtResource( 2 )
+
+[node name="trigger_hitbox" type="CollisionShape2D" parent="." groups=["to_disable"]]
+shape = SubResource( 12 )
+disabled = true
+
+[node name="score_panel" type="Panel" parent="."]
+visible = false
+light_mask = 128
+margin_left = -200.0
+margin_top = -245.0
+margin_right = 200.0
+margin_bottom = -70.0
+theme = SubResource( 14 )
+
+[node name="text" type="Label" parent="score_panel"]
+light_mask = 128
+margin_top = 5.0
+margin_right = 400.0
+margin_bottom = 70.0
+theme = SubResource( 14 )
+align = 1
+valign = 1
+
+[node name="boss_rematch_reminder" type="Label" parent="score_panel"]
+light_mask = 128
+margin_top = 145.0
+margin_right = 400.0
+margin_bottom = 165.0
+theme = SubResource( 14 )
+custom_fonts/font = SubResource( 16 )
+text = "You can rematch the boss by pressing Shift three times"
+align = 1
+valign = 1
+
+[connection signal="body_entered" from="." to="." method="_on_show_score_trigger_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_show_score_trigger_body_exited"]

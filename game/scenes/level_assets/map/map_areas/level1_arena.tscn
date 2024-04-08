@@ -1,0 +1,136 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/music/arena_doors_closed.wav" type="AudioStream" id=1]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/1/arena4.png" type="Texture" id=2]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/1/arena3.png" type="Texture" id=3]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/1/arena1.png" type="Texture" id=4]
+[ext_resource path="res://juegodetriangulos/res/music/level1_intro.wav" type="AudioStream" id=5]
+[ext_resource path="res://juegodetriangulos/res/sprites/misc/bg_color_solid.png" type="Texture" id=6]
+[ext_resource path="res://juegodetriangulos/res/scripts/base/set_checkpoint.gd" type="Script" id=7]
+[ext_resource path="res://juegodetriangulos/res/scripts/levels/map/parkov_arena.gd" type="Script" id=8]
+[ext_resource path="res://juegodetriangulos/res/scripts/base/start_fight.gd" type="Script" id=9]
+[ext_resource path="res://juegodetriangulos/scenes/level_assets/1/enemy.tscn" type="PackedScene" id=10]
+[ext_resource path="res://juegodetriangulos/scenes/level_assets/map/score_screen_area.tscn" type="PackedScene" id=11]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/1/arena2.png" type="Texture" id=12]
+[ext_resource path="res://juegodetriangulos/res/music/level1_loop.mp3" type="AudioStream" id=13]
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 12 ), ExtResource( 3 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 1.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 11, 55 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 11, 55 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 30, 50 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 100, 300 )
+
+[node name="level1_arena" type="Node2D"]
+light_mask = 65
+script = ExtResource( 8 )
+
+[node name="sprite" type="AnimatedSprite" parent="."]
+light_mask = 96
+z_index = -5
+frames = SubResource( 5 )
+offset = Vector2( -125, 100 )
+
+[node name="left_gate_limits" type="StaticBody2D" parent="sprite"]
+position = Vector2( -368, 0 )
+
+[node name="collision" type="CollisionShape2D" parent="sprite/left_gate_limits"]
+shape = SubResource( 1 )
+disabled = true
+
+[node name="right_gate_limits" type="StaticBody2D" parent="sprite"]
+position = Vector2( 368, 0 )
+collision_layer = 16
+
+[node name="collision" type="CollisionShape2D" parent="sprite/right_gate_limits"]
+shape = SubResource( 2 )
+disabled = true
+
+[node name="arena_limits" type="StaticBody2D" parent="sprite"]
+
+[node name="upper_part" type="CollisionPolygon2D" parent="sprite/arena_limits" groups=["to_disable"]]
+polygon = PoolVector2Array( -380, -250, -380, -30, -360, -30, -360, -235, 360, -235, 360, -30, 380, -30, 380, -250 )
+disabled = true
+
+[node name="lower_part" type="CollisionPolygon2D" parent="sprite/arena_limits" groups=["to_disable"]]
+polygon = PoolVector2Array( -380, 250, -380, 40, -360, 40, -360, 235, 360, 235, 360, 40, 380, 40, 380, 250 )
+disabled = true
+
+[node name="bgm_intro" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+bus = "BGM Base"
+
+[node name="bgm_loop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+bus = "BGM P2"
+
+[node name="doors_closed_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+bus = "Effects"
+
+[node name="board_center" type="Position2D" parent="."]
+position = Vector2( -250, -120 )
+
+[node name="checkpoint_position" type="Position2D" parent="."]
+
+[node name="enemy_mobile_position" type="Position2D" parent="."]
+position = Vector2( -500, 100 )
+
+[node name="camera_mobile_focus" type="Position2D" parent="."]
+position = Vector2( 0, 100 )
+
+[node name="enemy" parent="." instance=ExtResource( 10 )]
+position = Vector2( 0, -400 )
+
+[node name="start_fight_trigger" type="Area2D" parent="."]
+position = Vector2( -325, 2 )
+collision_layer = 16
+monitoring = false
+monitorable = false
+script = ExtResource( 9 )
+CHECKPOINT_NAME = "level1_arena"
+ENEMY_ID = 1
+ARENA_ID = 1
+
+[node name="trigger_hitbox" type="CollisionShape2D" parent="start_fight_trigger" groups=["to_disable"]]
+shape = SubResource( 3 )
+disabled = true
+
+[node name="enter_arena_left_door_trigger" type="Area2D" parent="."]
+position = Vector2( 325, 0 )
+scale = Vector2( 0.25, 0.25 )
+monitoring = false
+monitorable = false
+script = ExtResource( 7 )
+CHECKPOINT_NAME = "level1_arena"
+
+[node name="trigger_hitbox" type="CollisionShape2D" parent="enter_arena_left_door_trigger" groups=["to_disable"]]
+shape = SubResource( 4 )
+disabled = true
+
+[node name="arena_light" type="Light2D" parent="." groups=["on_level0_enemy_despawn", "to_not_enable"]]
+position = Vector2( 10, 115 )
+texture = ExtResource( 6 )
+texture_scale = 0.13
+range_item_cull_mask = 33
+shadow_color = Color( 0, 0, 0, 1 )
+shadow_item_cull_mask = 65
+
+[node name="show_score_trigger" parent="." instance=ExtResource( 11 )]
+
+[connection signal="finished" from="bgm_intro" to="." method="_on_bgm_intro_finished"]
+[connection signal="body_entered" from="start_fight_trigger" to="start_fight_trigger" method="_on_body_entered"]
+[connection signal="body_entered" from="enter_arena_left_door_trigger" to="enter_arena_left_door_trigger" method="_on_body_entered"]

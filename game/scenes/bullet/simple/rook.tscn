@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/1/rook.png" type="Texture" id=1]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="board_piece_rook" type="AnimatedSprite"]
+light_mask = 0
+scale = Vector2( 0.3, 0.3 )
+z_index = 1
+offset = Vector2( 0, -100 )
+
+[node name="hides_in_dark" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 3
+frames = SubResource( 2 )
+offset = Vector2( 0, -100 )
+
+[node name="shows_in_dark" type="AnimatedSprite" parent="."]
+light_mask = 4
+frames = SubResource( 2 )
+offset = Vector2( 0, -100 )

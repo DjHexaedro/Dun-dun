@@ -14,11 +14,14 @@ func bullet_hell_semicircle(
 	var deviation: float = distance_between_bullets * (randi() % 3)
 	var params_dict: Dictionary
 	var angle_to_player: float 
+	var n_of_players: int = PlayerManager.get_number_of_players()
+	var chosen_player_id: int
 	for current_bullet_number in range(total_bullet_number):
+		chosen_player_id = randi()%n_of_players
 		params_dict = bullet_params_list[posmod(current_bullet_number, len(bullet_params_list))]
-		angle_to_player = (PlayerManager.get_player_position() - params_dict.global_position).angle()
+		angle_to_player = (PlayerManager.get_player_position(chosen_player_id) - params_dict.global_position).angle()
 		params_dict["velocity"] = Vector2(cos(starting_angle + deviation), sin(starting_angle + deviation)) * params_dict["speed"]
-		SimpleBulletManager.shoot_bullet(bullet_type, params_dict, abs(angle_to_player - (starting_angle + deviation)) <= HEALTH_MAX_ALLOWED_DEVIATION)
+		SimpleBulletManager.shoot_bullet(bullet_type, params_dict)
 		deviation += distance_between_bullets
 
 func bullet_hell_circle(bullet_type: String, total_bullet_number: int, bullet_params_list: Array) -> void:
@@ -26,11 +29,14 @@ func bullet_hell_circle(bullet_type: String, total_bullet_number: int, bullet_pa
 	var deviation: float = distance_between_bullets * randf()
 	var params_dict: Dictionary
 	var angle_to_player: float 
+	var n_of_players: int = PlayerManager.get_number_of_players()
+	var chosen_player_id: int
 	for current_bullet_number in range(total_bullet_number):
+		chosen_player_id = randi()%n_of_players
 		params_dict = bullet_params_list[posmod(current_bullet_number, len(bullet_params_list))]
-		angle_to_player = (PlayerManager.get_player_position() - params_dict.global_position).angle()
+		angle_to_player = (PlayerManager.get_player_position(chosen_player_id) - params_dict.global_position).angle()
 		params_dict["velocity"] = Vector2(cos(deviation), sin(deviation)) * params_dict["speed"]
-		SimpleBulletManager.shoot_bullet(bullet_type, params_dict, abs(angle_to_player - deviation) <= HEALTH_MAX_ALLOWED_DEVIATION)
+		SimpleBulletManager.shoot_bullet(bullet_type, params_dict)
 		deviation += distance_between_bullets
 
 func bullet_wall(
@@ -55,6 +61,6 @@ func bullet_wall(
 		else:
 			can_be_health = false
 		if spawn_bullets:
-			SimpleBulletManager.spawn_bullet(bullet_type, params_dict, can_be_health)
+			SimpleBulletManager.spawn_bullet(bullet_type, params_dict)
 		else:
-			SimpleBulletManager.shoot_bullet(bullet_type, params_dict, can_be_health)
+			SimpleBulletManager.shoot_bullet(bullet_type, params_dict)

@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/level1_loop.wav-7db78b473625a0e5e1e8cb7baecdb15e.sample"
+
+[deps]
+
+source_file="res://juegodetriangulos/res/music/level1_loop.wav"
+dest_files=[ "res://.import/level1_loop.wav-7db78b473625a0e5e1e8cb7baecdb15e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

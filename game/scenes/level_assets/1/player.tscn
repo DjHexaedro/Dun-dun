@@ -1,0 +1,409 @@
+[gd_scene load_steps=61 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/scripts/levels/1/player.gd" type="Script" id=1]
+[ext_resource path="res://juegodetriangulos/res/sprites/player/player_sprite_sheet_v3.png" type="Texture" id=2]
+[ext_resource path="res://juegodetriangulos/res/sprites/player/hitbox_marker.png" type="Texture" id=3]
+[ext_resource path="res://juegodetriangulos/res/music/get_health_sfx0.wav" type="AudioStream" id=4]
+[ext_resource path="res://juegodetriangulos/res/music/got_hit.wav" type="AudioStream" id=5]
+[ext_resource path="res://juegodetriangulos/res/sprites/player/player2_sprite_sheet.png" type="Texture" id=6]
+[ext_resource path="res://juegodetriangulos/res/sprites/misc/plain_light.png" type="Texture" id=7]
+[ext_resource path="res://juegodetriangulos/res/sprites/player/player_sprite_sheet_v4.png" type="Texture" id=8]
+[ext_resource path="res://juegodetriangulos/res/sprites/player/player2_ghost_sprite_sheet.png" type="Texture" id=9]
+[ext_resource path="res://juegodetriangulos/res/sprites/player/player_ghost_sprite_sheet_v4.png" type="Texture" id=10]
+
+[sub_resource type="AtlasTexture" id=56]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 56, 44 )
+
+[sub_resource type="AtlasTexture" id=57]
+atlas = ExtResource( 2 )
+region = Rect2( 56, 0, 56, 44 )
+
+[sub_resource type="SpriteFrames" id=71]
+animations = [ {
+"frames": [ SubResource( 56 ), SubResource( 57 ) ],
+"loop": true,
+"name": "default",
+"speed": 3.0
+} ]
+
+[sub_resource type="AtlasTexture" id=97]
+atlas = ExtResource( 8 )
+region = Rect2( 784, 0, 56, 44 )
+
+[sub_resource type="AtlasTexture" id=94]
+atlas = ExtResource( 8 )
+region = Rect2( 840, 0, 56, 44 )
+
+[sub_resource type="AtlasTexture" id=95]
+atlas = ExtResource( 8 )
+region = Rect2( 896, 0, 56, 44 )
+
+[sub_resource type="SpriteFrames" id=96]
+animations = [ {
+"frames": [ SubResource( 97 ), SubResource( 94 ), SubResource( 94 ), SubResource( 94 ), SubResource( 95 ) ],
+"loop": false,
+"name": "default",
+"speed": 60.0
+} ]
+
+[sub_resource type="AtlasTexture" id=64]
+atlas = ExtResource( 2 )
+region = Rect2( 56, 44, 56, 44 )
+
+[sub_resource type="AtlasTexture" id=65]
+atlas = ExtResource( 2 )
+region = Rect2( 112, 44, 56, 44 )
+
+[sub_resource type="AtlasTexture" id=66]
+atlas = ExtResource( 2 )
+region = Rect2( 168, 44, 56, 44 )
+
+[sub_resource type="AtlasTexture" id=67]
+atlas = ExtResource( 2 )
+region = Rect2( 224, 44, 56, 44 )
+
+[sub_resource type="SpriteFrames" id=73]
+animations = [ {
+"frames": [ SubResource( 64 ), SubResource( 65 ), SubResource( 66 ), SubResource( 67 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=68]
+atlas = ExtResource( 2 )
+region = Rect2( 224, 44, 56, 44 )
+
+[sub_resource type="AtlasTexture" id=69]
+atlas = ExtResource( 2 )
+region = Rect2( 280, 44, 56, 44 )
+
+[sub_resource type="AtlasTexture" id=70]
+atlas = ExtResource( 2 )
+region = Rect2( 336, 44, 56, 44 )
+
+[sub_resource type="SpriteFrames" id=74]
+animations = [ {
+"frames": [ SubResource( 68 ), SubResource( 69 ), SubResource( 70 ) ],
+"loop": false,
+"name": "default",
+"speed": 2.0
+} ]
+
+[sub_resource type="AtlasTexture" id=98]
+atlas = ExtResource( 10 )
+region = Rect2( 0, 0, 56, 44 )
+
+[sub_resource type="AtlasTexture" id=99]
+atlas = ExtResource( 10 )
+region = Rect2( 56, 0, 56, 44 )
+
+[sub_resource type="SpriteFrames" id=100]
+animations = [ {
+"frames": [ SubResource( 98 ), SubResource( 99 ) ],
+"loop": true,
+"name": "default",
+"speed": 3.0
+} ]
+
+[sub_resource type="AtlasTexture" id=101]
+atlas = ExtResource( 10 )
+region = Rect2( 784, 0, 56, 44 )
+
+[sub_resource type="AtlasTexture" id=102]
+atlas = ExtResource( 10 )
+region = Rect2( 840, 0, 56, 44 )
+
+[sub_resource type="AtlasTexture" id=103]
+atlas = ExtResource( 10 )
+region = Rect2( 896, 0, 56, 44 )
+
+[sub_resource type="SpriteFrames" id=104]
+animations = [ {
+"frames": [ SubResource( 101 ), SubResource( 102 ), SubResource( 102 ), SubResource( 102 ), SubResource( 103 ) ],
+"loop": false,
+"name": "default",
+"speed": 60.0
+} ]
+
+[sub_resource type="AtlasTexture" id=77]
+atlas = ExtResource( 6 )
+region = Rect2( 35, 0, 35, 37 )
+
+[sub_resource type="AtlasTexture" id=78]
+atlas = ExtResource( 6 )
+region = Rect2( 70, 0, 35, 37 )
+
+[sub_resource type="AtlasTexture" id=79]
+atlas = ExtResource( 6 )
+region = Rect2( 105, 0, 35, 37 )
+
+[sub_resource type="AtlasTexture" id=76]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 35, 37 )
+
+[sub_resource type="SpriteFrames" id=80]
+animations = [ {
+"frames": [ SubResource( 77 ), SubResource( 78 ), SubResource( 79 ), SubResource( 76 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=81]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 35, 37 )
+
+[sub_resource type="AtlasTexture" id=82]
+atlas = ExtResource( 6 )
+region = Rect2( 35, 0, 35, 37 )
+
+[sub_resource type="AtlasTexture" id=83]
+atlas = ExtResource( 6 )
+region = Rect2( 70, 0, 35, 37 )
+
+[sub_resource type="AtlasTexture" id=84]
+atlas = ExtResource( 6 )
+region = Rect2( 105, 0, 35, 37 )
+
+[sub_resource type="SpriteFrames" id=85]
+animations = [ {
+"frames": [ SubResource( 81 ), SubResource( 82 ), SubResource( 83 ), SubResource( 84 ), SubResource( 83 ) ],
+"loop": false,
+"name": "default",
+"speed": 60.0
+} ]
+
+[sub_resource type="AtlasTexture" id=86]
+atlas = ExtResource( 6 )
+region = Rect2( 140, 0, 35, 37 )
+
+[sub_resource type="AtlasTexture" id=87]
+atlas = ExtResource( 6 )
+region = Rect2( 175, 0, 35, 37 )
+
+[sub_resource type="AtlasTexture" id=88]
+atlas = ExtResource( 6 )
+region = Rect2( 210, 0, 35, 37 )
+
+[sub_resource type="AtlasTexture" id=89]
+atlas = ExtResource( 6 )
+region = Rect2( 245, 0, 35, 37 )
+
+[sub_resource type="SpriteFrames" id=90]
+animations = [ {
+"frames": [ SubResource( 86 ), SubResource( 87 ), SubResource( 88 ), SubResource( 89 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=91]
+atlas = ExtResource( 6 )
+region = Rect2( 245, 0, 35, 37 )
+
+[sub_resource type="SpriteFrames" id=92]
+animations = [ {
+"frames": [ SubResource( 91 ), SubResource( 91 ), SubResource( 91 ) ],
+"loop": false,
+"name": "default",
+"speed": 2.0
+} ]
+
+[sub_resource type="AtlasTexture" id=105]
+atlas = ExtResource( 9 )
+region = Rect2( 35, 0, 35, 37 )
+
+[sub_resource type="AtlasTexture" id=106]
+atlas = ExtResource( 9 )
+region = Rect2( 70, 0, 35, 37 )
+
+[sub_resource type="AtlasTexture" id=107]
+atlas = ExtResource( 9 )
+region = Rect2( 105, 0, 35, 37 )
+
+[sub_resource type="SpriteFrames" id=108]
+animations = [ {
+"frames": [ SubResource( 105 ), SubResource( 106 ), SubResource( 107 ), SubResource( 106 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=109]
+atlas = ExtResource( 9 )
+region = Rect2( 0, 0, 35, 37 )
+
+[sub_resource type="AtlasTexture" id=110]
+atlas = ExtResource( 9 )
+region = Rect2( 35, 0, 35, 37 )
+
+[sub_resource type="AtlasTexture" id=111]
+atlas = ExtResource( 9 )
+region = Rect2( 70, 0, 35, 37 )
+
+[sub_resource type="AtlasTexture" id=112]
+atlas = ExtResource( 9 )
+region = Rect2( 105, 0, 35, 37 )
+
+[sub_resource type="SpriteFrames" id=113]
+animations = [ {
+"frames": [ SubResource( 109 ), SubResource( 110 ), SubResource( 111 ), SubResource( 112 ), SubResource( 111 ) ],
+"loop": false,
+"name": "default",
+"speed": 60.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=75]
+extents = Vector2( 2, 2 )
+
+[node name="player" type="Area2D"]
+position = Vector2( 49.9273, 48.5068 )
+collision_mask = 0
+script = ExtResource( 1 )
+BASE_HEALTH = 3
+HIT_DELAY = 1.0
+
+[node name="light_sprite" type="Sprite" parent="."]
+visible = false
+scale = Vector2( 0.3, 0.3 )
+z_index = -5
+texture = ExtResource( 7 )
+
+[node name="animation_list0" type="Node2D" parent="."]
+
+[node name="idle_animation" type="AnimatedSprite" parent="animation_list0"]
+scale = Vector2( 2, 2 )
+frames = SubResource( 71 )
+offset = Vector2( 0, -15 )
+
+[node name="moving_animation" type="AnimatedSprite" parent="animation_list0"]
+visible = false
+scale = Vector2( 2, 2 )
+frames = SubResource( 96 )
+offset = Vector2( -10, -15 )
+
+[node name="death_animation" type="AnimatedSprite" parent="animation_list0"]
+visible = false
+scale = Vector2( 2, 2 )
+frames = SubResource( 73 )
+offset = Vector2( 0, -15 )
+
+[node name="light_fade_animation" type="AnimatedSprite" parent="animation_list0"]
+visible = false
+scale = Vector2( 2, 2 )
+frames = SubResource( 74 )
+offset = Vector2( 0, -15 )
+
+[node name="ghost_idle_animation" type="AnimatedSprite" parent="animation_list0"]
+visible = false
+self_modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 100 )
+offset = Vector2( 0, -15 )
+
+[node name="ghost_moving_animation" type="AnimatedSprite" parent="animation_list0"]
+visible = false
+self_modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 104 )
+offset = Vector2( -10, -15 )
+
+[node name="animation_list1" type="Node2D" parent="."]
+visible = false
+
+[node name="idle_animation" type="AnimatedSprite" parent="animation_list1"]
+scale = Vector2( 2, 2 )
+frames = SubResource( 80 )
+offset = Vector2( 0, 5 )
+
+[node name="moving_animation" type="AnimatedSprite" parent="animation_list1"]
+visible = false
+scale = Vector2( 2, 2 )
+frames = SubResource( 85 )
+offset = Vector2( 0, -8 )
+
+[node name="death_animation" type="AnimatedSprite" parent="animation_list1"]
+visible = false
+scale = Vector2( 2, 2 )
+frames = SubResource( 90 )
+
+[node name="light_fade_animation" type="AnimatedSprite" parent="animation_list1"]
+visible = false
+scale = Vector2( 2, 2 )
+frames = SubResource( 92 )
+
+[node name="ghost_idle_animation" type="AnimatedSprite" parent="animation_list1"]
+visible = false
+self_modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 108 )
+offset = Vector2( 0, 5 )
+
+[node name="ghost_moving_animation" type="AnimatedSprite" parent="animation_list1"]
+visible = false
+self_modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 113 )
+offset = Vector2( 0, -8 )
+
+[node name="hitbox_marker" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 3 )
+
+[node name="damage_hitbox" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource( 75 )
+
+[node name="can_get_hit_timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.5
+one_shot = true
+
+[node name="blink_timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.1
+
+[node name="unblink_timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.1
+
+[node name="has_attempted_movement_timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.05
+one_shot = true
+
+[node name="light" type="Light2D" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+texture = ExtResource( 7 )
+texture_scale = 0.5
+mode = 2
+range_item_cull_mask = 33
+
+[node name="got_hit_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+bus = "Effects"
+
+[node name="got_healed_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+bus = "Effects"
+
+[connection signal="animation_finished" from="animation_list0/moving_animation" to="." method="_on_moving_animation_animation_finished"]
+[connection signal="frame_changed" from="animation_list0/moving_animation" to="." method="_on_moving_animation_frame_changed"]
+[connection signal="animation_finished" from="animation_list0/death_animation" to="." method="_on_death_animation_animation_finished"]
+[connection signal="animation_finished" from="animation_list0/light_fade_animation" to="." method="_on_light_fade_animation_animation_finished"]
+[connection signal="frame_changed" from="animation_list0/light_fade_animation" to="." method="_on_light_fade_animation_frame_changed"]
+[connection signal="animation_finished" from="animation_list0/ghost_moving_animation" to="." method="_on_moving_animation_animation_finished"]
+[connection signal="frame_changed" from="animation_list0/ghost_moving_animation" to="." method="_on_moving_animation_frame_changed"]
+[connection signal="animation_finished" from="animation_list1/moving_animation" to="." method="_on_moving_animation_animation_finished"]
+[connection signal="frame_changed" from="animation_list1/moving_animation" to="." method="_on_moving_animation_frame_changed"]
+[connection signal="animation_finished" from="animation_list1/death_animation" to="." method="_on_death_animation_animation_finished"]
+[connection signal="animation_finished" from="animation_list1/light_fade_animation" to="." method="_on_light_fade_animation_animation_finished"]
+[connection signal="frame_changed" from="animation_list1/light_fade_animation" to="." method="_on_light_fade_animation_frame_changed"]
+[connection signal="animation_finished" from="animation_list1/ghost_moving_animation" to="." method="_on_moving_animation_animation_finished"]
+[connection signal="frame_changed" from="animation_list1/ghost_moving_animation" to="." method="_on_moving_animation_frame_changed"]
+[connection signal="timeout" from="can_get_hit_timer" to="." method="_on_can_get_hit_timer_timeout"]
+[connection signal="timeout" from="blink_timer" to="." method="_on_blink_timer_timeout"]
+[connection signal="timeout" from="unblink_timer" to="." method="_on_unblink_timer_timeout"]
+[connection signal="timeout" from="has_attempted_movement_timer" to="." method="_on_has_attempted_movement_timer_timeout"]

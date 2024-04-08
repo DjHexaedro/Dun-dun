@@ -6,11 +6,8 @@ extends Node2D
 signal all_delayed_bullets_fired
 signal all_bullets_despawned
 signal bullets_despawned_by_type
+signal bullets_despawned_by_type_list
 
-const OOB_TOP: int = -100
-const OOB_BOTTOM: int = 1200
-const OOB_LEFT: int = -100
-const OOB_RIGHT: int = 2000
 const PLAYER_DISTANCE_TO_HIT: int = 5000
 const BULLET_DIR_PATH: String = "res://juegodetriangulos/scenes/bullet/simple"
 const BULLET_GRAPHICS_DICT: Dictionary = {
@@ -20,6 +17,10 @@ const BULLET_GRAPHICS_DICT: Dictionary = {
 	"soft_homing": "death_ball",
 	"straight": "fireball",
 	"health": "health_refill",
+	"pawn": "pawn",
+	"rook": "rook",
+	"bishop": "bishop",
+	"queen": "queen",
 }
 const SPAWN_BLINK_TIMES: int = 4
 const PATTERN_FUNCTION_BASE_NAME: String = "%s_bullet_pattern"
@@ -31,56 +32,62 @@ const HEALTH_REFILL_TIMER_ON_HEALTH_PICKUP_TIME: float = 45.0
 const HEALTH_REFILL_TIMER_INCREMENT: float = 10.0
 const HEALTH_REFILL_TIMER_MAX_TIME: float = 90.0
 const DESPAWN_BLINK_TIMES: int = 14
+const BULLET_DESPAWN_TIMER_TIMES: Array = [0.03, 0.12]
 
 var idle_bullets: Dictionary = {}
 var active_bullets: Dictionary = {}
 var bullet_params: Dictionary = {}
-var player_position: Vector2
+var player_position_list: Array
 var current_bullet: AnimatedSprite
+var current_bullet_params: Dictionary
 var delayed_bullet_stopped_list: Array = []
-var health_refill_spawned_audio: AudioStreamPlayer2D = AudioStreamPlayer2D.new()
-var health_refill_enabled: bool = true
-var health_refill_timer: Timer = Timer.new()
-var health_refill_times_missed: int = -1
 var bullet_despawn_timer: Timer = Timer.new()
-var health_refill_audio_list: Array = [
-	load("res://juegodetriangulos/res/music/shoot_health_sfx0.wav"),
-	load("res://juegodetriangulos/res/music/shoot_health_sfx1.wav"),
-]
+var screen_center_position: Vector2 = Vector2(0, 0)
+var oob_top: int
+var oob_bottom: int
+var oob_left: int
+var oob_right: int
+var last_instance_id
 
 func _ready() -> void:
 	SimpleBulletMovementManager.connect("delayed_bullet_stopped", self, "_on_delayed_bullet_stopped")
 	SimpleBulletMovementManager.connect("arena_center_reached", self, "_on_arena_center_reached")
 	bullet_despawn_timer.set_one_shot(true)
 	add_child(bullet_despawn_timer)
-	health_refill_timer.set_one_shot(true)
-	health_refill_timer.connect("timeout", self, "_on_health_refill_timer_timeout")
-	add_child(health_refill_timer)
-	health_refill_spawned_audio.set_bus("Effects")
-	add_child(health_refill_spawned_audio)
 
 func _process(delta: float) -> void:
 	if PlayerManager.player_exists():
 		for bullet_type in active_bullets:
 			for bullet_id in active_bullets[bullet_type]:
-				player_position = PlayerManager.get_player_position()
+				player_position_list = []
+				for player_id in range(PlayerManager.get_number_of_players()):
+					player_position_list.append(
+						PlayerManager.get_player_position(player_id)
+					)
 				current_bullet = instance_from_id(bullet_id)
-				var heals_player: bool = bullet_params[bullet_id].get("heals_player", false)
-				if current_bullet.visible and player_position.distance_squared_to(current_bullet.get_global_position()) <= (PLAYER_DISTANCE_TO_HIT * current_bullet.scale.length_squared() * (2 if heals_player else 1)):
-					if heals_player:
-						PlayerManager.heal_player()
-						health_refill_times_missed = -1
+				current_bullet_params = bullet_params.get(bullet_id, {})
+				if current_bullet_params:
+					var player_hit_id: int = _bullet_hit_player(current_bullet)
+					if current_bullet.visible and player_hit_id != -1:
+						PlayerManager.damage_player(current_bullet, player_hit_id)
+						if current_bullet_params.get("remove_bullet_on_hit", true):
+							remove_active_bullet(bullet_type, bullet_id)
 					else:
-						PlayerManager.damage_player(current_bullet)
-					remove_active_bullet(bullet_type, bullet_id, heals_player)
-				else:
-					SimpleBulletMovementManager.call(PATTERN_FUNCTION_BASE_NAME % bullet_type.to_lower(), current_bullet, bullet_params[bullet_id], delta)
-					if (
-						clamp(current_bullet.get_global_position().y, OOB_TOP, OOB_BOTTOM) in [OOB_TOP, OOB_BOTTOM]
-						or
-						clamp(current_bullet.get_global_position().x, OOB_LEFT, OOB_RIGHT) in [OOB_LEFT, OOB_RIGHT]
-					):
-						remove_active_bullet(bullet_type, bullet_id, heals_player)
+						SimpleBulletMovementManager.call(
+							PATTERN_FUNCTION_BASE_NAME % bullet_type.to_lower(),
+							current_bullet, bullet_params[bullet_id], delta
+						)
+						if (
+							clamp(
+								current_bullet.get_global_position().y,
+								oob_top, oob_bottom
+							) in [oob_top, oob_bottom] or
+							clamp(
+								current_bullet.get_global_position().x,
+								oob_left, oob_right
+							) in [oob_left, oob_right]
+						):
+							remove_active_bullet(bullet_type, bullet_id)
 
 func initializate_bullets(bullet_types_dict: Dictionary) -> void:
 	var new_bullet: AnimatedSprite 
@@ -88,8 +95,12 @@ func initializate_bullets(bullet_types_dict: Dictionary) -> void:
 	for bullet_type in bullet_types_dict:
 		if not idle_bullets.get(bullet_type, false):
 			idle_bullets[bullet_type] = []
-		var n_of_bullets = clamp(bullet_types_dict[bullet_type] - len(idle_bullets[bullet_type]), 0, 10000)
-		bullet_scene = load("%s/%s.tscn" % [BULLET_DIR_PATH, BULLET_GRAPHICS_DICT.get(bullet_type.to_lower(), "death_ball")])
+		var n_of_bullets = clamp(
+			bullet_types_dict[bullet_type] - len(idle_bullets[bullet_type]), 0, 10000
+		)
+		bullet_scene = load("%s/%s.tscn" % [
+			BULLET_DIR_PATH, BULLET_GRAPHICS_DICT.get(bullet_type.to_lower(), "death_ball")
+		])
 		for _i in range(n_of_bullets):
 			new_bullet = create_bullet(bullet_scene)
 			idle_bullets[bullet_type].append(new_bullet.get_instance_id())
@@ -123,36 +134,48 @@ func despawn_active_bullets() -> void:
 		yield(self, "bullets_despawned_by_type")
 	emit_signal("all_bullets_despawned")
 
-func despawn_active_bullets_by_type(bullet_type: String) -> void:
+func despawn_active_bullets_by_type(bullet_type: String, blink_times: int = DESPAWN_BLINK_TIMES) -> void:
 	var bullet_visible: bool = false 
-	var bullet_despawn_timer_times: Array = [0.03, 0.12]
-	for i in range(DESPAWN_BLINK_TIMES):
-		for bullet_id in active_bullets[bullet_type]:
-			if not bullet_params[bullet_id].get("heals_player", false):
+	if active_bullets.get(bullet_type, false):
+		for i in range(blink_times):
+			var active_bullets_aux: Array = active_bullets[bullet_type].duplicate()
+			for bullet_id in active_bullets_aux:
 				instance_from_id(bullet_id).visible = bullet_visible 
-				if (i + 1) == DESPAWN_BLINK_TIMES:
+				if (i + 1) >= blink_times:
 					remove_active_bullet(bullet_type, bullet_id)
-		bullet_visible = not bullet_visible
-		bullet_despawn_timer.start(bullet_despawn_timer_times[i % 2])
+			bullet_visible = not bullet_visible
+			bullet_despawn_timer.start(BULLET_DESPAWN_TIMER_TIMES[i % 2])
+			yield(bullet_despawn_timer, "timeout")
+	else:
+		# Small hack so the signal isn't emitted right away and yields for
+		# it work properly 
+		bullet_despawn_timer.start(BULLET_DESPAWN_TIMER_TIMES[0])
 		yield(bullet_despawn_timer, "timeout")
 	emit_signal("bullets_despawned_by_type")
 
+func despawn_active_bullets_by_type_list(bullet_type_list: Array, blink_times: int = DESPAWN_BLINK_TIMES) -> void:
+	var bullet_visible: bool = false 
+	for i in range(blink_times):
+		for bullet_type in bullet_type_list:
+			if active_bullets.get(bullet_type, false):
+				var active_bullets_aux: Array = active_bullets[bullet_type].duplicate()
+				for bullet_id in active_bullets_aux:
+					instance_from_id(bullet_id).visible = bullet_visible 
+					if (i + 1) >= blink_times:
+						remove_active_bullet(bullet_type, bullet_id)
+				bullet_visible = not bullet_visible
+		bullet_despawn_timer.start(BULLET_DESPAWN_TIMER_TIMES[i % 2])
+		yield(bullet_despawn_timer, "timeout")
+	emit_signal("bullets_despawned_by_type_list")
 
-func get_avaliable_bullet(bullet_type: String, params_dict: Dictionary, can_be_health: bool = false) -> AnimatedSprite:
-	if can_be_health and _bullet_is_health():
-		bullet_type = Globals.SimpleBulletTypes.HEALTH
-		params_dict["scale_increment"] = Vector2(-0.25, -0.25)
-		health_refill_enabled = false
-		health_refill_spawned_audio.stream = health_refill_audio_list[randi()%2]
-		health_refill_spawned_audio.global_position = params_dict.global_position
-		health_refill_spawned_audio.play()
-	var avaliable_bullet_id = idle_bullets[bullet_type].pop_back()
+func get_avaliable_bullet(bullet_type: String, params_dict: Dictionary) -> AnimatedSprite:
+	var avaliable_bullet_id = idle_bullets[bullet_type].pop_front()
 	if not avaliable_bullet_id:
 		return null 
 	if not active_bullets.get(bullet_type, false):
 		active_bullets[bullet_type] = []
-	var new_bullet: AnimatedSprite = instance_from_id(avaliable_bullet_id)
 	bullet_params[avaliable_bullet_id] = params_dict.duplicate()
+	var new_bullet: AnimatedSprite = instance_from_id(avaliable_bullet_id)
 	if bullet_type == Globals.SimpleBulletTypes.HEALTH:
 		bullet_params[avaliable_bullet_id]["heals_player"] = true
 	set_bullet_params(new_bullet, params_dict)
@@ -160,39 +183,33 @@ func get_avaliable_bullet(bullet_type: String, params_dict: Dictionary, can_be_h
 		set_bullet_frame(new_bullet, params_dict.velocity)
 	return new_bullet
 
+func add_bullet_to_active_bullets(bullet_type: String, bullet_id: int) -> void:
+	# If the player gets hit before the first bullet is fired,
+	# active_bullets[bullet_type] will not exist. This fixes that
+	if not active_bullets.get(bullet_type, false):
+		active_bullets[bullet_type] = []
+	if not bullet_id in active_bullets[bullet_type]:
+		active_bullets[bullet_type].append(bullet_id)
+
 func remove_all_active_bullets() -> void:
 	var active_bullets_aux: Dictionary = active_bullets.duplicate(true)
 	for bullet_type in active_bullets_aux:
 		for bullet_id in active_bullets_aux[bullet_type]:
-			remove_active_bullet(bullet_type, bullet_id, bullet_params[bullet_id].get("heals_player", false))
+			remove_active_bullet(bullet_type, bullet_id)
 
-func remove_active_bullet(bullet_type: String, bullet_id: int, heals_player: bool = false) -> void:
+func remove_active_bullet(bullet_type: String, bullet_id: int) -> void:
 	var bullet: AnimatedSprite = instance_from_id(bullet_id)
-	bullet.set_global_position(Globals.Positions.OUT_OF_BOUNDS)
+	bullet.set_global_position(Globals.OUT_OF_BOUNDS_POSITION)
 	bullet.set_rotation_degrees(0)
 	bullet.set_visible(false)
-	bullet_params.erase(bullet_id)
 	active_bullets[bullet_type].erase(bullet_id)
-	if heals_player:
-		instance_from_id(bullet_id).graphics.scale = Vector2(1, 1)
-		idle_bullets[Globals.SimpleBulletTypes.HEALTH].append(bullet_id)
-		if health_refill_times_missed == -1:
-			health_refill_timer.start(HEALTH_REFILL_TIMER_ON_HEALTH_PICKUP_TIME)
-		else:
-			health_refill_timer.start(clamp(
-				HEALTH_REFILL_TIMER_BASE_TIME + (HEALTH_REFILL_TIMER_INCREMENT * health_refill_times_missed),
-				HEALTH_REFILL_TIMER_BASE_TIME,
-				HEALTH_REFILL_TIMER_MAX_TIME
-			))
-		health_refill_times_missed += 1
-	else:
-		idle_bullets[bullet_type].append(bullet_id)
+	idle_bullets[bullet_type].append(bullet_id)
 
 func create_bullet(bulletscene: PackedScene) -> AnimatedSprite:
 	var bullet = bulletscene.instance()
 	if bullet:
 		get_tree().get_root().add_child(bullet)
-		bullet.set_position(Globals.Positions.OUT_OF_BOUNDS)
+		bullet.set_position(Globals.OUT_OF_BOUNDS_POSITION)
 	return bullet
 
 func set_bullet_frame(bullet: AnimatedSprite, velocity: Vector2) -> void:
@@ -235,50 +252,45 @@ func change_circular_bullet_rotation_direction() -> void:
 	for bullet_id in active_bullets[Globals.SimpleBulletTypes.CIRCULAR]:
 		change_bullet_param(bullet_id, "rotation_direction", bullet_params[bullet_id]["rotation_direction"] * -1)
 
-func shoot_bullet(bullet_type: String, params_dict: Dictionary, can_be_health: bool = true) -> void:
-	var new_bullet: AnimatedSprite = get_avaliable_bullet(bullet_type, params_dict, can_be_health)
+func shoot_bullet(bullet_type: String, params_dict: Dictionary) -> void:
+	var new_bullet: AnimatedSprite = get_avaliable_bullet(bullet_type, params_dict)
 	if new_bullet:
-		# If the player gets hit before the first bullet is fired,
-		# active_bullets[bullet_type] will not exist. This fixes that
-		if not active_bullets.get(bullet_type, false):
-			active_bullets[bullet_type] = []
-		active_bullets[bullet_type].append(new_bullet.get_instance_id())
+		new_bullet.visible = true
+
+		add_bullet_to_active_bullets(bullet_type, new_bullet.get_instance_id())
 
 func shoot_bullet_by_id(bullet_id: int, bullet_type: String) -> void:
-	# If the player gets hit before the first bullet is fired,
-	# active_bullets[bullet_type] will not exist. This fixes that
-	if not active_bullets.get(bullet_type, false):
-		active_bullets[bullet_type] = []
-	active_bullets[bullet_type].append(bullet_id)
+	add_bullet_to_active_bullets(bullet_type, bullet_id)
 
-func spawn_bullet(bullet_type: String, params_dict: Dictionary, can_be_health: bool = true) -> void:
-	var new_bullet: AnimatedSprite = get_avaliable_bullet(bullet_type, params_dict, can_be_health)
+func spawn_bullet(bullet_type: String, params_dict: Dictionary) -> void:
+	var new_bullet: AnimatedSprite = get_avaliable_bullet(bullet_type, params_dict)
 	if new_bullet:
 		for _i in range(SPAWN_BLINK_TIMES):
 			yield(get_tree().create_timer(0.12), "timeout")
 			new_bullet.visible = false
 			yield(get_tree().create_timer(0.03), "timeout")
 			new_bullet.visible = true
-		# If the player gets hit before the first bullet is fired,
-		# active_bullets[bullet_type] will not exist. This fixes that
-		if not active_bullets.get(bullet_type, false):
-			active_bullets[bullet_type] = []
-		active_bullets[bullet_type].append(new_bullet.get_instance_id())
+		add_bullet_to_active_bullets(bullet_type, new_bullet.get_instance_id())
 
-func _bullet_is_health() -> bool:
-	return (
-		health_refill_enabled and
-		len(idle_bullets[Globals.SimpleBulletTypes.HEALTH]) and
-		PlayerManager.get_player_health() < PlayerManager.get_player_max_health() and
-		randi() % 100 >= 60
-	)
+func update_screen_center_position() -> void:
+	screen_center_position = CameraManager.get_camera_screen_center()
+	oob_top = screen_center_position.y - 600
+	oob_bottom = screen_center_position.y + 600
+	oob_left = screen_center_position.x - 900
+	oob_right = screen_center_position.x + 900
 
-func _reenable_health_refill() -> void:
-	health_refill_enabled = true
-	health_refill_timer.stop()
+func update_bullet_params_dict(bullet_id: int, new_bullet_params: Dictionary) -> void:
+	bullet_params[bullet_id].merge(new_bullet_params, true)
 
-func _on_health_refill_timer_timeout() -> void:
-	health_refill_enabled = true
+func _bullet_hit_player(bullet: AnimatedSprite) -> int:
+	for player_id in range(len(player_position_list)):
+		if (
+			player_position_list[player_id].distance_squared_to(
+				bullet.get_global_position()
+			) <= PLAYER_DISTANCE_TO_HIT * bullet.scale.length_squared()
+		) and PlayerManager.can_player_be_hit(player_id):
+			return player_id
+	return -1
 
 func _on_delayed_bullet_stopped(bullet_id: int) -> void:
 	delayed_bullet_stopped_list.append(bullet_id)

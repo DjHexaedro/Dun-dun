@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/scripts/bullets/powerup.gd" type="Script" id=1]
+[ext_resource path="res://juegodetriangulos/res/sprites/powerup/powerup_spritesheet_v2.png" type="Texture" id=2]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 146.623, 45, 22.0181, 22 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 175.396, 50.2923, 18.1399, 18.1399 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 227.886, 52.2939, 15.763, 15.1374 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 251.356, 41.1598, 13.1358, 26.2716 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 289.887, 38.9079, 14.2617, 28.5235 )
+
+[node name="bullet" type="Node2D"]
+position = Vector2( 16.9333, 16.9086 )
+scale = Vector2( 0.5, 0.5 )
+z_index = 10
+script = ExtResource( 1 )
+
+[node name="graphics_v0" type="Sprite" parent="."]
+light_mask = 128
+use_parent_material = true
+scale = Vector2( 2.5, 2.5 )
+texture = SubResource( 1 )
+
+[node name="graphics_v1" type="Sprite" parent="."]
+visible = false
+light_mask = 128
+use_parent_material = true
+scale = Vector2( 2.5, 2.5 )
+texture = SubResource( 2 )
+
+[node name="graphics_v2" type="Sprite" parent="."]
+visible = false
+light_mask = 128
+use_parent_material = true
+scale = Vector2( 2.5, 2.5 )
+texture = SubResource( 3 )
+
+[node name="graphics_v3" type="Sprite" parent="."]
+visible = false
+light_mask = 128
+use_parent_material = true
+scale = Vector2( 2.5, 2.5 )
+texture = SubResource( 4 )
+
+[node name="graphics_v4" type="Sprite" parent="."]
+visible = false
+light_mask = 128
+use_parent_material = true
+scale = Vector2( 2.5, 2.5 )
+texture = SubResource( 5 )

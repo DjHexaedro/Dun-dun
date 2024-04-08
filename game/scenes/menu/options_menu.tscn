@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://juegodetriangulos/res/scripts/menus/options_menu.gd" type="Script" id=1]
+[ext_resource path="res://juegodetriangulos/res/scripts/menus/options.gd" type="Script" id=1]
+[ext_resource path="res://juegodetriangulos/res/sprites/ui/menu/grabber_highlight.png" type="Texture" id=2]
 [ext_resource path="res://juegodetriangulos/res/scripts/misc/button_remapping_keyboard.gd" type="Script" id=3]
 [ext_resource path="res://juegodetriangulos/res/themes/standard_small.tres" type="Theme" id=4]
 [ext_resource path="res://juegodetriangulos/res/themes/options_menu.tres" type="Theme" id=5]
@@ -9,6 +10,7 @@
 [ext_resource path="res://juegodetriangulos/res/scripts/misc/button_remapping_controller.gd" type="Script" id=8]
 
 [node name="options_menu" type="CanvasLayer"]
+layer = 10
 offset = Vector2( 1300, 660 )
 transform = Transform2D( 1, 0, 0, 1, 1300, 660 )
 script = ExtResource( 1 )
@@ -31,39 +33,44 @@ margin_bottom = -5.0
 theme = ExtResource( 4 )
 
 [node name="fullscreen" type="CheckBox" parent="tabs_container/General" groups=["control_to_load", "pressed"]]
-margin_left = 8.0
+margin_left = 40.0
 margin_top = 3.0
-margin_right = 121.0
+margin_right = 153.0
 margin_bottom = 42.0
 theme = ExtResource( 5 )
 text = "Fullscreen"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="walk_default" type="CheckBox" parent="tabs_container/General" groups=["control_to_load", "pressed"]]
-margin_left = 8.0
+margin_left = 40.0
 margin_top = 45.0
-margin_right = 153.0
+margin_right = 185.0
 margin_bottom = 84.0
 theme = ExtResource( 5 )
 text = "Walk by default"
 
 [node name="always_show_hitbox" type="CheckBox" parent="tabs_container/General" groups=["control_to_load", "pressed"]]
-margin_left = 8.0
+margin_left = 40.0
 margin_top = 90.0
-margin_right = 153.0
+margin_right = 212.0
 margin_bottom = 129.0
 theme = ExtResource( 5 )
 text = "Always show hitbox"
 
 [node name="show_fps" type="CheckBox" parent="tabs_container/General" groups=["control_to_load", "pressed"]]
-margin_left = 8.0
+margin_left = 40.0
 margin_top = 135.0
-margin_right = 180.0
+margin_right = 212.0
 margin_bottom = 174.0
 theme = ExtResource( 5 )
 text = "Show FPS"
+
+[node name="multiplayer_enabled" type="CheckBox" parent="tabs_container/General" groups=["control_to_load", "pressed"]]
+margin_left = 40.0
+margin_top = 180.0
+margin_right = 212.0
+margin_bottom = 219.0
+theme = ExtResource( 5 )
+text = "Enable multiplayer"
 
 [node name="Audio" type="Control" parent="tabs_container"]
 visible = false
@@ -75,21 +82,18 @@ margin_right = -5.0
 margin_bottom = -5.0
 
 [node name="master_label" type="Label" parent="tabs_container/Audio"]
-margin_left = 22.0
-margin_top = 16.0
-margin_right = 69.0
-margin_bottom = 33.0
+margin_left = 40.0
+margin_top = 22.0
+margin_right = 87.0
+margin_bottom = 39.0
 theme = ExtResource( 4 )
 text = "Master"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="master_volume" type="HSlider" parent="tabs_container/Audio" groups=["control_to_load", "value"]]
-margin_left = 89.0
+margin_left = 105.0
 margin_top = 18.0
-margin_right = 498.0
-margin_bottom = 35.0
+margin_right = 514.0
+margin_bottom = 43.0
 theme = ExtResource( 5 )
 max_value = 1.0
 step = 0.01
@@ -110,10 +114,10 @@ __meta__ = {
 }
 
 [node name="music_label" type="Label" parent="tabs_container/Audio"]
-margin_left = 22.0
-margin_top = 55.0
-margin_right = 69.0
-margin_bottom = 72.0
+margin_left = 40.0
+margin_top = 61.0
+margin_right = 87.0
+margin_bottom = 78.0
 theme = ExtResource( 4 )
 text = "Music"
 __meta__ = {
@@ -121,17 +125,14 @@ __meta__ = {
 }
 
 [node name="music_volume" type="HSlider" parent="tabs_container/Audio" groups=["control_to_load", "value"]]
-margin_left = 90.0
+margin_left = 105.0
 margin_top = 57.0
-margin_right = 499.0
-margin_bottom = 74.0
+margin_right = 514.0
+margin_bottom = 82.0
 max_value = 1.0
 step = 0.01
 tick_count = 10
 ticks_on_borders = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="current_value" type="Label" parent="tabs_container/Audio/music_volume"]
 margin_left = 418.0
@@ -146,10 +147,10 @@ __meta__ = {
 [node name="effects_label" type="Label" parent="tabs_container/Audio"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 22.0
-margin_top = 94.0
-margin_right = -520.0
-margin_bottom = -255.0
+margin_left = 40.0
+margin_top = 100.0
+margin_right = -502.0
+margin_bottom = -246.0
 theme = ExtResource( 4 )
 text = "Effects"
 __meta__ = {
@@ -157,10 +158,10 @@ __meta__ = {
 }
 
 [node name="effects_volume" type="HSlider" parent="tabs_container/Audio" groups=["control_to_load", "value"]]
-margin_left = 89.0
+margin_left = 105.0
 margin_top = 96.0
-margin_right = 498.0
-margin_bottom = 113.0
+margin_right = 514.0
+margin_bottom = 121.0
 max_value = 1.0
 step = 0.01
 tick_count = 10
@@ -200,7 +201,6 @@ __meta__ = {
 }
 
 [node name="keyboard_controls" type="Control" parent="tabs_container/Input"]
-visible = false
 anchor_left = -1.11
 anchor_top = -1.487
 anchor_right = -1.11
@@ -214,20 +214,21 @@ __meta__ = {
 }
 
 [node name="player_moveup_label" type="Label" parent="tabs_container/Input/keyboard_controls"]
-margin_left = 250.0
+margin_left = 270.0
 margin_top = 23.0
-margin_right = 305.0
-margin_bottom = 43.0
+margin_right = 325.0
+margin_bottom = 46.0
 theme = ExtResource( 4 )
 text = "Move up"
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="player_moveup" type="Button" parent="tabs_container/Input/keyboard_controls" groups=["control_to_load", "text"]]
-margin_left = 340.0
+margin_left = 360.0
 margin_top = 23.0
-margin_right = 490.0
+margin_right = 510.0
 margin_bottom = 46.0
 theme = ExtResource( 4 )
 flat = true
@@ -237,40 +238,39 @@ __meta__ = {
 }
 
 [node name="player_movedown_label" type="Label" parent="tabs_container/Input/keyboard_controls"]
-margin_left = 250.0
+margin_left = 270.0
 margin_top = 47.0
-margin_right = 325.0
-margin_bottom = 67.0
+margin_right = 345.0
+margin_bottom = 70.0
 theme = ExtResource( 4 )
 text = "Move down"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+valign = 1
 
 [node name="player_movedown" type="Button" parent="tabs_container/Input/keyboard_controls" groups=["control_to_load", "text"]]
-margin_left = 341.189
+margin_left = 360.0
 margin_top = 45.0
-margin_right = 491.189
+margin_right = 510.0
 margin_bottom = 68.0
 theme = ExtResource( 4 )
 flat = true
 script = ExtResource( 3 )
 
 [node name="player_moveleft_label" type="Label" parent="tabs_container/Input/keyboard_controls"]
-margin_left = 250.0
+margin_left = 270.0
 margin_top = 71.0
-margin_right = 313.0
-margin_bottom = 91.0
+margin_right = 333.0
+margin_bottom = 94.0
 theme = ExtResource( 4 )
 text = "Move left"
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="player_moveleft" type="Button" parent="tabs_container/Input/keyboard_controls" groups=["control_to_load", "text"]]
-margin_left = 340.0
+margin_left = 360.0
 margin_top = 69.0
-margin_right = 490.0
+margin_right = 510.0
 margin_bottom = 92.0
 theme = ExtResource( 4 )
 flat = true
@@ -279,20 +279,21 @@ script = ExtResource( 3 )
 [node name="player_moveright_label" type="Label" parent="tabs_container/Input/keyboard_controls"]
 anchor_top = -0.00347722
 anchor_bottom = -0.00347722
-margin_left = 250.0
+margin_left = 270.0
 margin_top = 94.7412
-margin_right = 323.0
-margin_bottom = 114.741
+margin_right = 343.0
+margin_bottom = 117.741
 theme = ExtResource( 4 )
 text = "Move right"
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="player_moveright" type="Button" parent="tabs_container/Input/keyboard_controls" groups=["control_to_load", "text"]]
-margin_left = 340.189
+margin_left = 360.0
 margin_top = 95.0
-margin_right = 490.189
+margin_right = 510.0
 margin_bottom = 118.0
 theme = ExtResource( 4 )
 flat = true
@@ -304,20 +305,21 @@ __meta__ = {
 [node name="player_walk_label" type="Label" parent="tabs_container/Input/keyboard_controls"]
 anchor_top = -0.00347722
 anchor_bottom = -0.00347722
-margin_left = 250.0
+margin_left = 270.0
 margin_top = 117.003
-margin_right = 323.0
-margin_bottom = 137.003
+margin_right = 343.0
+margin_bottom = 140.003
 theme = ExtResource( 4 )
 text = "Walk"
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="player_walk" type="Button" parent="tabs_container/Input/keyboard_controls" groups=["control_to_load", "text"]]
-margin_left = 337.811
+margin_left = 360.0
 margin_top = 117.595
-margin_right = 487.811
+margin_right = 510.0
 margin_bottom = 140.595
 theme = ExtResource( 4 )
 flat = true
@@ -590,6 +592,11 @@ text = "Controller deadzone"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="selected_option_marker" type="Sprite" parent="."]
+visible = false
+position = Vector2( 29.7372, 51.5686 )
+texture = ExtResource( 2 )
 
 [node name="save_button" type="Button" parent="."]
 visible = false

@@ -2,108 +2,134 @@
 # Can be accessed from anywhere within the project
 extends Node
 
-signal doors_closed
-
 
 var arena: Node
+var current_location: Node
 var spawning_zones: Array
-var bgm: AudioStreamPlayer
-var closed_doors_texture: Texture = preload("res://juegodetriangulos/res/sprites/levels/0/arena/arena_bg_closed_doors.png")
+var bgm_list: Array 
+var currently_loaded_areas: Array
 
-func initialize_arena(level_name: String) -> void:
-	var level_arena_scene = load("res://juegodetriangulos/scenes/level_assets/%s/arena.tscn" % level_name)
-	if level_arena_scene == null:
-		level_arena_scene = load("res://juegodetriangulos/scenes/level_assets/generic/arena.tscn")
-	arena = level_arena_scene.instance()
-	get_tree().get_root().add_child(arena)
-	arena.position = Globals.Positions.SCREEN_CENTER
-	spawning_zones = arena.get_node("powerup_spawning_zones").get_children()
-	PlayerManager.set_player_position(get_starting_position())
-	bgm = arena.get_node("bgm")
+func initialize_arena(chosen_enemy: String) -> void:
+	var level_arena_scene: PackedScene = load("res://juegodetriangulos/scenes/level_assets/map/map_areas/level%s_arena.tscn" % chosen_enemy)
+	current_location = level_arena_scene.instance()
+	arena = current_location
+	get_tree().get_root().add_child(current_location)
+	update_current_location()
+	update_current_bgm()
 	if Settings.get_game_statistic("fighting_boss", false):
-		close_arena(false)
+		current_location.close_arena(false)
 	else:
-		arena.get_node("hall_bgm").play()
-
-func close_arena(show_cutscene: bool = true) -> void:
-	arena.get_node("hall_bgm").stop()
-	arena.get_node("background").texture = closed_doors_texture
-	arena.get_node("background").get_node("left_limits").get_node("left_wall3").set_deferred("disabled", false)
-	if show_cutscene:
-		PlayerManager.player_stand_still()
-		CameraManager.shake_screen(null, 0.675, 0.5)
-		var doors_closed_audio: AudioStreamPlayer = arena.get_node("doors_closed_audio")
-		doors_closed_audio.play()
-		yield(doors_closed_audio, "finished")
-		PlayerManager.player.enable_input = true
-		emit_signal("doors_closed")
+		start_music()
 
 func get_arena() -> Node:
-	if arena and exists_arena():
-		return arena
-	else:
-		return Utils.log_error("get_arena", null)
+	return current_location
 
 func get_arena_center() -> Vector2:
-	if arena and exists_arena():
-		return arena.get_node("fighting_starting_position").global_position
+	return current_location.get_center()
+
+func get_current_location() -> Node:
+	if current_location and exists_current_location():
+		return current_location
 	else:
-		return Utils.log_error("get_arena_center", Vector2.ZERO)
+		return Utils.log_error("get_current_location", null)
 
-func get_valid_spawn_points() -> Array:
-	var valid_spawn_points = []
-	for zone in spawning_zones:
-		if zone.enabled:
-			var zone_spawn_points = zone.get_node("spawn_point_list").get_children()
-			for spawn_point in zone_spawn_points:
-				if spawn_point.enabled and not spawn_point.being_used:
-					valid_spawn_points.append(spawn_point)
-	return valid_spawn_points
+func get_current_location_node_path() -> NodePath:
+	if current_location and exists_current_location():
+		return current_location.get_path()
+	else:
+		return Utils.log_error("get_current_location_node_path", null)
 
-func get_starting_position() -> Vector2:
+func get_location(location_name: String) -> Node:
+	return current_location 
+
+func set_camera_focus(smoothing: bool) -> void:
+	current_location.set_camera_focus(smoothing)
+
+func get_checkpoint_position(checkpoint_name: String = '') -> Vector2:
 	if arena and exists_arena():
-		if Settings.get_game_statistic("fighting_boss", false):
-			return arena.get_node("fighting_starting_position").global_position
+		if checkpoint_name:
+			return arena.get_node("checkpoint_position").global_position
+#			return arena.get_node(checkpoint_name).get_node("checkpoint_position").global_position
 		else:
-			return arena.get_node("initial_starting_position").global_position
+			return arena.get_node("checkpoint_position").global_position
+#			return arena.get_node(Settings.get_game_statistic("current_player_checkpoint", "entrance_hall")).get_node("checkpoint_position").global_position
 	else:
-		return Utils.log_error("get_starting_position", Vector2.ZERO)
+		return Utils.log_error("get_checkpoint_position", Vector2.ZERO)
+
+func get_default_bgm() -> Node:
+	return arena.get_node("bgm")
 
 func enable_all_spawnpoints() -> void:
-	manage_powerup_spawn_points("top_left", ["spawn_point1", "spawn_point2", "spawn_point3", "spawn_point4"], true)
-	manage_powerup_spawn_points("top_right", ["spawn_point1", "spawn_point2", "spawn_point3", "spawn_point4"], true)
-	manage_powerup_spawn_points("bottom_left", ["spawn_point1", "spawn_point2", "spawn_point3", "spawn_point4"], true)
-	manage_powerup_spawn_points("bottom_right", ["spawn_point1", "spawn_point2", "spawn_point3", "spawn_point4"], true)
+	current_location.manage_powerup_spawn_points(
+		"top_left", ["spawn_point1", "spawn_point2", "spawn_point3", "spawn_point4"], true
+	)
+	current_location.manage_powerup_spawn_points(
+		"top_right", ["spawn_point1", "spawn_point2", "spawn_point3", "spawn_point4"], true
+	)
+	current_location.manage_powerup_spawn_points(
+		"bottom_left", ["spawn_point1", "spawn_point2", "spawn_point3", "spawn_point4"], true
+	)
+	current_location.manage_powerup_spawn_points(
+		"bottom_right", ["spawn_point1", "spawn_point2", "spawn_point3", "spawn_point4"], true
+	)
 
 func disable_spawnpoints_from_enemy(area_name: String, spawn_point_list: Array) -> void:
-	manage_powerup_spawn_points(area_name, spawn_point_list, false)
+	current_location.manage_powerup_spawn_points(area_name, spawn_point_list, false)
 
-func manage_powerup_spawn_points(area_name: String, spawn_point_name_list: Array, enabled: bool) -> void:
-	var area = arena.get_node("powerup_spawning_zones").get_node(area_name)
-	for spawn_point_name in spawn_point_name_list:
-		var spawn_point = area.get_node("spawn_point_list").get_node(spawn_point_name)
-		spawn_point.enabled = enabled 
+func get_valid_spawn_points(player_id: int = 0) -> Array:
+	return current_location.get_valid_spawn_points(player_id)
+
+func update_current_location(new_location_name: String = "") -> void:
+	if not new_location_name:
+		new_location_name = Settings.get_game_statistic("current_player_checkpoint", current_location.name)
+	load_areas(current_location.areas_to_load)
+
+func update_current_bgm(start_music: bool = false) -> void:
+	if start_music:
+		for bgm in bgm_list:
+			bgm.stop()
+	if current_location.has_method("get_bgm_to_play"):
+		bgm_list = current_location.get_bgm_to_play()
+	else:
+		bgm_list = [current_location.get_node("bgm")]
+	if start_music:
+		start_music()
 
 func start_music() -> void:
-	if bgm.get_stream_paused():
-		bgm.set_stream_paused(false)
-	else:
-		bgm.play()
+	for bgm in bgm_list:
+		if bgm.get_stream_paused():
+			bgm.set_stream_paused(false)
+		else:
+			bgm.play()
 
 func stop_music() -> void:
-	bgm.set_stream_paused(true)
+	for bgm in bgm_list:
+		bgm.set_stream_paused(true)
+
+func unmute_phase_bgm(boss_phase: int) -> void:
+	AudioServer.set_bus_mute(AudioServer.get_bus_index("BGM P%s" % boss_phase), false)
 
 func exists_arena() -> WeakRef:
 	var arena_ref = weakref(arena)
 	return arena_ref.get_ref()
 
+func exists_current_location() -> WeakRef:
+	var current_location_ref = weakref(current_location)
+	return current_location_ref.get_ref()
+
 func reset_arena() -> void:
 	if arena and arena != null:
-		PlayerManager.set_player_position(get_starting_position())
 		enable_all_spawnpoints()
-		bgm.stop()
+		current_location.reset()
+		for bgm in bgm_list:
+			bgm.stop()
 	else:
 		Utils.log_error("reset_arena")
+
+func load_areas(areas_to_load: Array) -> void:
+	areas_to_load = [current_location.name]
+	current_location.enable_map_area()
+	currently_loaded_areas = areas_to_load
 
 func unload_arena() -> void:
 	if arena and arena != null:

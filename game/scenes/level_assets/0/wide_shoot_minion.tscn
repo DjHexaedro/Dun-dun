@@ -1,0 +1,70 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/minion/minion3.png" type="Texture" id=1]
+[ext_resource path="res://juegodetriangulos/res/scripts/levels/0/enemy_minions/wide_shooting.gd" type="Script" id=2]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/minion/minion4.png" type="Texture" id=3]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/minion/minion5.png" type="Texture" id=4]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/minion/minion7.png" type="Texture" id=5]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/minion/minion2.png" type="Texture" id=6]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/minion/minion0.png" type="Texture" id=7]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/minion/minion6.png" type="Texture" id=8]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/minion/minion1.png" type="Texture" id=9]
+
+[sub_resource type="SpriteFrames" id=33]
+animations = [ {
+"frames": [ ExtResource( 7 ), ExtResource( 9 ), ExtResource( 6 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 5 ) ],
+"loop": false,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="SpriteFrames" id=35]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 8 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 1 ), ExtResource( 6 ), ExtResource( 9 ), ExtResource( 7 ) ],
+"loop": false,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="SpriteFrames" id=34]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 8 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 5 ) ],
+"loop": false,
+"name": "default",
+"speed": 10.0
+} ]
+
+[node name="minion" type="Node2D"]
+light_mask = 4
+position = Vector2( 16.9333, 16.9086 )
+z_index = 99
+script = ExtResource( 2 )
+
+[node name="begin_attacking_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="attack_cooldown_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="spawn_animation" type="AnimatedSprite" parent="."]
+light_mask = 4
+scale = Vector2( 0.1, 0.1 )
+frames = SubResource( 33 )
+
+[node name="despawn_animation" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 4
+scale = Vector2( 0.1, 0.1 )
+frames = SubResource( 35 )
+
+[node name="attack_animation" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 4
+scale = Vector2( 0.1, 0.1 )
+frames = SubResource( 34 )
+
+[connection signal="timeout" from="begin_attacking_timer" to="." method="_on_begin_attacking_timer_timeout"]
+[connection signal="timeout" from="attack_cooldown_timer" to="." method="_on_attack_cooldown_timer_timeout"]
+[connection signal="animation_finished" from="spawn_animation" to="." method="_on_spawn_animation_animation_finished"]
+[connection signal="animation_finished" from="despawn_animation" to="." method="_on_despawn_animation_animation_finished"]
+[connection signal="animation_finished" from="attack_animation" to="." method="_on_attack_animation_animation_finished"]

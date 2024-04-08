@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/scripts/base/corpse.gd" type="Script" id=1]
+[ext_resource path="res://juegodetriangulos/res/sprites/player/player2_sprite_sheet.png" type="Texture" id=3]
+[ext_resource path="res://juegodetriangulos/res/sprites/player/player_sprite_sheet_v3.png" type="Texture" id=9]
+
+[sub_resource type="AtlasTexture" id=97]
+atlas = ExtResource( 9 )
+region = Rect2( 336, 44, 56, 44 )
+
+[sub_resource type="SpriteFrames" id=55]
+animations = [ {
+"frames": [ SubResource( 97 ) ],
+"loop": false,
+"name": "default",
+"speed": 2.0
+} ]
+
+[sub_resource type="AtlasTexture" id=113]
+atlas = ExtResource( 3 )
+region = Rect2( 245, 0, 35, 37 )
+
+[sub_resource type="SpriteFrames" id=99]
+animations = [ {
+"frames": [ SubResource( 113 ) ],
+"loop": false,
+"name": "default",
+"speed": 2.0
+} ]
+
+[node name="corpses_list" type="Node2D"]
+pause_mode = 1
+light_mask = 524288
+z_index = 1
+script = ExtResource( 1 )
+
+[node name="corpse0" type="AnimatedSprite" parent="."]
+visible = false
+use_parent_material = true
+scale = Vector2( 2, 2 )
+frames = SubResource( 55 )
+
+[node name="corpse1" type="AnimatedSprite" parent="."]
+visible = false
+use_parent_material = true
+position = Vector2( -5, 20 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 99 )

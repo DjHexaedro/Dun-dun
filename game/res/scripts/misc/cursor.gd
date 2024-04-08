@@ -11,7 +11,7 @@ func _ready():
 	visible = not Utils.device_is_phone()
 	set_process(true)
 
-func _process(delta):
+func _process(_delta):
 	if follow_mouse:
 		old_position = position
 		global_position = get_global_mouse_position()

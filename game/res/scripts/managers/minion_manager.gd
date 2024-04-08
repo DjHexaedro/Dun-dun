@@ -6,8 +6,8 @@ extends Node2D
 # This will be changed in the future as it references the minions of the first
 # boss specifically
 const MINION_SCENE_DICT: Dictionary = {
-	"wide_shoot": preload("res://juegodetriangulos/scenes/level_assets/level0/wide_shoot_minion.tscn"),
-	"fully_automatic":  preload("res://juegodetriangulos/scenes/level_assets/level0/fully_automatic_shoot_minion.tscn"),
+	"wide_shoot": preload("res://juegodetriangulos/scenes/level_assets/0/wide_shoot_minion.tscn"),
+	"fully_automatic":  preload("res://juegodetriangulos/scenes/level_assets/0/fully_automatic_shoot_minion.tscn"),
 }
 
 var idle_minions: Dictionary = {}
@@ -68,10 +68,10 @@ func remove_all_active_minions() -> void:
 
 func create_minion(minionscene: PackedScene) -> AnimatedSprite:
 	var minion = minionscene.instance()
-	get_tree().get_root().add_child(minion)
-	minion.set_position(Globals.Positions.OUT_OF_BOUNDS)
 	return minion
 
 func spawn_minion(minion_type: String, params_dict: Dictionary) -> void:
 	var new_minion = get_avaliable_minion(minion_type)
+	ArenaManager.get_current_location().add_child(new_minion)
+	new_minion.set_position(Globals.OUT_OF_BOUNDS_POSITION)
 	new_minion.spawn(params_dict)

@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/1/pawn.png" type="Texture" id=1]
+[ext_resource path="res://juegodetriangulos/res/sprites/misc/bg_color_solid.png" type="Texture" id=2]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="board_piece_pawn" type="AnimatedSprite"]
+light_mask = 0
+scale = Vector2( 0.3, 0.3 )
+z_index = 1
+offset = Vector2( 0, -100 )
+
+[node name="hides_in_dark" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 3
+frames = SubResource( 1 )
+offset = Vector2( 0, -100 )
+
+[node name="shows_in_dark" type="AnimatedSprite" parent="."]
+light_mask = 4
+frames = SubResource( 1 )
+offset = Vector2( 0, -100 )
+
+[node name="light" type="Light2D" parent="."]
+visible = false
+position = Vector2( 0, -35 )
+texture = ExtResource( 2 )
+texture_scale = 0.05
+range_item_cull_mask = 32

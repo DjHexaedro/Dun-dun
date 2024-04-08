@@ -30,6 +30,11 @@ const NodeNames: Dictionary = {
 	PLAYER = "player",
 }
 
+const LevelCodes: Dictionary = {
+	GENERIC = "generic",
+	CHESSBOARD = "1",
+}
+
 const SimpleBulletTypes: Dictionary = {
 	CIRCULAR = "circular",
 	DELAYED = "delayed",
@@ -37,18 +42,33 @@ const SimpleBulletTypes: Dictionary = {
 	HEALTH = "health",
 	STRAIGHT = "straight",
 	SOFT_HOMING = "soft_homing",
+	PAWN = "pawn",
+	ROOK = "rook",
+	BISHOP = "bishop",
+	QUEEN = "queen",
 }
 
 const ComplexBulletTypes: Dictionary = {
-	AIMED_PULSATING = "aimed_pulsating_bullet",
-	POWERUP = "powerup_bullet",
-	PULSATING = "pulsating_bullet",
-	RANDOM_PULSATING = "random_pulsating_bullet",
+	AIMED_PULSATING = "aimed_pulsating",
+	POWERUP = "powerup",
+	PULSATING = "pulsating",
+	RANDOM_PULSATING = "random_pulsating",
 }
 
 const MinionTypes: Dictionary = {
 	WIDE = "wide_shoot",
 	AUTOMATIC = "fully_automatic",
+}
+
+const MatchEvents: Dictionary = {
+	PLAYER_HIT = "player_hit",
+	PLAYER_HEALED = "player_healed",
+	PLAYER_HEAL_AS_SCORE = "player_heal_as_score",
+	PLAYER_DEATH = "player_death",
+	PLAYER_REVIVE = "player_revive",
+	CRYSTAL_GRABBED = "crystal_grabbed",
+	CRYSTAL_MISSED = "crystal_missed",
+	BOSS_DEFEATED = "boss_defeated",
 }
 
 const OPTIONS_MENU_CONTROLS_TO_LOAD_GROUP: String = "control_to_load"
@@ -75,16 +95,19 @@ enum InputTypes {
 	ONSCREEN_JOYSTICK,
 }
 
-var Positions: Dictionary = {}
+enum PlayerIDs {
+	PLAYER_ONE,
+	PLAYER_TWO,
+}
 
-func _ready() -> void:
-	Positions = {
-		OUT_OF_BOUNDS = Vector2(-1000, -1000),
-		SCREEN_CENTER = Vector2(SCREEN_SIZE.x / 2, SCREEN_SIZE.y / 2),
-		TOP_Y = SCREEN_SIZE.y * 0.1,
-		BOTTOM_Y = SCREEN_SIZE.y * 0.9,
-		CENTER_Y = SCREEN_SIZE.y / 2,
-		LEFT_X = SCREEN_SIZE.x * 0.1,
-		RIGHT_X = SCREEN_SIZE.x * 0.9,
-		CENTER_X = SCREEN_SIZE.x / 2,
-	}
+const OUT_OF_BOUNDS_POSITION: Vector2 = Vector2(-999999, -999999)
+
+var Positions: Dictionary = {
+	SCREEN_CENTER = Vector2(0, 0),
+	TOP_Y = -432,
+	BOTTOM_Y = 432,
+	CENTER_Y = 0,
+	LEFT_X = -768,
+	RIGHT_X = 768,
+	CENTER_X = 0,
+}

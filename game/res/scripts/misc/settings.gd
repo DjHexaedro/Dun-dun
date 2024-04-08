@@ -4,9 +4,13 @@
 extends Node
 
 signal settings_file_changed
+signal game_statistic_updated(game_statistic, new_value)
 
+var saved_games_dir: Directory = Directory.new()
+var saved_games_dir_path: String = "user://saved_games"
 var save_data_file: File = File.new()
-var save_data_file_path: String = "user://save_data.json"
+var save_data_file_path: String = "user://saved_games/save_data_%s.json"
+var save_data_file_id: int = -1
 var save_data: Dictionary = {}
 var config: ConfigFile = ConfigFile.new()
 var config_path: String = "user://settings.cfg"
@@ -17,9 +21,12 @@ func _ready() -> void:
 	if config_file_status != OK:
 		create_default_config_file()
 	load_config_file()
-	get_saved_game_data()
-	if not save_data:
-		create_save_game_file()
+	if not saved_games_dir.dir_exists(saved_games_dir_path):
+		saved_games_dir.make_dir(saved_games_dir_path)
+	# if exists_saved_game_data():
+	# 	load_save_game_file(get_config_parameter("default_save_file_id", 0))
+	create_save_game_file()
+
 
 func get_config_parameter(parameter_name: String, return_value = null):
 	var current_parameter_value
@@ -30,51 +37,105 @@ func get_config_parameter(parameter_name: String, return_value = null):
 	return Utils.log_error("Parameter %s does not exist or is null" % parameter_name, return_value)
 
 func create_save_game_file() -> void:
+	save_data_file_id = get_config_parameter("next_save_file_id", 0)
+	save_data = {}
 	save_data["deaths"] = 0
 	save_data["selected_level"] = 0
-	save_data["inside_level"] = false
-	save_data["level_list"] = {}
-	save_game_data()
+	save_data["inside_level"] = true
+	save_data["current_boss"] = 0 
+	save_data["fighting_boss"] = true
+	save_data["is_lamp_on"] = true
+	save_data["level_scores"] = {}
+	# save_game_data()
+	save_to_config_file({
+		"saved_games": {
+			"default_save_file_id": save_data_file_id,
+			"next_save_file_id": save_data_file_id + 1,
+		}
+	})
 
-func get_saved_game_data() -> void:
-	save_data_file.open(save_data_file_path, File.READ)
+# func create_save_game_file() -> void:
+# 	save_data_file_id = get_config_parameter("next_save_file_id", 0)
+# 	save_data = {}
+# 	save_data["deaths"] = 0
+# 	save_data["selected_level"] = 0
+# 	save_data["inside_level"] = false
+# 	save_data["level_scores"] = {}
+# 	save_game_data()
+# 	save_to_config_file({
+# 		"saved_games": {
+# 			"default_save_file_id": save_data_file_id,
+# 			"next_save_file_id": save_data_file_id + 1,
+# 		}
+# 	})
+
+func exists_saved_game_data() -> bool:
+	if saved_games_dir.open(saved_games_dir_path) == OK:
+		saved_games_dir.list_dir_begin()
+		var file_name: String = saved_games_dir.get_next()
+		while file_name != "":
+			if file_name.ends_with(".json"):
+				return true
+			file_name = saved_games_dir.get_next()
+	return false
+
+func load_save_game_file(file_id: int = save_data_file_id) -> void:
+	save_data_file.open(save_data_file_path % file_id, File.READ)
 	var saved_data_json = save_data_file.get_as_text()
+	save_data_file.close()
 	if parse_json(saved_data_json) == null:
-		save_data = {}
+		create_save_game_file()
 	else:
 		save_data = parse_json(saved_data_json)
-	save_data_file.close()
+	save_data_file_id = file_id
+	save_to_config_file({
+		"saved_games": {
+			"default_save_file_id": file_id,
+		}
+	})
 
-func save_game_data() -> void:
-	save_data_file.open(save_data_file_path, File.WRITE)
-	save_data_file.store_string(to_json(save_data))
-	save_data_file.close()
+# func save_game_data(file_id: int = save_data_file_id) -> void:
+# 	save_data_file.open(save_data_file_path % file_id, File.WRITE)
+# 	save_data_file.store_string(to_json(save_data))
+# 	save_data_file.close()
 
-func save_game_statistic(statistic: String, value) -> void:
-	save_data[statistic] = value
-	save_game_data()
+func save_game_statistic(statistic: String, value, key: String = "") -> void:
+	if key:
+		save_data[statistic][key] = value
+	else:
+		save_data[statistic] = value
+	# save_game_data()
+	emit_signal("game_statistic_updated", statistic, value)
 
 func increase_game_statistic(statistic: String, increment: int) -> void:
 	if save_data.get(statistic, 0):
 		save_data[statistic] += increment
 	else:
 		save_data[statistic] = increment
-	save_game_data()
+	# save_game_data()
 
-func get_game_statistic(statistic: String, default_value):
-	return save_data.get(statistic, default_value)
-	
-func save_current_level_state(completed: bool, max_score: int, inside_level: bool) -> void:
-	var map_node = get_tree().get_root().get_node("map")
-	var selected_level = map_node.current_level_node
-	var level_list_data = save_data["level_list"]
-	var level_data = level_list_data.get(str(selected_level.get_path()), {})
-	level_data["completed"] = completed
-	level_data["max_score"] = max_score 
-	save_data["level_list"][str(selected_level.get_path())] = level_data
-	save_data["inside_level"] = inside_level
-	save_data["selected_level"] = map_node.selected_level
-	save_game_data()
+func get_game_statistic(statistic: String, default_value, key: String = ""):
+	if key:
+		return save_data.get(statistic, {}).get(key, default_value)
+	else:
+		return save_data.get(statistic, default_value)
+
+func get_save_files_list() -> Array:
+	var save_files_list: Array = []
+	if saved_games_dir.open(saved_games_dir_path) == OK:
+		saved_games_dir.list_dir_begin()
+		var file_name: String = saved_games_dir.get_next()
+		while file_name != "":
+			if file_name.ends_with(".json"):
+				save_files_list.append(_format_file_name(file_name))
+			file_name = saved_games_dir.get_next()
+	return save_files_list
+
+func _format_file_name(file_name: String) -> String:
+	var new_file_name: String = file_name.replace("_", " ")
+	new_file_name = new_file_name.replace(".json", "")
+	new_file_name = new_file_name.capitalize()
+	return new_file_name
 
 func save_to_config_file(sections_dict: Dictionary) -> void:
 	for section in sections_dict:
@@ -95,8 +156,7 @@ func load_config_file() -> void:
 	GameStateManager.set_debug(config_params_dict.get("misc", {}).get("debug", false))
 	load_into_input_map()
 	OS.set_window_fullscreen(config_params_dict.get("general", {}).get("fullscreen", false))
-	HudManager.move_hud_joystick(config_params_dict.get("input", {}).get("onscreen_joystick_right", false))
-	HudManager.show_fps_label(config_params_dict.get("general", {}).get("show_fps", false))
+	GameStateManager.set_multiplayer_enabled(config_params_dict.get("general", {}).get("multiplayer_enabled", false))
 
 func load_into_input_map() -> void:
 	# Loads all variables into the input map so they can actually be used
@@ -125,6 +185,7 @@ func create_default_config_file() -> void:
 	config.set_value("general", "walk_default", false)
 	config.set_value("general", "always_show_hitbox", false)
 	config.set_value("general", "show_fps", false)
+	config.set_value("general", "multiplayer_enabled", false)
 	config.set_value("audio", "master_volume", 50)
 	config.set_value("audio", "effects_volume", 75)
 	config.set_value("audio", "music_volume", 50)
@@ -144,5 +205,7 @@ func create_default_config_file() -> void:
 	config.set_value("input", "onscreen_joystick_right", false)
 	config.set_value("input", "show_pause_menu", "Escape")
 	config.set_value("input", "input_method", Globals.InputTypes.ONSCREEN_JOYSTICK if Utils.device_is_phone() else Globals.InputTypes.KEYBOARD)
+	config.set_value("saved_data", "default_save_file_id", -1)
+	config.set_value("saved_data", "next_save_file_id", 0)
 	config.set_value("misc", "debug", false)
 	config.save(config_path)
