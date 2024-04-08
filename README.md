@@ -1,6 +1,6 @@
 # Dun-dun
 
-2D bullet-hell style game.
+You can download the latest version of the game [here](https://djhexaedro.itch.io/dun-dun)
 
 Currently only a single boss is available to play, with three different difficulties to choose from. Gameplay consists in dodging the boss' attacks and collecting crystals to damage it. The more you wait before you collect a crystal, the more damage it will do, but if you wait too much it'll break and disappear.
 
