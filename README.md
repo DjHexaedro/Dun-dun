@@ -2,13 +2,13 @@
 
 You can download the latest version of the game [here](https://djhexaedro.itch.io/dun-dun)
 
-Currently only a single boss is available to play, with three different difficulties to choose from. Gameplay consists in dodging the boss' attacks and collecting crystals to damage it. The more you wait before you collect a crystal, the more damage it will do, but if you wait too much it'll break and disappear.
+Currently three bosses are available to play, each with three different difficulties to choose from. Gameplay consists in dodging the boss' attacks and collecting crystals to damage it. The more you wait before you collect a crystal, the more damage it will do, but if you wait too much it'll break and disappear.
 
 Music done by [Blackphilip](https://www.instagram.com/mr.satvrn/)
 
 Art done by [Carlos Rodas (Rourrodas)](https://www.instagram.com/rourodas/)
 
-If you are interested, you can watch development of the game [live on Twitch](https://www.twitch.tv/playnoweverybody) on Mondays and Wednesdays.
+If you are interested, you can watch development of the game [live on Twitch](https://www.twitch.tv/djhexaedro) (in spanish).
 
 ## Controls
 
