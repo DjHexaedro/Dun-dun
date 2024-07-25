@@ -1,0 +1,197 @@
+[gd_scene load_steps=30 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/scripts/levels/2/enemy.gd" type="Script" id=1]
+[ext_resource path="res://juegodetriangulos/res/themes/mathmagician.tres" type="Theme" id=2]
+[ext_resource path="res://juegodetriangulos/res/music/level2_fail.wav" type="AudioStream" id=3]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/2/spritesheet.png" type="Texture" id=4]
+[ext_resource path="res://juegodetriangulos/res/sprites/misc/bg_color_solid.png" type="Texture" id=5]
+[ext_resource path="res://juegodetriangulos/res/music/level2_laughter.wav" type="AudioStream" id=6]
+[ext_resource path="res://juegodetriangulos/res/music/level2_spawn.wav" type="AudioStream" id=7]
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 4 )
+region = Rect2( 512, 128, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 4 )
+region = Rect2( 640, 128, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 4 )
+region = Rect2( 768, 128, 128, 128 )
+
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 11 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 4 )
+region = Rect2( 896, 128, 128, 128 )
+
+[sub_resource type="SpriteFrames" id=27]
+animations = [ {
+"frames": [ SubResource( 26 ), SubResource( 26 ), SubResource( 26 ), SubResource( 26 ), SubResource( 26 ), SubResource( 26 ), SubResource( 26 ), SubResource( 26 ), SubResource( 26 ), SubResource( 26 ), SubResource( 26 ), SubResource( 26 ) ],
+"loop": false,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 4 )
+region = Rect2( 896, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 4 )
+region = Rect2( 1024, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 128, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 4 )
+region = Rect2( 128, 128, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 4 )
+region = Rect2( 256, 128, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=25]
+atlas = ExtResource( 4 )
+region = Rect2( 384, 128, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 4 )
+region = Rect2( 128, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 4 )
+region = Rect2( 256, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 4 )
+region = Rect2( 384, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 4 )
+region = Rect2( 512, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 4 )
+region = Rect2( 640, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 4 )
+region = Rect2( 768, 0, 128, 128 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ) ],
+"loop": false,
+"name": "body",
+"speed": 3.0
+}, {
+"frames": [ SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ],
+"loop": false,
+"name": "glasses",
+"speed": 10.0
+} ]
+
+[sub_resource type="AtlasTexture" id=28]
+atlas = ExtResource( 4 )
+region = Rect2( 1024, 128, 128, 128 )
+
+[sub_resource type="SpriteFrames" id=9]
+animations = [ {
+"frames": [ SubResource( 28 ), SubResource( 28 ), SubResource( 28 ), SubResource( 28 ), SubResource( 28 ), SubResource( 28 ), SubResource( 28 ), SubResource( 28 ), SubResource( 28 ), SubResource( 28 ), SubResource( 28 ), SubResource( 28 ) ],
+"loop": false,
+"name": "default",
+"speed": 7.0
+} ]
+
+[node name="enemy" type="Node2D"]
+z_index = 10
+script = ExtResource( 1 )
+DISPLAY_NAME = "Uelackschually, THE MATHMAGICIAN"
+N_OF_PHASES = 20
+MAX_DAMAGE_TAKEN_PHASE = 75
+ENEMY_ID = 2
+HARDEST_MODE_TOTAL_FIGHT_TIME = 180.0
+
+[node name="idle_animation" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 4
+position = Vector2( 0, -30 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 8 )
+
+[node name="on_hit_animation" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 4
+position = Vector2( 0, -30 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 27 )
+
+[node name="spawn_animation" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 4
+position = Vector2( 0, -30 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 4 )
+animation = "glasses"
+
+[node name="got_hit_animation" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 4
+position = Vector2( 0, -30 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 9 )
+
+[node name="special_animation" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 4
+position = Vector2( 0, -30 )
+
+[node name="problem" type="Label" parent="."]
+light_mask = 4
+margin_left = -600.0
+margin_top = -75.0
+margin_right = -200.0
+margin_bottom = 25.0
+theme = ExtResource( 2 )
+align = 1
+valign = 1
+
+[node name="remaining_time" type="Sprite" parent="."]
+light_mask = 4
+position = Vector2( -200, 35 )
+scale = Vector2( -0.1, 0.005 )
+texture = ExtResource( 5 )
+centered = false
+
+[node name="laugh" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+
+[node name="spawn" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+
+[node name="fail" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+
+[node name="answer_timer" type="Timer" parent="."]
+wait_time = 4.0
+
+[connection signal="animation_finished" from="on_hit_animation" to="." method="_on_on_hit_animation_animation_finished"]
+[connection signal="frame_changed" from="on_hit_animation" to="." method="_on_on_hit_animation_frame_changed"]
+[connection signal="animation_finished" from="spawn_animation" to="." method="_on_spawn_animation_animation_finished"]
+[connection signal="animation_finished" from="got_hit_animation" to="." method="_on_got_hit_animation_animation_finished"]
+[connection signal="frame_changed" from="got_hit_animation" to="." method="_on_got_hit_animation_frame_changed"]
+[connection signal="timeout" from="answer_timer" to="." method="_on_answer_timer_timeout"]

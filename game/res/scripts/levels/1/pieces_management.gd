@@ -227,9 +227,9 @@ func pawn_set_next_position(piece_params: Dictionary, pawn_id: int = -1) -> void
 		):
 			horizontal_direction = (
 				1 if current_position.x == 0 else
-				-1 if current_position.x == len(
+				-1 if (current_position.x == len(
 					board_space_list[current_position.y]
-				) else
+				) - 1) else
 				[1, -1][randi()%2]
 			)
 
@@ -248,7 +248,7 @@ func pawn_set_next_position(piece_params: Dictionary, pawn_id: int = -1) -> void
 		):
 			vertical_direction = (
 				1 if current_position.y == 0 else
-				-1 if current_position.y == len(board_space_list) else
+				-1 if current_position.y == (len(board_space_list) - 1) else
 				[1, -1][randi()%2]
 			)
 	

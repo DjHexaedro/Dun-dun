@@ -5,8 +5,11 @@ signal exit_to_map
 signal try_again 
 signal match_history_shown
 
-const LIFEBAR_X_SCALE = 33.8
+const LIFEBAR_X_SCALE: float = 33.8
 const MENU_OPTIONS_TEXT: Array = ["Try again", "Exit level"]
+const BASE_DMG: int = 15
+const BASE_SCORE: int = 5
+const INSTEAD_OF_HEALTH_SCORE: int = 15000
 
 onready var lifemarkerscene = preload(
 	"res://juegodetriangulos/scenes/level_assets/generic/boss_phase_lifebar_marker.tscn"
@@ -52,6 +55,7 @@ var previous_events: Dictionary = {
 	"above": { "at": 999999, "tall": false },
 	"below": { "at": 999999, "tall": false },
 }
+var current_player_health: int = 3
 var MIN_DISTANCE_BETWEEN_EVENTS: int
 
 
@@ -128,6 +132,7 @@ func show_history_hardest_mode(match_history: Array) -> void:
 				yield(get_tree().create_timer(0.5), "timeout")
 			current_enemy_health -= 1.0
 		place_below = check_entry(entry, place_below)
+		add_score(pow(10, current_player_health + 1))
 		if show_match_history_animation:
 			yield(get_tree().create_timer(0.5), "timeout")
 
@@ -137,15 +142,17 @@ func check_entry(entry: Dictionary, place_below: bool) -> bool:
 	match entry.event:
 		Globals.MatchEvents.PLAYER_HIT:
 			add_history_marker(Globals.MatchEvents.PLAYER_HIT, place_below)
+			current_player_health -= 1
 			return not place_below
 
 		Globals.MatchEvents.PLAYER_HEALED:
 			add_history_marker(Globals.MatchEvents.PLAYER_HEALED, place_below)
+			current_player_health += 1
 			return not place_below
 
 		Globals.MatchEvents.PLAYER_HEAL_AS_SCORE:
 			add_history_marker(Globals.MatchEvents.PLAYER_HEAL_AS_SCORE, place_below)
-			add_score(15000)
+			add_score(INSTEAD_OF_HEALTH_SCORE)
 			return not place_below
 
 		Globals.MatchEvents.PLAYER_DEATH:
@@ -165,8 +172,10 @@ func check_entry(entry: Dictionary, place_below: bool) -> bool:
 			powerup_data_container.get_node(
 				"%s/qty" % (entry.additional_info - 1)
 			).text = "x%s" % crystals_collected_list[entry.additional_info - 1]
-			update_enemy_health(15 * entry.additional_info)
-			add_score(pow(5 * entry.additional_info, 2))
+			update_enemy_health(BASE_DMG * clamp(entry.additional_info, 1, 5))
+			add_score(pow(
+				BASE_SCORE * entry.additional_info, 2
+			) * GameStateManager.get_score_multiplier())
 			return place_below
 
 		Globals.MatchEvents.CRYSTAL_MISSED:

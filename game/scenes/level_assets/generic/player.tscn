@@ -353,7 +353,7 @@ position = Vector2( -5, 20 )
 use_parent_material = true
 scale = Vector2( 2, 2 )
 frames = SubResource( 72 )
-frame = 1
+frame = 2
 playing = true
 offset = Vector2( 2, -5 )
 

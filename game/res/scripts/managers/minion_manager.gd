@@ -55,16 +55,16 @@ func get_avaliable_minion(minion_type: String) -> Object:
 	active_minions[minion_type].append(avaliable_minion_id)
 	return instance_from_id(avaliable_minion_id)
 
-func remove_active_minion(minion_type: String, minion_id: int) -> void:
-	instance_from_id(minion_id).despawn()
+func remove_active_minion(minion_type: String, minion_id: int, reset: bool = false) -> void:
+	instance_from_id(minion_id).despawn(reset)
 	active_minions[minion_type].erase(minion_id)
 	idle_minions[minion_type].append(minion_id)
 
-func remove_all_active_minions() -> void:
+func remove_all_active_minions(reset: bool = false) -> void:
 	var active_minions_aux: Dictionary = active_minions.duplicate(true)
 	for minion_type in active_minions_aux:
 		for minion in active_minions_aux[minion_type]:
-			remove_active_minion(minion_type, minion)
+			remove_active_minion(minion_type, minion, reset)
 
 func create_minion(minionscene: PackedScene) -> AnimatedSprite:
 	var minion = minionscene.instance()

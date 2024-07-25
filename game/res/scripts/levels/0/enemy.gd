@@ -11,12 +11,6 @@ func _ready() -> void:
 	secondary_attack_timer = Timer.new()
 	secondary_attack_timer.set_one_shot(true)
 	self.add_child(secondary_attack_timer)
-	var difficulty_attacks_dict: Dictionary = {
-		Globals.DifficultyLevels.NORMAL: "set_normal_mode",
-		Globals.DifficultyLevels.HARD: "set_hard_mode",
-		Globals.DifficultyLevels.HARDEST: "set_hardest_mode",
-	}
-	call(difficulty_attacks_dict[GameStateManager.get_difficulty_level()])
 
 func reset(reset_animations: bool = true) -> void:
 	.reset(reset_animations)

@@ -19,8 +19,8 @@ func spawn(params_dict: Dictionary) -> void:
 	.spawn(params_dict)
 	attack_speed_difference = max_attack_speed - params_dict.min_attack_speed
 
-func despawn() -> void:
-	.despawn()
+func despawn(reset: bool = false) -> void:
+	.despawn(reset)
 	attack_cooldown_timer.stop()
 
 func _process(_delta) -> void:

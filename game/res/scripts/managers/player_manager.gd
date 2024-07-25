@@ -37,6 +37,24 @@ func initialize_player(player_type: String) -> void:
 func get_player_list() -> Array:
 	return player_list
 
+func get_random_player_id(except: Array = [-1]) -> int:
+	var allowed_player_ids: Array = []
+
+	for player_id in range(len(player_list)):
+		if not player_id in except:
+			allowed_player_ids.append(player_id)
+
+	var random_player_id: int = allowed_player_ids[randi()%len(allowed_player_ids)]
+	
+	return random_player_id
+
+func get_hittable_players() -> Array:
+	var hittable_players: Array = []
+	for player in player_list:
+		if player.can_be_hit():
+			hittable_players.append(player)
+	return hittable_players
+
 func get_player_node(player_id: int = Globals.PlayerIDs.PLAYER_ONE) -> BasePlayer:
 	if player_list and player_exists(player_id):
 		return player_list[player_id]
@@ -76,6 +94,12 @@ func get_player_position(player_id: int = Globals.PlayerIDs.PLAYER_ONE) -> Vecto
 		return player_list[player_id].position
 	else:
 		return log_error("get_player_position", Vector2.ZERO)
+
+func get_player_global_position(player_id: int = Globals.PlayerIDs.PLAYER_ONE) -> Vector2:
+	if player_list and player_exists(player_id):
+		return player_list[player_id].global_position
+	else:
+		return log_error("get_player_global_position", Vector2.ZERO)
 
 func get_player_old_position(player_id: int = Globals.PlayerIDs.PLAYER_ONE) -> Vector2:
 	if player_list and player_exists(player_id):
@@ -187,12 +211,6 @@ func heal_player() -> void:
 func update_player_list_idle_animation_speed() -> void:
 	for player in player_list:
 		player.update_idle_animation_speed(player_health)
-
-func add_score(score: int, player_id: int = Globals.PlayerIDs.PLAYER_ONE) -> void:
-	if player_list and player_exists(player_id):
-		player_list[player_id].current_score += score * GameStateManager.get_score_multiplier()
-	else:
-		log_error("add_to_player_score")
 
 func can_player_be_hit(player_id: int) -> bool:
 	if player_list and player_exists(player_id):

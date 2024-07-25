@@ -1,6 +1,7 @@
 # Functions used by the pause menu
 extends CanvasLayer
 
+signal game_paused(value)
 
 onready var continue_button: Button = $continue
 onready var exit_button: Button = $exit
@@ -21,11 +22,12 @@ func _ready() -> void:
 	pause_mode = Node.PAUSE_MODE_PROCESS
 	options_window = Utils.get_options_menu()
 	options_window.connect("options_menu_exit", self, "_on_options_menu_exit")
+	background_rect.rect_size = Globals.SCREEN_SIZE
 
 func _input(event: InputEvent) -> void:
 	if enabled:
 		if event.is_action_pressed("show_pause_menu") or event.is_action_pressed("show_pause_menu_controller"):
-			if main_menu.ingame:
+			if not main_menu.on_main_menu:
 				if in_pause_menu:
 					_on_continue_pressed()
 				else:
@@ -51,7 +53,6 @@ func _on_exit_pressed() -> void:
 	enabled = false
 
 func show_pause_menu() -> void:
-	background_rect.rect_size = Globals.SCREEN_SIZE
 	show()
 	Utils.show_mouse_if_necessary()
 	in_pause_menu = true
@@ -62,14 +63,12 @@ func hide_pause_menu() -> void:
 	in_pause_menu = false
 
 func manage_pausing(paused: bool) -> void:
-	for player_id in range(PlayerManager.get_number_of_players()):
-		PlayerManager.set_player_velocity(Vector2.ZERO, player_id)
-		PlayerManager.get_player_node(player_id).set_process_input(not paused)
 	get_tree().paused = paused
 	if paused:
 		show_pause_menu()
 	else:
 		hide_pause_menu()
+	emit_signal("game_paused", paused)
 
 func _on_retry_pressed() -> void:
 	if not on_options_menu:

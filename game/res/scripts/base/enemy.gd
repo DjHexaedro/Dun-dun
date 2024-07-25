@@ -18,6 +18,12 @@ export (int) var MAX_DAMAGE_TAKEN_PHASE
 export (int) var ENEMY_ID
 export (float) var HARDEST_MODE_TOTAL_FIGHT_TIME
 
+onready var idle_animation: AnimatedSprite = $idle_animation
+onready var on_hit_animation: AnimatedSprite = $on_hit_animation
+onready var spawn_animation: AnimatedSprite = $spawn_animation
+onready var got_hit_animation: AnimatedSprite = $got_hit_animation
+onready var special_animation: AnimatedSprite = $special_animation
+
 var attack_params: Dictionary
 var secondary_attack_thread: Thread = Thread.new()
 var current_damage_taken: int = 0
@@ -46,6 +52,12 @@ var positions_list: Dictionary
 var main_attack_timer: Timer
 var secondary_attack_timer: Timer
 var hardest_mode_accumulated_score: int = 0
+var hit_animation_intensity: int = 1
+var difficulty_attacks_dict: Dictionary = {
+	Globals.DifficultyLevels.NORMAL: "set_normal_mode",
+	Globals.DifficultyLevels.HARD: "set_hard_mode",
+	Globals.DifficultyLevels.HARDEST: "set_hardest_mode",
+}
 
 func _ready() -> void:
 	rng.randomize()
@@ -68,6 +80,7 @@ func _ready() -> void:
 	connect("change_boss_phase", self, "start_next_attack_delay")
 	connect("enemy_death", self, "enemy_died")
 	connect("disable_spawnpoints", ArenaManager, "disable_spawnpoints_from_enemy")
+	call(difficulty_attacks_dict[GameStateManager.get_difficulty_level()])
 
 func reset() -> void:
 	can_get_hit = true
@@ -76,6 +89,7 @@ func reset() -> void:
 	current_attack = 0
 	current_damage_taken = 0
 	current_boss_phase = 1
+	hit_animation_intensity = 1
 	continue_attacking = false
 	secondary_attack_enabled = false
 	chosen_attack = ""
@@ -88,8 +102,7 @@ func reset() -> void:
 	setup_attack_constants()
 
 func spawn() -> void:
-	if GameStateManager.debug:
-		Utils.log_error("Spawn method not defined")
+	spawn_animation.play()
 
 func enemy_died() -> void:
 	is_defeated = true
@@ -116,6 +129,16 @@ func enemy_died() -> void:
 func get_hit(dmg_source: BaseBullet) -> void:
 	if can_get_hit:
 		current_damage_taken += dmg_source.damage
+		if (
+			not got_hit_animation.is_playing() and
+			not is_moving and
+			not on_hit_animation.is_playing()
+		):
+			idle_animation.hide()
+			got_hit_animation.show()
+			got_hit_animation.play()
+		else:
+			hit_animation_intensity += 1
 		if GameStateManager.get_debug():
 			print(
 				'Enemy got hit by %s. Current health: %s Current phase: %s' %
@@ -133,6 +156,11 @@ func get_hit(dmg_source: BaseBullet) -> void:
 				MinionManager.remove_all_active_minions()
 
 func change_boss_phase(new_boss_phase: int) -> void:
+	Settings.increase_game_statistic(
+		"level%s_%s_times_reached_phase_%s" %
+			[ENEMY_ID, GameStateManager.get_difficulty_level(), new_boss_phase],
+		1
+	)
 	current_boss_phase = new_boss_phase
 	current_damage_taken = 0
 	hardest_mode_current_attack_stage = 0
@@ -205,3 +233,16 @@ func _on_hardest_mode_time_until_next_stage_timer_timeout() -> void:
 		)
 	else:
 		PlayerManager.add_score(hardest_mode_accumulated_score)
+
+func _on_got_hit_animation_frame_changed():
+	got_hit_animation.offset = Vector2(randi()%8 - 4, randi()%4 - 2)
+	if got_hit_animation.get_frame() / 2 == hit_animation_intensity:
+		_on_got_hit_animation_animation_finished()
+
+func _on_got_hit_animation_animation_finished():
+	hit_animation_intensity = 1
+	got_hit_animation.offset = Vector2.ZERO
+	got_hit_animation.stop()
+	got_hit_animation.set_frame(0)
+	got_hit_animation.hide()
+	idle_animation.show()

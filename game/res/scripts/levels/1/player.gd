@@ -105,6 +105,7 @@ func _update_position() -> void:
 	_update_player_animations(true)
 	is_moving = false
 	current_direction = Vector2.ZERO
+	ArenaManager.get_arena().update_board_spaces_near_player(current_position, player_id)
 
 func _on_board_modified() -> void:
 	board_space_list = ArenaManager.get_current_location().get_board_info()
@@ -132,4 +133,8 @@ func _on_can_get_hit_timer_timeout() -> void:
 		# Doesn't use manage_light(false) because that would also update the
 		# is_light_enabled variable
 		light.visible = false
+
+func _on_game_paused(paused: bool) -> void:
+	_player_move(Vector2.ZERO)
+	._on_game_paused(paused)
 

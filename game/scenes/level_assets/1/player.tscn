@@ -299,6 +299,7 @@ offset = Vector2( 0, -15 )
 [node name="ghost_idle_animation" type="AnimatedSprite" parent="animation_list0"]
 visible = false
 self_modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
+light_mask = 9
 scale = Vector2( 2, 2 )
 frames = SubResource( 100 )
 offset = Vector2( 0, -15 )
@@ -306,6 +307,7 @@ offset = Vector2( 0, -15 )
 [node name="ghost_moving_animation" type="AnimatedSprite" parent="animation_list0"]
 visible = false
 self_modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
+light_mask = 9
 scale = Vector2( 2, 2 )
 frames = SubResource( 104 )
 offset = Vector2( -10, -15 )
@@ -337,6 +339,7 @@ frames = SubResource( 92 )
 [node name="ghost_idle_animation" type="AnimatedSprite" parent="animation_list1"]
 visible = false
 self_modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
+light_mask = 9
 scale = Vector2( 2, 2 )
 frames = SubResource( 108 )
 offset = Vector2( 0, 5 )
@@ -344,6 +347,7 @@ offset = Vector2( 0, 5 )
 [node name="ghost_moving_animation" type="AnimatedSprite" parent="animation_list1"]
 visible = false
 self_modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
+light_mask = 9
 scale = Vector2( 2, 2 )
 frames = SubResource( 113 )
 offset = Vector2( 0, -8 )

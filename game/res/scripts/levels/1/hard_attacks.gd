@@ -228,6 +228,11 @@ func gellers_rook_dance(piece_params: Dictionary) -> void:
 	)
 
 func caro_kann_hidden_offense(piece_params: Dictionary) -> void:
+	idle_animation.hide()
+	special_animation.show()
+	special_animation.play()
+	yield(self, "special_animation_peak_reached")
+
 	var spawn_position: Vector2 
 	var current_attack_id: int = current_attack
 	while continue_attacking:
@@ -307,16 +312,27 @@ func queens_stealthy_gambit(piece_params: Dictionary) -> void:
 	)
 
 func hide_queens(_piece_params: Dictionary) -> void:
+	idle_animation.hide()
+	special_animation.show()
+	special_animation.play()
+	yield(self, "special_animation_peak_reached")
+
 	for queen_id in current_queen_id_list: 
 		var queen_piece = instance_from_id(queen_id)
 		queen_piece.get_node("shows_in_dark").visible = false
 		queen_piece.get_node("hides_in_dark").visible = true 
 
 func absolute_darkness(_piece_params: Dictionary) -> void:
+	idle_animation.hide()
+	special_animation.show()
+	special_animation.play()
+	yield(self, "special_animation_peak_reached")
+
 	for queen_id in current_queen_id_list: 
 		var queen_piece = instance_from_id(queen_id)
 		queen_piece.get_node("shows_in_dark").visible = true 
 		queen_piece.get_node("hides_in_dark").visible = false 
+
 	PlayerManager.manage_player_light(false)
 
 func _pawn_explode(pawn_params: Dictionary, attack_params: Dictionary) -> void:

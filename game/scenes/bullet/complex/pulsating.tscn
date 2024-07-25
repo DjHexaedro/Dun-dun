@@ -19,7 +19,6 @@ light_mask = 8
 scale = Vector2( 0.05, 0.05 )
 z_index = 10
 frames = SubResource( 2 )
-frame = 2
 playing = true
 script = ExtResource( 3 )
 

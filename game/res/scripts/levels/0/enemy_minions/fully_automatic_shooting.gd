@@ -24,8 +24,8 @@ func spawn(params_dict: Dictionary) -> void:
 	attack_speed = ATTACK_SPEED
 	current_speed = BASE_SPEED
 
-func despawn() -> void:
-	.despawn()
+func despawn(reset: bool = false) -> void:
+	.despawn(reset)
 	attack_cooldown_timer.stop()
 
 func _process(_delta: float) -> void:

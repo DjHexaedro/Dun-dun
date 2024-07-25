@@ -20,10 +20,16 @@ const REGULAR_SPACE_COLOR: Color = Color(0.4, 0.4, 0.4, 1)
 var can_spawn_pieces: bool = false setget set_can_spawn_pieces, get_can_spawn_pieces
 var being_used: bool = false
 var can_spawn_powerups: bool = false
+var near_player: Array = []
 var enabled: bool = true setget set_enabled, get_enabled
 var about_to_disappear: bool = false
 var time_waited: float = 0
 var was_despawned: bool = false
+
+func _ready() -> void:
+	rotation_degrees = [0, 90, 180, 270][randi()%4]
+	flip_animations([true, false][randi()%2], [true, false][randi()%2])
+	idle_animation.play()
 
 func _process(delta: float) -> void:
 	if about_to_disappear:
@@ -33,9 +39,6 @@ func _process(delta: float) -> void:
 		else:
 			time_waited += TIME_WAITED_INCREMENT * delta
 
-func play_animation() -> void:
-	idle_animation.play()
-
 func flip_animations(flip_h: bool, flip_v: bool) -> void:
 	idle_animation.flip_h = flip_h
 	idle_animation.flip_v = flip_v
@@ -44,24 +47,22 @@ func flip_animations(flip_h: bool, flip_v: bool) -> void:
 	despawn_animation.flip_h = flip_h
 	despawn_animation.flip_v = flip_v
 
-func set_position_from_two_values(
-	new_h_position: float, new_v_position: float
-) -> void:
-	global_position = Vector2(new_h_position, new_v_position)
-
 func set_can_spawn_pieces(is_piece_spawner: bool) -> void:
-	can_spawn_pieces = is_piece_spawner 
+	if enabled:
+		can_spawn_pieces = is_piece_spawner 
+		if is_piece_spawner:
+			can_spawn_powerups = false 
 
-	idle_animation.self_modulate =\
-			PIECE_SPAWNER_COLOR if is_piece_spawner else REGULAR_SPACE_COLOR
+		idle_animation.self_modulate =\
+				PIECE_SPAWNER_COLOR if is_piece_spawner else REGULAR_SPACE_COLOR
 
-	despawn_animation.hide()
-	spawn_animation.hide()
-	idle_animation.show()
-	idle_animation.play()
-	visible = true
+		despawn_animation.hide()
+		spawn_animation.hide()
+		idle_animation.show()
+		idle_animation.play()
+		visible = true
 
-	manage_light(is_piece_spawner)
+		manage_light(is_piece_spawner)
 
 func get_can_spawn_pieces() -> bool:
 	return can_spawn_pieces

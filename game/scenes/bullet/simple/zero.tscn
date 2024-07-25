@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://juegodetriangulos/res/fonts/joystix.otf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 72
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = SubResource( 1 )
+
+[sub_resource type="Theme" id=3]
+default_font = SubResource( 2 )
+
+[node name="bullet" type="AnimatedSprite"]
+light_mask = 524296
+z_index = 99
+
+[node name="0" type="Label" parent="."]
+light_mask = 8
+margin_right = 60.0
+margin_bottom = 87.0
+rect_scale = Vector2( 3, 3 )
+rect_pivot_offset = Vector2( 45, 70 )
+theme = SubResource( 3 )
+text = "0"

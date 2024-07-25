@@ -37,10 +37,12 @@ const LevelCodes: Dictionary = {
 
 const SimpleBulletTypes: Dictionary = {
 	CIRCULAR = "circular",
+	CIRCULAR_ZERO = "circular_zero",
 	DELAYED = "delayed",
 	DELAYED_CIRCULAR = "delayed_circular",
 	HEALTH = "health",
 	STRAIGHT = "straight",
+	STRAIGHT_ZERO = "straight_zero",
 	SOFT_HOMING = "soft_homing",
 	PAWN = "pawn",
 	ROOK = "rook",
@@ -53,6 +55,9 @@ const ComplexBulletTypes: Dictionary = {
 	POWERUP = "powerup",
 	PULSATING = "pulsating",
 	RANDOM_PULSATING = "random_pulsating",
+	DIVIDING = "dividing",
+	ACTUAL_HOMMING = "actual_homming",
+	PULSATING_ZERO = "pulsating_zero",
 }
 
 const MinionTypes: Dictionary = {

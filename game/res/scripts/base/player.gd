@@ -156,6 +156,8 @@ func _ready() -> void:
 		get_hit_if_moving_timer.set_one_shot(false)
 		add_child(get_hit_if_moving_timer)
 		get_hit_if_moving_timer.connect("timeout", self, "get_hit", [self])
+	
+	Utils.get_pause_menu().connect("game_paused", self, "_on_game_paused")
 
 func _flip_player_animations(flipped: bool, vertical_only: bool) -> void:
 	if vertical_only:
@@ -165,11 +167,10 @@ func _flip_player_animations(flipped: bool, vertical_only: bool) -> void:
 			animation.flip_h = flipped
 
 func _update_player_animations(idle: bool) -> void:
-	if alive:
-		idle_animation.visible = idle
-		idle_animation.playing = idle
-		moving_animation.visible = not idle
-		moving_animation.playing = not idle
+	idle_animation.visible = idle
+	idle_animation.playing = idle
+	moving_animation.visible = not idle
+	moving_animation.playing = not idle
 
 func _reset_common() -> void:
 	_update_player_animations(true)
@@ -183,6 +184,7 @@ func _reset_common() -> void:
 	light.position = Vector2.ZERO
 	invencible = false
 	enable_input = true
+	update_idle_animation_speed(current_health)
 	if player_corpse:
 		player_corpse.queue_free()
 
@@ -194,6 +196,10 @@ func reset() -> void:
 	update_idle_animation_speed(BASE_HEALTH)
 	current_score = 0
 	position = ArenaManager.get_arena_center()
+	idle_animation.hide()
+	moving_animation.hide()
+	idle_animation = animation_list.get_node(IDLE_ANIMATION_NAME)
+	moving_animation = animation_list.get_node(MOVING_ANIMATION_NAME)
 	_reset_common()
 
 func revive() -> void:
@@ -305,7 +311,7 @@ func instance_revive_heart() -> void:
 	revive_heart.spawn(self)
 
 func unload() -> void:
-	if player_corpse:
+	if player_corpse and is_instance_valid(player_corpse):
 		player_corpse.queue_free()
 	queue_free()
 
@@ -367,7 +373,7 @@ func _on_settings_file_changed() -> void:
 		GRAPHICS_WALKING_COLOR if always_show_hitbox else GRAPHICS_DEFAULT_COLOR
 	_update_input_method(Settings.get_config_parameter("input_method"))
 
-func _update_input_method(input_method: int):
+func _update_input_method(input_method: int) -> void:
 	if player_id == Globals.PlayerIDs.PLAYER_ONE:
 		if input_method == Globals.InputTypes.KEYBOARD:
 			set_keyboard_actions()
@@ -386,3 +392,5 @@ func _update_input_method(input_method: int):
 			else:
 				set_keyboard_actions()
 
+func _on_game_paused(paused: bool) -> void:
+	set_process_input(not paused)

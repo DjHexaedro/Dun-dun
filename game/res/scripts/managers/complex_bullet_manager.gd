@@ -24,7 +24,7 @@ func initializate_bullets(bullet_types_dict: Dictionary) -> void:
 	for bullet_type in bullet_types_dict:
 		if not idle_bullets.get(bullet_type, false):
 			idle_bullets[bullet_type] = []
-		var n_of_bullets = clamp(bullet_types_dict[bullet_type] - len(idle_bullets[bullet_type]), 0, 20)
+		var n_of_bullets = clamp(bullet_types_dict[bullet_type] - len(idle_bullets[bullet_type]), 0, 1000)
 		bullet_scene = load("%s/%s.tscn" % [BULLET_DIR_PATH, bullet_type.to_lower()])
 		for _i in range(n_of_bullets):
 			new_bullet = create_bullet(bullet_scene)

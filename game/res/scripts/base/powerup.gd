@@ -32,7 +32,7 @@ var bullet_list: Array = []
 var current_damage: int
 var current_shoot_bullets: int
 var is_shooting: bool
-var enabled: bool = true
+var enabled: bool = true setget set_enabled, get_enabled
 var n_of_bullets: int = 1
 var has_spawned: bool = false
 var delay_between_bullets_timer: Timer = Timer.new()
@@ -40,6 +40,11 @@ var player_pickup_distance: float = BASE_PLAYER_PICKUP_DISTANCE
 var allowed_player_id: int = -1
 var changed_owners: bool = false
 
+func set_enabled(value: bool) -> void:
+	enabled = value
+
+func get_enabled() -> bool:
+	return enabled
 
 func _ready() -> void:
 	# Spawn the powerup out of bounds before its actual position is set,
@@ -117,8 +122,8 @@ func shoot() -> void:
 	visible = false
 	PowerupManager.remove_active_powerup(get_instance_id())
 
-func add_score() -> void:
-	PowerupManager.add_score(n_of_bullets)
+func get_powerup_combo() -> int:
+	return PowerupManager.get_powerup_combo(n_of_bullets)
 
 func unload() -> void:
 	bullet_list = []
@@ -181,11 +186,11 @@ func _on_powerup_grabbed() -> void:
 				decay_timer.stop()
 				break_powerup()
 			else:
-				add_score()
 				shoot()
 			
 			GameStateManager.update_match_history(
-				Globals.MatchEvents.CRYSTAL_GRABBED, n_of_bullets
+				Globals.MatchEvents.CRYSTAL_GRABBED,
+				n_of_bullets
 			)
 			Settings.increase_game_statistic("crystals_collected", 1)
 			if n_of_bullets == 5:

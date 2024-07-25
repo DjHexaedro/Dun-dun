@@ -39,6 +39,12 @@ func _ready() -> void:
 			missed_grabs_do_damage_checkbox,
 			save_button,
 		],
+		2: [
+			one_hit_death_checkbox,
+			standing_still_does_damage_checkbox,
+			moving_does_damage_checkbox,
+			save_button,
+		],
 	}
 	options_list = options_by_boss[0]
 	joystick_ui_timer.set_wait_time(0.1)
@@ -50,32 +56,39 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("ui_cancel"):
 			_on_save_button_pressed()
 		else:
-			if event.is_action_pressed("ui_up"):
-				current_option -= 1
-				if current_option < 0:
-					current_option = len(options_list) - 1
-			if event.is_action_pressed("ui_down"):
-				current_option += 1
-				if current_option > len(options_list) - 1:
-					current_option = 0
-			if event.is_action_pressed("ui_up_joystick") and can_move_joystick_ui:
-				current_option -= 1
-				if current_option < 0:
-					current_option = len(options_list) - 1
+			if (
+				event.is_action_pressed("ui_up") or
+				event.is_action_pressed("ui_down")
+			):
+				_update_current_option(
+					-1 if event.is_action_pressed("ui_up") else 1
+				)
+
+			if (
+				event.is_action_pressed("ui_up_joystick") or
+				event.is_action_pressed("ui_down_joystick")
+			) and can_move_joystick_ui:
+				_update_current_option(
+					-1 if event.is_action_pressed("ui_up_joystick") else 1
+				)
 				can_move_joystick_ui = false
 				joystick_ui_timer.start()
-			if event.is_action_pressed("ui_down_joystick") and can_move_joystick_ui:
-				current_option += 1
-				if current_option > len(options_list) - 1:
-					current_option = 0
-				can_move_joystick_ui = false
-				joystick_ui_timer.start()
+
 			move_marker()
+
 			if event.is_action_pressed("ui_accept"):
 				if options_list[current_option].name == "save_button":
 					_on_save_button_pressed()
 				else:
-					options_list[current_option].pressed = not options_list[current_option].pressed
+					options_list[current_option].pressed =\
+						not options_list[current_option].pressed
+
+func _update_current_option(option_increase: int) -> void:
+	current_option += option_increase
+	if current_option < 0:
+		current_option = len(options_list) - 1
+	if current_option > len(options_list) - 1:
+		current_option = 0
 
 func move_marker() -> void:
 	selected_challenge_marker_sprite.position.y =\
@@ -91,6 +104,7 @@ func switch_challenges(boss_id: int) -> void:
 		challenge.show()
 	options_list = options_by_boss[boss_id]
 	current_option = 0
+	move_marker()
 
 func _on_one_hit_death_toggled(button_pressed: bool) -> void:
 	GameStateManager.set_one_hit_death(button_pressed)

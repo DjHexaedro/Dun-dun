@@ -8,24 +8,18 @@ onready var bgm_phase2: AudioStreamPlayer = $bgm_phase2
 onready var bgm_phase3: AudioStreamPlayer = $bgm_phase3
 onready var bgm_phase4: AudioStreamPlayer = $bgm_phase4
 onready var bgm_phase5: AudioStreamPlayer = $bgm_phase5
-onready var doors_closed_audio: AudioStreamPlayer = $doors_closed_audio
 onready var enemy: Node2D = $enemy
 onready var powerup_spawning_zones: Node2D = $powerup_spawning_zones
 onready var background_sprite: Sprite = $sprite
-onready var show_score_screen_area: Area2D = $show_score_trigger
 
 const SCORE_PANEL_TEXT: String = "Your last achieved score is\n%s\nYour top score is\n%s"
 const ENEMY_ID: int = 0
 
 var spawning_zones_list: Array
-var open_doors_texture: Texture = preload("res://juegodetriangulos/res/sprites/levels/0/arena/arena_bg_open_doors.png")
-var closed_doors_texture: Texture = preload("res://juegodetriangulos/res/sprites/levels/0/arena/arena_bg_closed_doors.png")
 var enemy_already_defeated: bool = false
 
 func _ready():
-	areas_to_load = ["entrance_hall", "after_ongard_hall"]
 	spawning_zones_list = powerup_spawning_zones.get_children()
-#	enemy_already_defeated = Settings.get_game_statistic("level0_enemy_defeated", false)
 	GameStateManager.connect("level_end", self, "_on_level_reload")
 	GameStateManager.connect("level_restart", self, "_on_level_reload")
 	if enemy_already_defeated:
@@ -36,6 +30,7 @@ func _ready():
 	AudioServer.set_bus_mute(AudioServer.get_bus_index("BGM P3"), true)
 	AudioServer.set_bus_mute(AudioServer.get_bus_index("BGM P4"), true)
 	AudioServer.set_bus_mute(AudioServer.get_bus_index("BGM P5"), true)
+	start_boss_fight()
 
 func get_enemy_positions_list() -> Dictionary:
 	return {
@@ -60,8 +55,6 @@ func get_enemy_positions_list() -> Dictionary:
 	}
 
 func start_boss_fight(temporary: bool = false) -> void:
-	close_arena()
-	yield(self, "level0_fight_started")
 	EnemyManager.setup_enemy("level0")
 	enemy.connect("enemy_death", self, "_on_enemy_death")
 	enemy.connect("enemy_despawn", self, "_on_enemy_despawn")
@@ -70,30 +63,6 @@ func start_boss_fight(temporary: bool = false) -> void:
 		Settings.save_game_statistic("current_boss", ENEMY_ID)
 	else:
 		GameStateManager.set_camera_focus(true, false)
-	if PlayerManager.get_player_lamp_on():
-		PlayerManager.player_emit_lamp_on_signal()
-
-func open_arena(show_cutscene: bool = true) -> void:
-	manage_arena_open_state(show_cutscene, true)
-
-func close_arena(show_cutscene: bool = true) -> void:
-	manage_arena_open_state(show_cutscene, false)
-
-func manage_arena_open_state(show_cutscene: bool = true, open: bool = true) -> void:
-	background_sprite.texture = open_doors_texture if open else closed_doors_texture
-	background_sprite.get_node("left_gate_limits").get_node("collision").set_deferred("disabled", open)
-	background_sprite.get_node("right_gate_limits").get_node("collision").set_deferred("disabled", open)
-	if show_cutscene:
-		for player_id in range(PlayerManager.get_number_of_players()):
-			PlayerManager.player_stand_still(player_id)
-		CameraManager.shake_screen(null, 0.675, 0.5)
-		doors_closed_audio.play()
-		yield(doors_closed_audio, "finished")
-		for player in PlayerManager.get_player_list():
-			player.enable_input = true
-		if not open:
-			emit_signal("level0_fight_started")
-		manage_lights(open)
 
 func manage_powerup_spawn_points(area_name: String, spawn_point_name_list: Array, enabled: bool) -> void:
 	var area = powerup_spawning_zones.get_node(area_name)
@@ -123,7 +92,6 @@ func manage_lights(enabled: bool) -> void:
 		light.visible = enabled 
 
 func reset() -> void:
-	manage_arena_open_state(false, enemy_already_defeated)
 	AudioServer.set_bus_mute(AudioServer.get_bus_index("BGM P2"), true)
 	AudioServer.set_bus_mute(AudioServer.get_bus_index("BGM P3"), true)
 	AudioServer.set_bus_mute(AudioServer.get_bus_index("BGM P4"), true)
@@ -134,10 +102,6 @@ func _on_enemy_death() -> void:
 
 func _on_enemy_despawn() -> void:
 	manage_lights(true)
-	show_score_screen_area.enable(
-		SCORE_PANEL_TEXT % [Settings.get_game_statistic("level_scores", 0, "level0_last"),
-		Settings.get_game_statistic("level_scores", 0, "level0_top")]
-	)
 
 func _on_level_reload() -> void:
 	if enemy_already_defeated:

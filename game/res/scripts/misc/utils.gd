@@ -18,6 +18,7 @@ var options_menu: CanvasLayer
 var extra_challenges_container: Panel 
 var dialog_box: CanvasLayer
 var pause_menu: CanvasLayer
+var message_node = null
 
 func _ready() -> void:
 	main_node = get_tree().get_root().get_node("Main")
@@ -56,6 +57,7 @@ func disable_pause_node() -> void:
 	pause_menu.enabled = false
 
 func show_extra_challenges_screen() -> void:
+	yield(get_tree().create_timer(0.1), "timeout")
 	extra_challenges_container.show()
 
 func update_extra_challenges_options(boss_id: int) -> void:
@@ -83,8 +85,9 @@ func is_dialog_box_visible() -> bool:
 	return dialog_box.visible
 
 func show_message(message: String = "") -> void:
-	var message_node = messagescene.instance()
-	get_tree().get_root().add_child(message_node)
+	if not message_node:
+		message_node = messagescene.instance()
+		get_tree().get_root().add_child(message_node)
 	if message:
 		message_node.get_node("message_label").text = message
 

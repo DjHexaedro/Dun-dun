@@ -51,7 +51,6 @@ func hard_flamethrower(userdata: Dictionary) -> void:
 			current_bullet_number = 0
 
 func hard_bullet_hell_semicircle(userdata: Dictionary) -> void:
-	Settings.increase_game_statistic("ongard_hard_times_reached_second_phase", 1)
 	var change_bullet_direction_timer: Timer = Timer.new()
 	change_bullet_direction_timer.set_wait_time(1)
 	change_bullet_direction_timer.set_one_shot(true)
@@ -111,7 +110,6 @@ func hard_shoot_soft_homing_bullets(userdata: Dictionary) -> void:
 				SimpleBulletManager.spawn_bullet(userdata.BULLET_TYPE, params_dict)
 
 func hard_three_lane_fireball(userdata: Dictionary) -> void:
-	Settings.increase_game_statistic("ongard_hard_times_reached_third_phase", 1)
 	MinionManager.spawn_minion(Globals.MinionTypes.WIDE, userdata.UPPER_MINION_PARAMS)
 	MinionManager.spawn_minion(Globals.MinionTypes.WIDE, userdata.LOWER_MINION_PARAMS)
 
@@ -120,7 +118,6 @@ func hard_three_lane_fireball_secondary_attack(userdata: Dictionary) -> void:
 	MinionManager.spawn_minion(Globals.MinionTypes.AUTOMATIC, userdata.RIGHTER_MINION_PARAMS)
 
 func hard_fireball_circle(userdata: Dictionary) -> void:
-	Settings.increase_game_statistic("ongard_hard_times_reached_fourth_phase", 1)
 	var params_dict = {
 		"scale": userdata.BASE_BULLET_SIZE,
 		"global_position": Vector2(positions_list.global.LEFT_X, positions_list.global.TOP_Y),
@@ -139,7 +136,6 @@ func hard_fireball_circle_secondary_attack(userdata: Dictionary) -> void:
 	ComplexBulletManager.spawn_bullet(userdata.BULLET_TYPE, params_dict)
 
 func hard_constant_fire_circle(userdata: Dictionary) -> void:
-	Settings.increase_game_statistic("ongard_hard_times_reached_fifth_phase", 1)
 	create_hard_constant_fire_circle(userdata)
 
 func create_hard_constant_fire_circle(userdata: Dictionary, notify_arena_center: bool = true) -> void:

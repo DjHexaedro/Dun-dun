@@ -3,16 +3,15 @@
 extends BaseEnemy
 
 signal clear_used_board_space_spawners
-
-onready var idle_animation: AnimatedSprite = $idle_animation
-onready var laugh_animation: AnimatedSprite = $laugh_animation
-onready var spawn_animation: AnimatedSprite = $spawn_animation
-onready var invert_shader: ShaderMaterial = preload("res://juegodetriangulos/res/shaders/invert.tres")
+signal special_animation_peak_reached
 
 const PAWN_BASE_SPEED: int = 100
 const ROOK_BASE_SPEED: int = 250
 const BISHOP_BASE_SPEED: int = 150
 const QUEEN_BASE_SPEED: int = 250
+
+onready var invert_shader: ShaderMaterial = preload("res://juegodetriangulos/res/shaders/invert.tres")
+onready var laugh_audio: AudioStreamPlayer2D = $laugh
 
 var board_space_list: Array
 var board_space_spawners: Dictionary
@@ -38,6 +37,11 @@ func change_boss_phase(new_boss_phase: int) -> void:
 		PlayerManager.heal_player()
 	_update_board(new_boss_phase)
 	.change_boss_phase(new_boss_phase)
+
+func laugh() -> void:
+	on_hit_animation.show()
+	on_hit_animation.play()
+	laugh_audio.play()
 
 func select_spawn_space_in_row(row: int, is_random: bool = false) -> Vector2:
 	if not board_space_spawners.get(row, []):
@@ -186,6 +190,7 @@ func get_random_board_space_position() -> Vector2:
 
 func reset(_reset_animations: bool = true) -> void:
 	.reset()
+	get_parent().arena_light.visible = true
 	used_board_space_spawners = {}
 	previous_used_board_space_spawners = {}
 	spawned_pieces_list = []
@@ -203,12 +208,18 @@ func _setup_enemy() -> void:
 	idle_animation.stop()
 	idle_animation.hide()
 	idle_animation.set_frame(0)
-	laugh_animation.stop()
-	laugh_animation.hide()
-	laugh_animation.set_frame(0)
+	on_hit_animation.stop()
+	on_hit_animation.hide()
+	on_hit_animation.set_frame(0)
 	spawn_animation.stop()
 	spawn_animation.hide()
 	spawn_animation.set_frame(0)
+	got_hit_animation.stop()
+	got_hit_animation.hide()
+	got_hit_animation.set_frame(0)
+	special_animation.stop()
+	special_animation.hide()
+	special_animation.set_frame(0)
 
 func unload() -> void:
 	var spawned_pieces_list_copy = spawned_pieces_list.duplicate()
@@ -233,24 +244,23 @@ func _on_spawn_animation_animation_finished() -> void:
 	spawn_animation.hide()
 	spawn_animation.stop()
 	spawn_animation.set_frame(0)
-	laugh_animation.show()
-	laugh_animation.play()
+	on_hit_animation.show()
+	on_hit_animation.play()
+	laugh_audio.play()
 
-func _on_laugh_animation_animation_finished() -> void:
+func _on_on_hit_animation_animation_finished() -> void:
 	spawn_animation.hide()
-	laugh_animation.stop()
-	laugh_animation.hide()
-	laugh_animation.set_frame(0)
-	idle_animation.show()
-	idle_animation.play()
+	on_hit_animation.stop()
+	on_hit_animation.hide()
+	on_hit_animation.set_frame(0)
 
 	if start_attacking:
-		PlayerManager.get_player_node().connect("player_hit", self, "_on_player_hit")
-		get_parent().arena_light.visible = false
-		ArenaManager.update_current_bgm(true)
-		_update_board()
-		attack()
-		start_attacking = false
+		special_animation.show()
+		special_animation.play()
+		yield(special_animation, "animation_finished")
+	else:
+		idle_animation.show()
+		idle_animation.play()
 
 func _on_board_modified() -> void:
 	board_space_list = get_parent().get_board_info()
@@ -279,7 +289,29 @@ func _on_clear_used_board_space_spawners() -> void:
 	used_board_space_spawners = {}
 
 func _on_player_hit() -> void:
-	idle_animation.hide()
-	spawn_animation.hide()
-	laugh_animation.show()
-	laugh_animation.play()
+	if not got_hit_animation.is_playing():
+		idle_animation.hide()
+		spawn_animation.hide()
+		on_hit_animation.show()
+		on_hit_animation.play()
+		laugh_audio.play()
+
+func _on_special_animation_frame_changed() -> void:
+	if special_animation.frame == 4:
+		if start_attacking:
+			get_parent().arena_light.visible = false
+		emit_signal("special_animation_peak_reached")
+
+func _on_special_animation_animation_finished() -> void:
+	special_animation.hide()
+	special_animation.stop()
+	special_animation.set_frame(0)
+	idle_animation.show()
+	idle_animation.play()
+
+	if start_attacking:
+		PlayerManager.get_player_node().connect("player_hit", self, "_on_player_hit")
+		ArenaManager.update_current_bgm(true)
+		_update_board()
+		attack()
+		start_attacking = false

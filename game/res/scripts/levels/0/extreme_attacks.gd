@@ -108,7 +108,6 @@ func hardest_fire_wall_end(userdata: Dictionary) -> void:
 	change_boss_phase(current_boss_phase + 1)
 
 func hardest_pulsating_fireball(userdata: Dictionary) -> void:
-	Settings.increase_game_statistic("ongard_hardest_times_reached_second_phase", 1)
 	var params_dict: Dictionary = {
 		"scale": userdata.BULLET_SIZE,
 		"n_of_bullets": userdata.N_OF_BULLETS,
@@ -151,7 +150,6 @@ func hardest_pulsating_fireball_end(_userdata: Dictionary) -> void:
 	change_boss_phase(current_boss_phase + 1)
 
 func hardest_fireball_circle(userdata: Dictionary) -> void:
-	Settings.increase_game_statistic("ongard_hardest_times_reached_third_phase", 1)
 	while continue_attacking:
 		create_fireball_circle(userdata)
 		yield(self, "fireball_finished")
@@ -213,7 +211,6 @@ func create_fireball_circle(userdata: Dictionary) -> void:
 	emit_signal("fireball_finished")
 
 func hardest_last_attack(userdata: Dictionary) -> void:
-	Settings.increase_game_statistic("ongard_hardest_times_reached_fourth_phase", 1)
 	var fire_wall_userdata = attack_params.hardest_fire_wall
 	fire_wall_userdata.is_last_attack = true
 	fire_wall_userdata.BASE_TIME_BETWEEN_ROWS = 0.3

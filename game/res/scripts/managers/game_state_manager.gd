@@ -139,7 +139,7 @@ func reset_game_objects() -> void:
 	EnemyManager.reset_enemy()
 	SimpleBulletManager.remove_all_active_bullets()
 	ComplexBulletManager.remove_all_active_bullets()
-	MinionManager.remove_all_active_minions()
+	MinionManager.remove_all_active_minions(true)
 	if GameStateManager.get_difficulty_level() != Globals.DifficultyLevels.HARDEST:
 		PowerupManager.reset_powerups()
 	set_camera_focus(Settings.get_game_statistic("fighting_boss", false), false)

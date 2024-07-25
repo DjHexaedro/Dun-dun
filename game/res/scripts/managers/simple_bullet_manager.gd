@@ -12,11 +12,12 @@ const PLAYER_DISTANCE_TO_HIT: int = 5000
 const BULLET_DIR_PATH: String = "res://juegodetriangulos/scenes/bullet/simple"
 const BULLET_GRAPHICS_DICT: Dictionary = {
 	"circular": "death_ball",
+	"circular_zero": "zero",
 	"delayed": "fireball",
 	"delayed_circular": "death_ball",
 	"soft_homing": "death_ball",
 	"straight": "fireball",
-	"health": "health_refill",
+	"straight_zero": "zero",
 	"pawn": "pawn",
 	"rook": "rook",
 	"bishop": "bishop",
@@ -27,17 +28,13 @@ const PATTERN_FUNCTION_BASE_NAME: String = "%s_bullet_pattern"
 const BULLET_STOPPED_INITIAL_WAIT_TIME: float = 0.5
 const BULLET_STOPPED_BASE_WAIT_TIME: float = 0.05
 const BULLET_STOPPED_BASE_WAIT_TIME_MODIFIER: float = 0.02
-const HEALTH_REFILL_TIMER_BASE_TIME: float = 30.0
-const HEALTH_REFILL_TIMER_ON_HEALTH_PICKUP_TIME: float = 45.0
-const HEALTH_REFILL_TIMER_INCREMENT: float = 10.0
-const HEALTH_REFILL_TIMER_MAX_TIME: float = 90.0
 const DESPAWN_BLINK_TIMES: int = 14
 const BULLET_DESPAWN_TIMER_TIMES: Array = [0.03, 0.12]
 
 var idle_bullets: Dictionary = {}
 var active_bullets: Dictionary = {}
 var bullet_params: Dictionary = {}
-var player_position_list: Array
+var player_list: Array
 var current_bullet: AnimatedSprite
 var current_bullet_params: Dictionary
 var delayed_bullet_stopped_list: Array = []
@@ -48,6 +45,7 @@ var oob_bottom: int
 var oob_left: int
 var oob_right: int
 var last_instance_id
+var check_collision: bool = true
 
 func _ready() -> void:
 	SimpleBulletMovementManager.connect("delayed_bullet_stopped", self, "_on_delayed_bullet_stopped")
@@ -56,14 +54,11 @@ func _ready() -> void:
 	add_child(bullet_despawn_timer)
 
 func _process(delta: float) -> void:
-	if PlayerManager.player_exists():
+	if check_collision and len(active_bullets) and PlayerManager.player_exists():
+		player_list = PlayerManager.get_player_list()
+
 		for bullet_type in active_bullets:
 			for bullet_id in active_bullets[bullet_type]:
-				player_position_list = []
-				for player_id in range(PlayerManager.get_number_of_players()):
-					player_position_list.append(
-						PlayerManager.get_player_position(player_id)
-					)
 				current_bullet = instance_from_id(bullet_id)
 				current_bullet_params = bullet_params.get(bullet_id, {})
 				if current_bullet_params:
@@ -75,7 +70,7 @@ func _process(delta: float) -> void:
 					else:
 						SimpleBulletMovementManager.call(
 							PATTERN_FUNCTION_BASE_NAME % bullet_type.to_lower(),
-							current_bullet, bullet_params[bullet_id], delta
+							current_bullet, bullet_params[bullet_id], delta * 2
 						)
 						if (
 							clamp(
@@ -88,6 +83,7 @@ func _process(delta: float) -> void:
 							) in [oob_left, oob_right]
 						):
 							remove_active_bullet(bullet_type, bullet_id)
+	check_collision = not check_collision
 
 func initializate_bullets(bullet_types_dict: Dictionary) -> void:
 	var new_bullet: AnimatedSprite 
@@ -98,9 +94,11 @@ func initializate_bullets(bullet_types_dict: Dictionary) -> void:
 		var n_of_bullets = clamp(
 			bullet_types_dict[bullet_type] - len(idle_bullets[bullet_type]), 0, 10000
 		)
-		bullet_scene = load("%s/%s.tscn" % [
-			BULLET_DIR_PATH, BULLET_GRAPHICS_DICT.get(bullet_type.to_lower(), "death_ball")
-		])
+		bullet_scene = load(
+			"%s/%s.tscn" % [BULLET_DIR_PATH, BULLET_GRAPHICS_DICT.get(
+				bullet_type.to_lower(), "death_ball"
+			)]
+		)
 		for _i in range(n_of_bullets):
 			new_bullet = create_bullet(bullet_scene)
 			idle_bullets[bullet_type].append(new_bullet.get_instance_id())
@@ -176,8 +174,6 @@ func get_avaliable_bullet(bullet_type: String, params_dict: Dictionary) -> Anima
 		active_bullets[bullet_type] = []
 	bullet_params[avaliable_bullet_id] = params_dict.duplicate()
 	var new_bullet: AnimatedSprite = instance_from_id(avaliable_bullet_id)
-	if bullet_type == Globals.SimpleBulletTypes.HEALTH:
-		bullet_params[avaliable_bullet_id]["heals_player"] = true
 	set_bullet_params(new_bullet, params_dict)
 	if BULLET_GRAPHICS_DICT[bullet_type] == "fireball":
 		set_bullet_frame(new_bullet, params_dict.velocity)
@@ -236,6 +232,9 @@ func set_bullet_frame(bullet: AnimatedSprite, velocity: Vector2) -> void:
 	bullet.set_frame(frame_index)
 	bullet.rotation_degrees = initial_rotation_degrees
 
+func get_active_bullets_ids_by_type(bullet_type: String) -> Array:
+	return active_bullets[bullet_type]
+
 func set_bullet_params(bullet: AnimatedSprite, params_dict: Dictionary) -> void:
 	for key in params_dict:
 		bullet.set(key, params_dict[key])
@@ -266,9 +265,9 @@ func spawn_bullet(bullet_type: String, params_dict: Dictionary) -> void:
 	var new_bullet: AnimatedSprite = get_avaliable_bullet(bullet_type, params_dict)
 	if new_bullet:
 		for _i in range(SPAWN_BLINK_TIMES):
-			yield(get_tree().create_timer(0.12), "timeout")
+			yield(get_tree().create_timer(BULLET_DESPAWN_TIMER_TIMES[1]), "timeout")
 			new_bullet.visible = false
-			yield(get_tree().create_timer(0.03), "timeout")
+			yield(get_tree().create_timer(BULLET_DESPAWN_TIMER_TIMES[0]), "timeout")
 			new_bullet.visible = true
 		add_bullet_to_active_bullets(bullet_type, new_bullet.get_instance_id())
 
@@ -283,13 +282,11 @@ func update_bullet_params_dict(bullet_id: int, new_bullet_params: Dictionary) ->
 	bullet_params[bullet_id].merge(new_bullet_params, true)
 
 func _bullet_hit_player(bullet: AnimatedSprite) -> int:
-	for player_id in range(len(player_position_list)):
-		if (
-			player_position_list[player_id].distance_squared_to(
-				bullet.get_global_position()
-			) <= PLAYER_DISTANCE_TO_HIT * bullet.scale.length_squared()
-		) and PlayerManager.can_player_be_hit(player_id):
-			return player_id
+	for player in player_list:
+		if player.can_be_hit() and player.position.distance_squared_to(
+			bullet.get_global_position()
+		) <= PLAYER_DISTANCE_TO_HIT * bullet.scale.length_squared():
+			return player.player_id
 	return -1
 
 func _on_delayed_bullet_stopped(bullet_id: int) -> void:

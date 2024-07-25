@@ -16,10 +16,7 @@ func initialize_arena(chosen_enemy: String) -> void:
 	get_tree().get_root().add_child(current_location)
 	update_current_location()
 	update_current_bgm()
-	if Settings.get_game_statistic("fighting_boss", false):
-		current_location.close_arena(false)
-	else:
-		start_music()
+	start_music()
 
 func get_arena() -> Node:
 	return current_location
@@ -47,12 +44,7 @@ func set_camera_focus(smoothing: bool) -> void:
 
 func get_checkpoint_position(checkpoint_name: String = '') -> Vector2:
 	if arena and exists_arena():
-		if checkpoint_name:
-			return arena.get_node("checkpoint_position").global_position
-#			return arena.get_node(checkpoint_name).get_node("checkpoint_position").global_position
-		else:
-			return arena.get_node("checkpoint_position").global_position
-#			return arena.get_node(Settings.get_game_statistic("current_player_checkpoint", "entrance_hall")).get_node("checkpoint_position").global_position
+		return arena.get_node("checkpoint_position").global_position
 	else:
 		return Utils.log_error("get_checkpoint_position", Vector2.ZERO)
 

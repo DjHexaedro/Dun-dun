@@ -42,7 +42,7 @@ func spawn(params_dict: Dictionary) -> void:
 	spawn_animation.set_frame(0)
 	spawn_animation.play()
 
-func despawn() -> void:
+func despawn(reset: bool = false) -> void:
 	begin_attacking_timer.stop()
 	can_attack = false
 	spawn_animation.visible = false
@@ -51,7 +51,11 @@ func despawn() -> void:
 	attack_animation.set_frame(0)
 	despawn_animation.visible = true 
 	despawn_animation.set_frame(0)
-	despawn_animation.play()
+	if reset:
+		despawn_animation.visible = false
+		global_position = Globals.OUT_OF_BOUNDS_POSITION
+	else:
+		despawn_animation.play()
 	spawned = false 
 
 func attack() -> void:
@@ -81,11 +85,14 @@ func _on_begin_attacking_timer_timeout() -> void:
 func _on_attack_animation_animation_finished() -> void:
 	attack()
 	attack_animation.visible = false 
+	attack_animation.stop()
 	spawn_animation.visible = true 
 
 func _on_spawn_animation_animation_finished() -> void:
+	spawn_animation.stop()
 	can_attack = true
 	spawned = true
 
 func _on_despawn_animation_animation_finished() -> void:
+	despawn_animation.stop()
 	global_position = Globals.OUT_OF_BOUNDS_POSITION

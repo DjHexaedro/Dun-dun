@@ -145,15 +145,12 @@ func create_and_start_powerup_timer() -> void:
 func reset_perfect_powerups_combo():
 	perfect_powerups_combo = 0
 
-func add_score(n_of_bullets: int) -> void:
+func get_powerup_combo(n_of_bullets: int) -> int:
 	if n_of_bullets == 5:
 		perfect_powerups_combo += 1
 	else:
 		reset_perfect_powerups_combo()
-	var total_score: int =\
-		pow(BASE_SCORE * n_of_bullets, 2) *\
-		(int(perfect_powerups_combo / COMBO_INCREASE_INTERVAL) + 1)
-	PlayerManager.add_score(total_score)
+	return int(perfect_powerups_combo / COMBO_INCREASE_INTERVAL) + 1
 
 func start_powerup_timer() -> void:
 	if exists_powerup_timer():

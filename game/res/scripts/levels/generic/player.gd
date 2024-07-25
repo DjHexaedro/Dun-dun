@@ -192,3 +192,7 @@ func _on_stop_get_hit_if_moving_timer_timer_timeout() -> void:
 
 func _on_set_idle_animation_on_phone_timer_timeout() -> void:
 	_update_player_animations(true)
+
+func _on_game_paused(paused: bool) -> void:
+	_player_move(Vector2.ZERO)
+	._on_game_paused(paused)

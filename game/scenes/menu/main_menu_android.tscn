@@ -1,7 +1,9 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://juegodetriangulos/res/scripts/menus/main.gd" type="Script" id=1]
 [ext_resource path="res://juegodetriangulos/res/themes/main_menu_button.tres" type="StyleBox" id=2]
+[ext_resource path="res://juegodetriangulos/res/sprites/ui/hud/continue_playing.png" type="Texture" id=3]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Frame2ojo.png" type="Texture" id=4]
 [ext_resource path="res://juegodetriangulos/res/sprites/ui/menu/checkbox_checked.png" type="Texture" id=5]
 [ext_resource path="res://juegodetriangulos/res/sprites/misc/main_screen_bg_animations/main_screen_bg2.png" type="Texture" id=6]
 [ext_resource path="res://juegodetriangulos/res/sprites/misc/main_screen_bg_animations/main_screen_bg1.png" type="Texture" id=7]
@@ -10,29 +12,61 @@
 [ext_resource path="res://juegodetriangulos/res/sprites/ui/hud/exit_icon.png" type="Texture" id=10]
 [ext_resource path="res://juegodetriangulos/res/music/Select.wav" type="AudioStream" id=11]
 [ext_resource path="res://juegodetriangulos/res/music/main_menu.mp3" type="AudioStream" id=12]
-[ext_resource path="res://juegodetriangulos/res/themes/options_menu_android.tres" type="Theme" id=14]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Frame1ojo.png" type="Texture" id=13]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/1/parkov_spritesheet_v2.png" type="Texture" id=14]
 [ext_resource path="res://juegodetriangulos/res/themes/standard_extra_large.tres" type="Theme" id=15]
 [ext_resource path="res://juegodetriangulos/res/sprites/ui/hud/stats.png" type="Texture" id=16]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Frame3ojo.png" type="Texture" id=17]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Frame5ojo.png" type="Texture" id=18]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/boss/Frame4ojo.png" type="Texture" id=19]
+[ext_resource path="res://juegodetriangulos/res/themes/standard_large.tres" type="Theme" id=20]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/2/spritesheet.png" type="Texture" id=21]
 
-[sub_resource type="DynamicFontData" id=2]
-font_path = "res://juegodetriangulos/res/fonts/Dun_dunTipografia-Regular.otf"
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 13 ), ExtResource( 13 ), ExtResource( 13 ), ExtResource( 13 ), ExtResource( 4 ), ExtResource( 17 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 17 ), ExtResource( 4 ), ExtResource( 13 ), ExtResource( 13 ), ExtResource( 13 ), ExtResource( 13 ), ExtResource( 13 ), ExtResource( 13 ), ExtResource( 13 ), ExtResource( 13 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
-[sub_resource type="DynamicFont" id=3]
-size = 32
-outline_size = 1
-outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 2 )
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 14 )
+region = Rect2( 128, 64, 64, 64 )
 
-[sub_resource type="DynamicFontData" id=4]
-font_path = "res://juegodetriangulos/res/fonts/Dun_dunTipografia-Regular.otf"
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 14 )
+region = Rect2( 256, 64, 64, 64 )
 
-[sub_resource type="DynamicFont" id=5]
-size = 32
-outline_size = 1
-outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 4 )
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 2.0
+} ]
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 21 )
+region = Rect2( 512, 128, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 21 )
+region = Rect2( 640, 128, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 21 )
+region = Rect2( 768, 128, 128, 128 )
+
+[sub_resource type="SpriteFrames" id=16]
+animations = [ {
+"frames": [ SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 14 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=5]
 animations = [ {
 "frames": [ ExtResource( 8 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 7 ) ],
 "loop": true,
@@ -48,31 +82,102 @@ visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
-[node name="boss_list" type="HBoxContainer" parent="menu_container"]
+[node name="boss_list_previous" type="Button" parent="menu_container"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1044.0
+margin_top = 441.0
+margin_right = 1244.0
+margin_bottom = 641.0
+rect_rotation = -180.0
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 2 )
+custom_styles/focus = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+icon = ExtResource( 3 )
+expand_icon = true
+
+[node name="boss_list_next" type="Button" parent="menu_container"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1507.0
+margin_top = 252.0
+margin_right = 1707.0
+margin_bottom = 452.0
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 2 )
+custom_styles/focus = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+icon = ExtResource( 3 )
+expand_icon = true
+
+[node name="boss_list" type="Control" parent="menu_container"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 1145.0
-margin_top = 80.0
-margin_right = 1487.0
-margin_bottom = 353.0
-alignment = 1
+margin_left = 1180.0
+margin_top = -16.0
+margin_right = 1460.0
+margin_bottom = 257.0
 
-[node name="level0_checkbox" type="CheckBox" parent="menu_container/boss_list"]
-margin_right = 174.0
-margin_bottom = 273.0
-theme = ExtResource( 14 )
-custom_fonts/font = SubResource( 3 )
+[node name="0" type="Label" parent="menu_container/boss_list"]
+visible = false
+margin_left = -70.0
+margin_top = 285.0
+margin_right = 330.0
+margin_bottom = 485.0
+theme = ExtResource( 15 )
 text = "Ongard"
+align = 1
+valign = 1
 
-[node name="level1_checkbox" type="CheckBox" parent="menu_container/boss_list"]
-margin_left = 178.0
-margin_right = 342.0
-margin_bottom = 273.0
-theme = ExtResource( 14 )
-custom_fonts/font = SubResource( 5 )
+[node name="icon" type="AnimatedSprite" parent="menu_container/boss_list/0"]
+position = Vector2( 200, -40 )
+scale = Vector2( 0.25, 0.25 )
+frames = SubResource( 3 )
+frame = 9
+playing = true
+
+[node name="1" type="Label" parent="menu_container/boss_list"]
+visible = false
+margin_left = -70.0
+margin_top = 285.0
+margin_right = 330.0
+margin_bottom = 485.0
+theme = ExtResource( 15 )
 text = "Parkov"
+align = 1
+valign = 1
+
+[node name="icon" type="AnimatedSprite" parent="menu_container/boss_list/1"]
+position = Vector2( 200, -40 )
+scale = Vector2( 2.5, 2.5 )
+frames = SubResource( 4 )
+playing = true
+
+[node name="2" type="Label" parent="menu_container/boss_list"]
+visible = false
+margin_left = -77.0
+margin_top = 325.0
+margin_right = 336.0
+margin_bottom = 525.0
+theme = ExtResource( 20 )
+text = "THE
+MATHMAGICIAN"
+align = 1
+valign = 1
+
+[node name="icon" type="AnimatedSprite" parent="menu_container/boss_list/2"]
+position = Vector2( 200, -115 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 16 )
+frame = 3
+playing = true
 
 [node name="main_menu" type="VBoxContainer" parent="menu_container"]
 anchor_left = 0.5
@@ -80,9 +185,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = 885.0
-margin_top = 280.0
+margin_top = 508.0
 margin_right = 1765.0
-margin_bottom = 780.0
+margin_bottom = 1008.0
 alignment = 1
 
 [node name="normal" type="Button" parent="menu_container/main_menu"]
@@ -141,9 +246,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 1660.0
+margin_left = -20.0
 margin_top = 815.0
-margin_right = 1860.0
+margin_right = 180.0
 margin_bottom = 1015.0
 custom_styles/hover = ExtResource( 2 )
 custom_styles/pressed = ExtResource( 2 )
@@ -193,7 +298,7 @@ texture = ExtResource( 5 )
 light_mask = 128
 position = Vector2( 512.842, 577.814 )
 z_index = -10
-frames = SubResource( 1 )
+frames = SubResource( 5 )
 frame = 3
 playing = true
 
@@ -205,8 +310,31 @@ bus = "Effects"
 stream = ExtResource( 12 )
 bus = "BGM Base"
 
-[connection signal="pressed" from="menu_container/boss_list/level0_checkbox" to="." method="_on_boss_checkbox_pressed" binds= [ 0 ]]
-[connection signal="pressed" from="menu_container/boss_list/level1_checkbox" to="." method="_on_boss_checkbox_pressed" binds= [ 1 ]]
+[node name="demo" type="VideoPlayer" parent="."]
+visible = false
+margin_right = 1920.0
+margin_bottom = 1080.0
+
+[node name="demo_playing" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -250.0
+margin_top = 390.0
+margin_right = 250.0
+margin_bottom = 540.0
+theme = ExtResource( 20 )
+text = "DEMO PLAY"
+align = 1
+valign = 1
+
+[node name="play_demo_timer" type="Timer" parent="."]
+wait_time = 30.0
+
+[connection signal="pressed" from="menu_container/boss_list_previous" to="." method="_on_boss_list_previous_pressed"]
+[connection signal="pressed" from="menu_container/boss_list_next" to="." method="_on_boss_list_next_pressed"]
 [connection signal="mouse_entered" from="menu_container/main_menu/normal" to="." method="_on_normal_mouse_entered"]
 [connection signal="pressed" from="menu_container/main_menu/normal" to="." method="_on_normal_pressed"]
 [connection signal="mouse_entered" from="menu_container/main_menu/hard" to="." method="_on_hard_mouse_entered"]

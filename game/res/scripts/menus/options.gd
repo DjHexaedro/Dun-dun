@@ -16,8 +16,12 @@ func _ready() -> void:
 	# Input method OptionButton
 	input_method_option_button.add_item("Keyboard")
 	input_method_option_button.add_item("Controller")
-	input_method_option_button.select(int(Settings.get_config_parameter(input_method_option_button.get_name())))
-	_on_input_method_item_selected(int(Settings.get_config_parameter(input_method_option_button.get_name())))
+	input_method_option_button.select(int(
+		Settings.get_config_parameter(input_method_option_button.get_name())
+	))
+	_on_input_method_item_selected(int(
+		Settings.get_config_parameter(input_method_option_button.get_name())
+	))
 
 	# Load value stored in the config file into the corresponding control.
 	# Uses the controls' groups to know which to load and which property
@@ -77,12 +81,15 @@ func _input(event: InputEvent) -> void:
 				current_option += 1
 				if current_option > len(options_list[current_tab]) - 1:
 					current_option = 0
+
 			move_marker()
+
 			var current_control = options_list[current_tab][current_option]
 			if event.is_action_pressed("ui_left", true) and current_control is HSlider:
 				current_control.value -= 0.01
 			elif event.is_action_pressed("ui_right", true) and current_control is HSlider:
 				current_control.value += 0.01
+
 			if event.is_action_pressed("ui_accept") and not ignore_next_ui_accept:
 				if current_control is CheckBox:
 					current_control.pressed = not current_control.pressed
@@ -99,7 +106,9 @@ func move_marker() -> void:
 			tabs_container.current_tab = current_tab
 			current_option = 0
 		selected_option_marker_sprite.visible = true 
-		selected_option_marker_sprite.global_position.y = options_list[current_tab][current_option].rect_global_position.y + (options_list[current_tab][current_option].rect_size.y / 2)
+		selected_option_marker_sprite.global_position.y =\
+			options_list[current_tab][current_option].rect_global_position.y +\
+			(options_list[current_tab][current_option].rect_size.y / 2)
 
 func show_options_menu() -> void:
 	.show_options_menu()
@@ -120,6 +129,7 @@ func _on_save_button_pressed() -> void:
 		tab_name = tabs_container.get_tab_title(c)
 		control_list = tabs_container.get_node(tab_name).get_children()
 		keybind_dict = {}
+
 		for control in control_list:
 			if control is CheckBox:
 				keybind_dict[control.name] = control.pressed
@@ -138,15 +148,13 @@ func _on_save_button_pressed() -> void:
 						keybind_dict[input.name] = input.value
 					elif input is Button:
 						keybind_dict[input.name] = input.text
+
 		sections_dict[tab_name.to_lower()] = keybind_dict
 		c += 1
 	Settings.save_to_config_file(sections_dict)
 	._on_save_button_pressed()
 
 func _on_input_method_item_selected(index: int) -> void:
-	if index == Globals.InputTypes.KEYBOARD:
-		keyboard_controls_control.show()
-		controller_controls_control.hide()
-	elif index == Globals.InputTypes.CONTROLLER:
-		keyboard_controls_control.hide()
-		controller_controls_control.show()
+	keyboard_controls_control.visible = index == Globals.InputTypes.KEYBOARD
+	controller_controls_control.visible = index == Globals.InputTypes.CONTROLLER
+

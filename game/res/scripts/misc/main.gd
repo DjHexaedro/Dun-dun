@@ -23,6 +23,7 @@ func _ready() -> void:
 	)
 	add_child(main_menu_canvas)
 	main_menu_canvas.connect("start_game", self, "game_start")
+	main_menu_canvas.connect("start_game", GameStateManager, "initialize_game_objects")
 
 	logo_animations.connect("splash_over", main_menu_canvas, "show_main_menu")
 	logo_animations.visible = true
@@ -30,6 +31,5 @@ func _ready() -> void:
 
 func game_start() -> void:
 	white_bg_sprite.visible = false
-	GameStateManager.initialize_game_objects()
 	pause_menu_canvas.main_menu = main_menu_canvas
 	pause_menu_canvas.enabled = true

@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/themes/mathmagician.tres" type="Theme" id=1]
+[ext_resource path="res://juegodetriangulos/res/scripts/bullets/pulsating_zero.gd" type="Script" id=2]
+
+[node name="bullet" type="Node2D"]
+light_mask = 8
+z_index = 10
+script = ExtResource( 2 )
+
+[node name="label" type="Label" parent="."]
+light_mask = 8
+margin_left = -30.0
+margin_top = -48.0
+margin_right = 30.0
+margin_bottom = 39.0
+rect_pivot_offset = Vector2( 30, 48 )
+theme = ExtResource( 1 )
+text = "0"
+
+[node name="blink_timer" type="Timer" parent="."]
+wait_time = 0.13
+one_shot = true
+
+[node name="unblink_timer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true

@@ -131,7 +131,6 @@ texture = ExtResource( 1 )
 texture_scale = 0.15
 mode = 2
 range_item_cull_mask = 34
-shadow_enabled = true
 shadow_item_cull_mask = 262144
 
 [node name="break_sound" type="AudioStreamPlayer" parent="."]

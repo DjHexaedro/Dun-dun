@@ -47,7 +47,7 @@ func _calculate_final_score() -> void:
 				calculated_score += 15000
 
 			Globals.MatchEvents.CRYSTAL_GRABBED:
-				calculated_score += pow(5 * entry.additional_info, 2)
+				calculated_score += pow(5 * entry.additional_info, 2) * GameStateManager.get_score_multiplier()
 	
 	player_score = calculated_score
 	emit_signal("score_calculated")

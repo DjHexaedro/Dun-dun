@@ -1,12 +1,4 @@
 extends "res://juegodetriangulos/res/scripts/levels/1/extreme_attacks.gd"
-
-func _ready():
-	var difficulty_attacks_dict: Dictionary = {
-		Globals.DifficultyLevels.NORMAL: "set_normal_mode",
-		Globals.DifficultyLevels.HARD: "set_hard_mode",
-		Globals.DifficultyLevels.HARDEST: "set_hardest_mode",
-	}
-	call(difficulty_attacks_dict[GameStateManager.get_difficulty_level()])
 	
 func set_normal_mode() -> void:
 	attack_list = [

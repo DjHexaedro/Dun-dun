@@ -1,0 +1,132 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://juegodetriangulos/res/scripts/levels/2/powerup.gd" type="Script" id=2]
+[ext_resource path="res://juegodetriangulos/res/shaders/invert.tres" type="Material" id=3]
+[ext_resource path="res://juegodetriangulos/res/music/crystal_breaking.wav" type="AudioStream" id=4]
+[ext_resource path="res://juegodetriangulos/res/themes/standard_small_black.tres" type="Theme" id=5]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/2/powerup.png" type="Texture" id=6]
+[ext_resource path="res://juegodetriangulos/res/music/shoot_1_crystal.mp3" type="AudioStream" id=20]
+
+[sub_resource type="AtlasTexture" id=32]
+atlas = ExtResource( 6 )
+region = Rect2( 410, 82, 82, 82 )
+
+[sub_resource type="AtlasTexture" id=33]
+atlas = ExtResource( 6 )
+region = Rect2( 492, 82, 82, 82 )
+
+[sub_resource type="AtlasTexture" id=34]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 164, 82, 82 )
+
+[sub_resource type="AtlasTexture" id=35]
+atlas = ExtResource( 6 )
+region = Rect2( 82, 164, 82, 82 )
+
+[sub_resource type="AtlasTexture" id=36]
+atlas = ExtResource( 6 )
+region = Rect2( 164, 164, 82, 82 )
+
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ) ],
+"loop": false,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="AtlasTexture" id=39]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 82, 82 )
+
+[sub_resource type="AtlasTexture" id=40]
+atlas = ExtResource( 6 )
+region = Rect2( 82, 0, 82, 82 )
+
+[sub_resource type="AtlasTexture" id=41]
+atlas = ExtResource( 6 )
+region = Rect2( 164, 0, 82, 82 )
+
+[sub_resource type="AtlasTexture" id=42]
+atlas = ExtResource( 6 )
+region = Rect2( 246, 0, 82, 82 )
+
+[sub_resource type="AtlasTexture" id=43]
+atlas = ExtResource( 6 )
+region = Rect2( 328, 0, 82, 82 )
+
+[sub_resource type="AtlasTexture" id=44]
+atlas = ExtResource( 6 )
+region = Rect2( 410, 0, 82, 82 )
+
+[sub_resource type="AtlasTexture" id=45]
+atlas = ExtResource( 6 )
+region = Rect2( 492, 0, 82, 82 )
+
+[sub_resource type="SpriteFrames" id=9]
+animations = [ {
+"frames": [ SubResource( 39 ), SubResource( 40 ), SubResource( 41 ), SubResource( 42 ), SubResource( 43 ), SubResource( 44 ), SubResource( 45 ) ],
+"loop": false,
+"name": "default",
+"speed": 8.0
+} ]
+
+[sub_resource type="AtlasTexture" id=37]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 82, 82, 82 )
+
+[sub_resource type="AtlasTexture" id=38]
+atlas = ExtResource( 6 )
+region = Rect2( 328, 82, 82, 82 )
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ SubResource( 37 ), SubResource( 38 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="powerup" type="Node2D"]
+light_mask = 96
+script = ExtResource( 2 )
+BASE_DAMAGE = 15.0
+
+[node name="break" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 96
+use_parent_material = true
+frames = SubResource( 8 )
+
+[node name="spawn" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 128
+material = ExtResource( 3 )
+frames = SubResource( 9 )
+
+[node name="cracking" type="AnimatedSprite" parent="."]
+visible = false
+light_mask = 96
+use_parent_material = true
+frames = SubResource( 6 )
+
+[node name="value" type="Label" parent="."]
+light_mask = 4
+margin_left = -51.0
+margin_top = 30.0
+margin_right = 45.0
+margin_bottom = 76.0
+theme = ExtResource( 5 )
+align = 1
+valign = 1
+
+[node name="break_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+bus = "Effects"
+
+[node name="shoot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 20 )
+bus = "Effects"
+
+[connection signal="animation_finished" from="break" to="." method="_on_break_animation_finished"]
+[connection signal="animation_finished" from="spawn" to="." method="_on_spawn_animation_finished"]

@@ -1,18 +1,12 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/arena/arena_open_door_left.png" type="Texture" id=1]
-[ext_resource path="res://juegodetriangulos/res/scripts/base/set_checkpoint.gd" type="Script" id=2]
-[ext_resource path="res://juegodetriangulos/res/scripts/base/start_fight.gd" type="Script" id=3]
-[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/arena/arena_open_door_right.png" type="Texture" id=4]
-[ext_resource path="res://juegodetriangulos/res/music/arena_doors_closed.wav" type="AudioStream" id=5]
-[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/arena/arena_bg_open_doors.png" type="Texture" id=6]
+[ext_resource path="res://juegodetriangulos/res/sprites/levels/0/arena/arena_bg_closed_doors.png" type="Texture" id=6]
 [ext_resource path="res://juegodetriangulos/res/scripts/base/powerup_spawning_area.gd" type="Script" id=7]
 [ext_resource path="res://juegodetriangulos/res/scripts/base/spawn_point.gd" type="Script" id=8]
 [ext_resource path="res://juegodetriangulos/res/music/level0_phase1.mp3" type="AudioStream" id=9]
 [ext_resource path="res://juegodetriangulos/res/scripts/levels/map/ongard_arena.gd" type="Script" id=10]
 [ext_resource path="res://juegodetriangulos/scenes/level_assets/0/enemy.tscn" type="PackedScene" id=11]
 [ext_resource path="res://juegodetriangulos/res/sprites/misc/plain_light.png" type="Texture" id=12]
-[ext_resource path="res://juegodetriangulos/scenes/level_assets/map/score_screen_area.tscn" type="PackedScene" id=13]
 [ext_resource path="res://juegodetriangulos/res/music/level0_phase3.mp3" type="AudioStream" id=14]
 [ext_resource path="res://juegodetriangulos/res/music/level0_phase5.mp3" type="AudioStream" id=15]
 [ext_resource path="res://juegodetriangulos/res/music/level0_phase2.mp3" type="AudioStream" id=16]
@@ -25,18 +19,6 @@ extents = Vector2( 9.49854, 55.0551 )
 extents = Vector2( 9.50781, 55.0043 )
 
 [sub_resource type="RectangleShape2D" id=5]
-
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 30, 50 )
-
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 100, 300 )
-
-[sub_resource type="OccluderPolygon2D" id=13]
-polygon = PoolVector2Array( -10, -40, 10, -40, 10, 40, -10, 40, -30, 80, 50, 80, 10, 40, 10, -40, 70, -120, -40, -120 )
-
-[sub_resource type="OccluderPolygon2D" id=14]
-polygon = PoolVector2Array( 10, -40, -10, -40, -10, 40, 10, 40, 30, 80, -50, 80, -10, 40, -10, -40, -70, -120, 40, -120 )
 
 [node name="level0_arena" type="Node2D"]
 light_mask = 65
@@ -52,7 +34,6 @@ position = Vector2( -368, 0 )
 [node name="collision" type="CollisionShape2D" parent="sprite/left_gate_limits"]
 position = Vector2( -1.50143, 0.0550919 )
 shape = SubResource( 1 )
-disabled = true
 
 [node name="right_gate_limits" type="StaticBody2D" parent="sprite"]
 position = Vector2( 368, 0 )
@@ -61,13 +42,6 @@ collision_layer = 16
 [node name="collision" type="CollisionShape2D" parent="sprite/right_gate_limits"]
 position = Vector2( 1.49219, 0.00433731 )
 shape = SubResource( 2 )
-disabled = true
-
-[node name="entrance_door" type="Sprite" parent="sprite"]
-light_mask = 65
-position = Vector2( -402.261, -2.68179 )
-z_index = 5
-texture = ExtResource( 1 )
 
 [node name="arena_limits" type="StaticBody2D" parent="sprite"]
 
@@ -78,12 +52,6 @@ disabled = true
 [node name="lower_part" type="CollisionPolygon2D" parent="sprite/arena_limits" groups=["to_disable"]]
 polygon = PoolVector2Array( -380, 250, -380, 40, -360, 40, -360, 235, 360, 235, 360, 40, 380, 40, 380, 250 )
 disabled = true
-
-[node name="exit_door" type="Sprite" parent="sprite"]
-light_mask = 65
-position = Vector2( 404.286, 6.5035 )
-z_index = 5
-texture = ExtResource( 4 )
 
 [node name="powerup_spawning_zones" type="Node2D" parent="."]
 position = Vector2( -354, -249 )
@@ -220,66 +188,10 @@ bus = "BGM P4"
 stream = ExtResource( 15 )
 bus = "BGM P5"
 
-[node name="doors_closed_audio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 5 )
-bus = "Effects"
-
 [node name="checkpoint_position" type="Position2D" parent="."]
 
 [node name="enemy" parent="." instance=ExtResource( 11 )]
 position = Vector2( 0, -432 )
-
-[node name="start_fight_trigger" type="Area2D" parent="."]
-position = Vector2( -325, 2 )
-collision_layer = 16
-script = ExtResource( 3 )
-CHECKPOINT_NAME = "level0_arena"
-
-[node name="trigger_hitbox" type="CollisionShape2D" parent="start_fight_trigger" groups=["to_disable"]]
-shape = SubResource( 3 )
-disabled = true
-
-[node name="enter_arena_left_door_trigger" type="Area2D" parent="."]
-position = Vector2( 325, 0 )
-scale = Vector2( 0.25, 0.25 )
-script = ExtResource( 2 )
-CHECKPOINT_NAME = "level0_arena"
-
-[node name="trigger_hitbox" type="CollisionShape2D" parent="enter_arena_left_door_trigger" groups=["to_disable"]]
-shape = SubResource( 4 )
-disabled = true
-
-[node name="previous_hall_light" type="Light2D" parent="." groups=["on_level0_enemy_despawn", "to_not_enable"]]
-visible = false
-position = Vector2( -550, 10 )
-texture = ExtResource( 12 )
-texture_scale = 0.5
-range_item_cull_mask = 64
-shadow_enabled = true
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_item_cull_mask = 65
-
-[node name="light_occluder_2d" type="LightOccluder2D" parent="previous_hall_light"]
-light_mask = 65
-position = Vector2( 20, 0 )
-occluder = SubResource( 13 )
-light_mask = 65
-
-[node name="next_hall_light" type="Light2D" parent="." groups=["on_level0_enemy_despawn", "to_not_enable"]]
-visible = false
-position = Vector2( 540, 10 )
-texture = ExtResource( 12 )
-texture_scale = 0.5
-range_item_cull_mask = 64
-shadow_enabled = true
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_item_cull_mask = 65
-
-[node name="light_occluder_2d" type="LightOccluder2D" parent="next_hall_light"]
-light_mask = 65
-position = Vector2( -20, 0 )
-occluder = SubResource( 14 )
-light_mask = 65
 
 [node name="arena_light" type="Light2D" parent="." groups=["on_level0_enemy_despawn", "to_not_enable"]]
 visible = false
@@ -289,8 +201,6 @@ range_item_cull_mask = 64
 shadow_color = Color( 0, 0, 0, 1 )
 shadow_item_cull_mask = 65
 
-[node name="show_score_trigger" parent="." instance=ExtResource( 13 )]
-
 [connection signal="body_entered" from="powerup_spawning_zones/top_left" to="powerup_spawning_zones/top_left" method="_on_body_entered"]
 [connection signal="body_exited" from="powerup_spawning_zones/top_left" to="powerup_spawning_zones/top_left" method="_on_body_exited"]
 [connection signal="body_entered" from="powerup_spawning_zones/top_right" to="powerup_spawning_zones/top_right" method="_on_body_entered"]
@@ -299,5 +209,3 @@ shadow_item_cull_mask = 65
 [connection signal="body_exited" from="powerup_spawning_zones/bottom_left" to="powerup_spawning_zones/bottom_left" method="_on_body_exited"]
 [connection signal="body_entered" from="powerup_spawning_zones/bottom_right" to="powerup_spawning_zones/bottom_right" method="_on_body_entered"]
 [connection signal="body_exited" from="powerup_spawning_zones/bottom_right" to="powerup_spawning_zones/bottom_right" method="_on_body_exited"]
-[connection signal="body_entered" from="start_fight_trigger" to="start_fight_trigger" method="_on_body_entered"]
-[connection signal="body_entered" from="enter_arena_left_door_trigger" to="enter_arena_left_door_trigger" method="_on_body_entered"]

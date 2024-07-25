@@ -29,6 +29,7 @@ size = 36
 font_data = ExtResource( 7 )
 
 [node name="extra_challenges_menu" type="CanvasLayer"]
+layer = 5
 offset = Vector2( 1300, 660 )
 transform = Transform2D( 1, 0, 0, 1, 1300, 660 )
 script = ExtResource( 1 )

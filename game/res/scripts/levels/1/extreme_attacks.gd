@@ -84,9 +84,17 @@ func pawn_field_begin(attack_params: Dictionary) -> void:
 			)
 
 func pawn_field_hidden(_attack_params: Dictionary) -> void:
+	idle_animation.hide()
+	special_animation.show()
+	special_animation.play()
+	yield(self, "special_animation_peak_reached")
 	get_parent().make_all_board_spaces_safe()
 
 func pawn_field_hide_player(_attack_params: Dictionary) -> void:
+	idle_animation.hide()
+	special_animation.show()
+	special_animation.play()
+	yield(self, "special_animation_peak_reached")
 	PlayerManager.manage_player_light(false)
 
 func pawn_field_end(_attack_params: Dictionary) -> void:
@@ -116,6 +124,10 @@ func danger_line(attack_params: Dictionary) -> void:
 	get_parent().manage_spawner_spaces_column(danger_line_column, true)
 	yield(get_parent(), "board_modified")
 
+	idle_animation.hide()
+	special_animation.show()
+	special_animation.play()
+	yield(self, "special_animation_peak_reached")
 	PlayerManager.get_player_node().light.visible = false
 
 	var missing_piece_position: int = player_data.current_position.y
@@ -235,7 +247,6 @@ func danger_line(attack_params: Dictionary) -> void:
 
 func danger_line_end(attack_params: Dictionary) -> void:
 	continue_attacking = false
-	PlayerManager.get_player_node().light.visible = true
 	PlayerManager.manage_player_light(true)
 	SimpleBulletManager.despawn_active_bullets_by_type_list([
 	  Globals.SimpleBulletTypes.ROOK,
@@ -422,13 +433,13 @@ func towers_of_doom_mix(attack_params: Dictionary) -> void:
 			Vector2(7, row), right_col_rook_params
 		))
 
-func towers_of_doom_update_speed(attack_params: Dictionary) -> void:
+func towers_of_doom_update_speed(_attack_params: Dictionary) -> void:
 	for tower_id in towers_of_doom_list:
 		SimpleBulletManager.update_bullet_params_dict(
 			tower_id, { "choose_random": true }
 		)
 
-func towers_of_doom_end(attack_params: Dictionary) -> void:
+func towers_of_doom_end(_attack_params: Dictionary) -> void:
 	continue_attacking = false
 	SimpleBulletManager.despawn_active_bullets_by_type_list([
 	  Globals.SimpleBulletTypes.ROOK,

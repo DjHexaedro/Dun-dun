@@ -34,6 +34,11 @@ func straight_bullet_pattern(
 	bullet.position.x += bullet_params.velocity.x * delta
 	bullet.position.y += bullet_params.velocity.y * delta
 
+func straight_zero_bullet_pattern(
+	bullet: AnimatedSprite, bullet_params: Dictionary, delta: float
+) -> void:
+	straight_bullet_pattern(bullet, bullet_params, delta)
+
 func circular_bullet_pattern(
 	bullet: AnimatedSprite, bullet_params: Dictionary, delta: float
 ) -> void:
@@ -46,6 +51,11 @@ func circular_bullet_pattern(
 		),
 		-CIRCULAR_MAX_DEVIATION_DEGREES, CIRCULAR_MAX_DEVIATION_DEGREES
 	)
+
+func circular_zero_bullet_pattern(
+	bullet: AnimatedSprite, bullet_params: Dictionary, delta: float
+) -> void:
+	circular_bullet_pattern(bullet, bullet_params, delta)
 
 func soft_homing_bullet_pattern(
 	bullet: AnimatedSprite, bullet_params: Dictionary, delta: float
